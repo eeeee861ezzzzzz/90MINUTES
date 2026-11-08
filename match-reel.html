@@ -4,454 +4,342 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PITCH'AURA | Match réel</title>
+<title>PITCH'AURA | Match Lab 2.0</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#08130e;color:white;
- font-family:Arial,sans-serif
-}
-header{
- padding:22px 6%;background:#102219;
- display:flex;justify-content:space-between;
- gap:15px;flex-wrap:wrap
-}
-.logo{font-size:24px;font-weight:bold}
+body{margin:0;background:#08130e;color:#fff;font-family:Arial,sans-serif}
+header{padding:20px 6%;background:#102219;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:900}
 .logo span{color:#38e888}
 a{color:#38e888;text-decoration:none}
-main{max-width:1100px;margin:auto;padding:30px 16px}
-h1{font-size:32px}
+main{max-width:1100px;margin:auto;padding:30px 16px 65px}
+h1{font-size:clamp(25px,5vw,38px)}
 p{color:#b5cbbd;line-height:1.6}
-.panel{
- background:#10231a;border:1px solid #2b5039;
- padding:20px;border-radius:15px;margin:20px 0
-}
-label{display:block;margin:12px 0 7px;color:#b5cbbd}
-select,button{
- padding:12px;background:#1b3b29;color:white;
- border:1px solid #427d54;border-radius:8px;
- font-size:14px
-}
+.panel{background:#10231a;border:1px solid #2b5039;padding:20px;border-radius:15px;margin:20px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:block;margin:12px 0 7px;color:#b5cbbd;font-size:13px}
+select,button{padding:12px;background:#1b3b29;color:white;border:1px solid #427d54;border-radius:8px;font-size:14px}
 select{width:100%}
 button{cursor:pointer}
 button:disabled{opacity:.45;cursor:not-allowed}
 .primary{background:#38e888;color:#062011;font-weight:bold}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.pitch{
- position:relative;width:100%;aspect-ratio:1.5;
- background:repeating-linear-gradient(
- 90deg,#16643d 0%,#16643d 12.5%,
- #1b7046 12.5%,#1b7046 25%);
- border:3px solid #d5f2dc;border-radius:8px;
- overflow:hidden
-}
+.pitch{width:100%;aspect-ratio:1.5;background:repeating-linear-gradient(90deg,#16643d 0%,#16643d 12.5%,#1b7046 12.5%,#1b7046 25%);border:3px solid #d5f2dc;border-radius:8px;overflow:hidden}
 .pitch svg{width:100%;height:100%;display:block}
-.pitch line,.pitch rect,.pitch circle{
- vector-effect:non-scaling-stroke
-}
-.info{
- padding:16px;background:#163a26;
- border-radius:10px;margin-top:15px;
- line-height:1.7
-}
-.stats{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:12px;margin-top:18px
-}
-.stat{
- background:#0b1c13;border:1px solid #345640;
- padding:15px;border-radius:10px;text-align:center
-}
-.stat strong{display:block;font-size:22px;color:#38e888}
+.info{padding:16px;background:#163a26;border-radius:10px;margin-top:15px;line-height:1.8}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{background:#0b1c13;border:1px solid #345640;padding:15px;border-radius:10px;text-align:center}
+.stat strong{display:block;font-size:24px;color:#38e888}
 .stat small{color:#b5cbbd}
 #status{color:#38e888}
-@media(max-width:600px){
- .stats{grid-template-columns:1fr}
- h1{font-size:25px}
-}
+.tag{display:inline-block;background:#1d5235;color:#a8f7c4;border-radius:20px;padding:6px 12px;font-size:12px}
+@media(max-width:600px){.grid,.stats{grid-template-columns:1fr}.controls button{flex:1}}
 </style>
 </head>
 <body>
-
 <header>
- <div class="logo">PITCH'<span>AURA</span></div>
- <a href="/">← Accueil</a>
+<div class="logo">PITCH'<span>AURA</span></div>
+<a href="/">← Accueil</a>
 </header>
 
 <main>
-<h1>⚽ MATCH LAB — Matchs réels</h1>
-<p>
- Explore les passes réellement enregistrées pendant
- un match, avec leurs positions et leurs joueurs.
-</p>
+<span class="tag">MATCH LAB 2.0 · DONNÉES RÉELLES</span>
+<h1>⚽ Analyse des matchs réels</h1>
+<p>Explore les passes, les tirs et les buts réellement enregistrés pendant un match.</p>
 
-<div class="panel">
- <h2>Choisir un match</h2>
- <p>Première compétition disponible : Euro 2024.</p>
+<section class="panel">
+<h2>Choisir un match</h2>
+<label for="match">Match de l'Euro 2024</label>
+<select id="match"><option>Chargement...</option></select>
 
- <label for="match">Match</label>
- <select id="match">
-  <option>Chargement des matchs...</option>
- </select>
-
- <label for="team">Équipe à analyser</label>
- <select id="team">
-  <option>Toutes les équipes</option>
- </select>
-
- <button class="primary" id="load" disabled>
-  Charger les vraies actions
- </button>
-
- <p id="status">Connexion aux données...</p>
+<div class="grid">
+<div>
+<label for="team">Équipe</label>
+<select id="team"><option value="all">Les deux équipes</option></select>
+</div>
+<div>
+<label for="type">Actions à afficher</label>
+<select id="type">
+<option value="all">Toutes les actions</option>
+<option value="Pass">Passes</option>
+<option value="Shot">Tirs et buts</option>
+<option value="Goal">Buts uniquement</option>
+</select>
+</div>
 </div>
 
-<div class="panel">
- <h2 id="matchTitle">Terrain d'analyse</h2>
+<div class="controls">
+<button class="primary" id="load" disabled>Charger les actions réelles</button>
+</div>
+<p id="status">Connexion à StatsBomb...</p>
+</section>
 
- <div class="pitch">
-  <svg id="field" viewBox="0 0 120 80"
-       preserveAspectRatio="none">
-   <rect x="0" y="0" width="120" height="80"
-    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
-   <line x1="60" y1="0" x2="60" y2="80"
-    stroke="#ffffffaa" stroke-width=".5"/>
-   <circle cx="60" cy="40" r="10"
-    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
-   <rect x="0" y="18" width="18" height="44"
-    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
-   <rect x="102" y="18" width="18" height="44"
-    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
-
-   <g id="action"></g>
-  </svg>
- </div>
-
- <div class="controls">
-  <button id="previous" disabled>← Action précédente</button>
-  <button class="primary" id="next" disabled>
-   Action suivante →
-  </button>
- </div>
-
- <div class="info" id="info">
-  Charge un match pour afficher ses vraies passes.
- </div>
-
- <div class="stats">
-  <div class="stat">
-   <strong id="passCount">0</strong>
-   <small>Passes enregistrées</small>
-  </div>
-  <div class="stat">
-   <strong id="index">0</strong>
-   <small>Action affichée</small>
-  </div>
-  <div class="stat">
-   <strong id="total">0</strong>
-   <small>Actions disponibles</small>
-  </div>
- </div>
+<section class="panel">
+<h2 id="matchTitle">Terrain d'analyse</h2>
+<div class="pitch">
+<svg id="field" viewBox="0 0 120 80" preserveAspectRatio="none">
+<rect x="0" y="0" width="120" height="80" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<line x1="60" y1="0" x2="60" y2="80" stroke="#ffffffaa" stroke-width=".5"/>
+<circle cx="60" cy="40" r="10" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="0" y="18" width="18" height="44" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="102" y="18" width="18" height="44" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="0" y="30" width="6" height="20" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="114" y="30" width="6" height="20" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<g id="action"></g>
+</svg>
 </div>
 
-<p>
- Source : StatsBomb Open Data.
- Les données représentent des événements enregistrés,
- pas une reconstitution vidéo complète.
-</p>
-<p>
- <a href="https://github.com/hudl/open-data"
- target="_blank" rel="noopener noreferrer">
- Consulter la source des données StatsBomb
- </a>
-</p>
+<div class="controls">
+<button id="previous" disabled>← Précédente</button>
+<button class="primary" id="next" disabled>Suivante →</button>
+</div>
+
+<div class="info" id="info">Charge un match pour commencer.</div>
+
+<div class="stats">
+<div class="stat"><strong id="passes">0</strong><small>Passes</small></div>
+<div class="stat"><strong id="shots">0</strong><small>Tirs</small></div>
+<div class="stat"><strong id="goals">0</strong><small>Buts</small></div>
+</div>
+
+<p id="counter">Action 0 / 0</p>
+</section>
+<p>Source : StatsBomb Open Data. Les actions sont des événements enregistrés, pas une vidéo ou un suivi continu des joueurs.</p>
 </main>
 
 <script>
 const $=id=>document.getElementById(id);
-
-const BASE=
- "https://raw.githubusercontent.com/hudl/open-data/master/data";
-
+const BASE="https://raw.githubusercontent.com/hudl/open-data/master/data";
 const COMPETITION=55;
 const SEASON=282;
 
 let matches=[];
-let passes=[];
+let events=[];
+let filtered=[];
 let current=0;
-let loadedMatch=null;
+let loadedId=null;
 
-function status(message){
- $("status").textContent=message;
-}
+function status(text){$("status").textContent=text}
 
 async function getJSON(url){
  const response=await fetch(url);
- if(!response.ok){
-  throw new Error("Erreur HTTP "+response.status);
- }
+ if(!response.ok)throw new Error("HTTP "+response.status);
  return response.json();
 }
 
 function matchName(m){
- return m.home_team.home_team_name+
- " "+m.home_score+" - "+m.away_score+
- " "+m.away_team.away_team_name;
+ return m.home_team.home_team_name+" "+m.home_score+
+ " - "+m.away_score+" "+m.away_team.away_team_name;
 }
 
 async function loadMatches(){
  try{
-  const url=BASE+"/matches/"+
-   COMPETITION+"/"+SEASON+".json";
-
-  matches=await getJSON(url);
-
-  matches.sort((a,b)=>
-   String(b.match_date).localeCompare(
-    String(a.match_date)
-   )
-  );
-
-  const select=$("match");
-  select.replaceChildren();
+  matches=await getJSON(BASE+"/matches/"+COMPETITION+"/"+SEASON+".json");
+  matches.sort((a,b)=>String(b.match_date).localeCompare(String(a.match_date)));
+  $("match").replaceChildren();
 
   matches.forEach(m=>{
-   const option=document.createElement("option");
-   option.value=m.match_id;
-   option.textContent=m.match_date+" | "+matchName(m);
-   select.appendChild(option);
+   const o=document.createElement("option");
+   o.value=m.match_id;
+   o.textContent=m.match_date+" | "+matchName(m);
+   $("match").appendChild(o);
   });
 
   $("load").disabled=false;
   status(matches.length+" matchs disponibles.");
-
  }catch(error){
-  status("Impossible de récupérer les matchs : "+
-   error.message);
+  status("Erreur : "+error.message);
  }
 }
 
-function makeSVG(tag,attributes){
- const element=document.createElementNS(
-  "http://www.w3.org/2000/svg",tag
- );
- Object.entries(attributes).forEach(([key,value])=>{
-  element.setAttribute(key,value);
- });
- return element;
+function svg(tag,attributes){
+ const el=document.createElementNS("http://www.w3.org/2000/svg",tag);
+ Object.entries(attributes).forEach(([k,v])=>el.setAttribute(k,v));
+ return el;
 }
 
-function validPoint(point){
- return Array.isArray(point)&&
-  point.length>=2&&
-  Number.isFinite(point[0])&&
-  Number.isFinite(point[1]);
+function point(p){
+ return Array.isArray(p)&&p.length>=2&&
+ Number.isFinite(p[0])&&Number.isFinite(p[1]);
 }
 
-function drawPass(pass){
+function draw(event){
  const group=$("action");
  group.replaceChildren();
 
- const start=pass.location;
- const end=pass.pass.end_location;
+ const start=event.location;
+ const end=event.type.name==="Pass"
+  ?event.pass?.end_location
+  :event.shot?.end_location;
 
- if(!validPoint(start)||!validPoint(end))return;
+ if(!point(start))return;
 
- const line=makeSVG("line",{
-  x1:start[0],y1:start[1],
-  x2:end[0],y2:end[1],
-  stroke:"#ffe36a",
-  "stroke-width":1.2,
-  "stroke-linecap":"round"
- });
+ const isShot=event.type.name==="Shot";
+ const color=isShot?"#ffb347":"#ffe36a";
 
- const origin=makeSVG("circle",{
-  cx:start[0],cy:start[1],r:2,
-  fill:"#38e888",stroke:"#08130e",
-  "stroke-width":0.5
- });
+ if(point(end)){
+  group.appendChild(svg("line",{
+   x1:start[0],y1:start[1],x2:end[0],y2:end[1],
+   stroke:color,"stroke-width":1.2
+  }));
+  group.appendChild(svg("circle",{
+   cx:end[0],cy:end[1],r:2,fill:color
+  }));
+ }
 
- const destination=makeSVG("circle",{
-  cx:end[0],cy:end[1],r:2,
-  fill:"#ffe36a",stroke:"#08130e",
-  "stroke-width":0.5
- });
-
- group.append(line,origin,destination);
-
- const dx=end[0]-start[0];
- const dy=end[1]-start[1];
- const angle=Math.atan2(dy,dx);
- const size=3;
-
- const arrow=makeSVG("polygon",{
-  points:[
-   [end[0],end[1]],
-   [
-    end[0]-size*Math.cos(angle-.5),
-    end[1]-size*Math.sin(angle-.5)
-   ],
-   [
-    end[0]-size*Math.cos(angle+.5),
-    end[1]-size*Math.sin(angle+.5)
-   ]
-  ].map(p=>p.join(",")).join(" "),
-  fill:"#ffe36a"
- });
-
- group.appendChild(arrow);
+ group.appendChild(svg("circle",{
+  cx:start[0],cy:start[1],r:2.4,
+  fill:isShot?"#ff6b4a":"#38e888",
+  stroke:"#08130e","stroke-width":.5
+ }));
 }
 
-function showAction(){
- if(!passes.length){
+function show(){
+ if(!filtered.length){
   $("action").replaceChildren();
-  $("info").textContent="Aucune passe disponible.";
-  $("index").textContent="0";
-  $("total").textContent="0";
+  $("info").textContent="Aucune action trouvée pour ce filtre.";
+  $("counter").textContent="Action 0 / 0";
   $("previous").disabled=true;
   $("next").disabled=true;
   return;
  }
 
- const pass=passes[current];
- drawPass(pass);
+ const e=filtered[current];
+ draw(e);
 
- const minute=pass.minute;
- const second=String(pass.second).padStart(2,"0");
- const player=pass.player?.name||"Joueur inconnu";
- const team=pass.team?.name||"Équipe inconnue";
- const receiver=pass.pass?.recipient?.name;
- const outcome=pass.pass?.outcome?.name;
+ const isShot=e.type.name==="Shot";
+ const goal=isShot&&e.shot?.outcome?.name==="Goal";
 
- const parts=[
-  "Minute "+minute+":"+second,
-  "Équipe : "+team,
-  "Passeur : "+player,
-  "Destinataire : "+(receiver||"Non indiqué"),
-  "Résultat : "+(outcome||"Passe réussie ou sans résultat d'échec")
+ const details=[
+  "⏱ Minute : "+e.minute+":"+String(e.second).padStart(2,"0"),
+  "🏟 Équipe : "+(e.team?.name||"Inconnue"),
+  "👤 Joueur : "+(e.player?.name||"Inconnu"),
+  "⚽ Action : "+(goal?"BUT !":isShot?"Tir":"Passe")
  ];
 
- $("info").replaceChildren();
+ if(isShot){
+  details.push("Résultat : "+(e.shot?.outcome?.name||"Non indiqué"));
+ }else{
+  details.push("Destinataire : "+(e.pass?.recipient?.name||"Non indiqué"));
+  details.push("Résultat : "+(e.pass?.outcome?.name||"Pas d'échec indiqué"));
+ }
 
- parts.forEach(text=>{
+ $("info").replaceChildren();
+ details.forEach(t=>{
   const div=document.createElement("div");
-  div.textContent=text;
+  div.textContent=t;
   $("info").appendChild(div);
  });
 
- $("index").textContent=current+1;
- $("total").textContent=passes.length;
+ $("counter").textContent="Action "+(current+1)+" / "+filtered.length;
  $("previous").disabled=current===0;
- $("next").disabled=current===passes.length-1;
+ $("next").disabled=current===filtered.length-1;
 }
 
-function filterPasses(){
- if(!loadedMatch)return;
+function applyFilters(){
+ const team=$("team").value;
+ const type=$("type").value;
 
- const selected=$("team").value;
+ filtered=events.filter(e=>{
+  const action=e.type?.name;
+  if(action!=="Pass"&&action!=="Shot")return false;
+  if(!point(e.location))return false;
+  if(team!=="all"&&e.team?.name!==team)return false;
+  if(type==="Goal")return action==="Shot"&&e.shot?.outcome?.name==="Goal";
+  if(type!=="all"&&action!==type)return false;
+  return true;
+ });
 
- passes=loadedMatch.events.filter(e=>
-  e.type?.name==="Pass"&&
-  validPoint(e.location)&&
-  validPoint(e.pass?.end_location)&&
-  (selected==="all"||e.team?.name===selected)
- );
-
- passes.sort((a,b)=>
+ filtered.sort((a,b)=>
   a.period-b.period||
   a.minute-b.minute||
   a.second-b.second||
-  String(a.timestamp||"").localeCompare(
-   String(b.timestamp||"")
-  )
+  String(a.timestamp||"").localeCompare(String(b.timestamp||""))
  );
 
  current=0;
- $("passCount").textContent=passes.length;
- showAction();
+ show();
 }
 
-async function loadRealMatch(){
+function updateStats(){
+ const team=$("team").value;
+ const selected=events.filter(e=>
+  team==="all"||e.team?.name===team
+ );
+
+ $("passes").textContent=selected.filter(e=>e.type?.name==="Pass").length;
+ $("shots").textContent=selected.filter(e=>e.type?.name==="Shot").length;
+ $("goals").textContent=selected.filter(e=>
+  e.type?.name==="Shot"&&e.shot?.outcome?.name==="Goal"
+ ).length;
+}
+
+async function loadMatch(){
  const id=Number($("match").value);
  const match=matches.find(m=>m.match_id===id);
  if(!match)return;
 
  $("load").disabled=true;
- $("previous").disabled=true;
- $("next").disabled=true;
- status("Chargement des événements réels...");
+ status("Chargement des vraies actions...");
 
  try{
-  const events=await getJSON(
-   BASE+"/events/"+id+".json"
-  );
-
-  loadedMatch={match,events};
-
+  events=await getJSON(BASE+"/events/"+id+".json");
+  loadedId=id;
   $("matchTitle").textContent=matchName(match);
 
-  const teamSelect=$("team");
-  teamSelect.replaceChildren();
-
-  const all=document.createElement("option");
-  all.value="all";
-  all.textContent="Les deux équipes";
-  teamSelect.appendChild(all);
+  $("team").replaceChildren();
+  const all=new Option("Les deux équipes","all");
+  $("team").appendChild(all);
 
   [
    match.home_team.home_team_name,
    match.away_team.away_team_name
   ].forEach(name=>{
-   const option=document.createElement("option");
-   option.value=name;
-   option.textContent=name;
-   teamSelect.appendChild(option);
+   $("team").appendChild(new Option(name,name));
   });
 
-  filterPasses();
-
-  status("Données réelles chargées avec succès.");
-
+  updateStats();
+  applyFilters();
+  status("Données réelles chargées !");
  }catch(error){
-  status("Erreur de chargement : "+error.message);
+  status("Erreur : "+error.message);
  }finally{
   $("load").disabled=false;
  }
 }
 
-$("load").addEventListener("click",loadRealMatch);
+$("load").addEventListener("click",loadMatch);
 
-$("team").addEventListener("change",filterPasses);
+$("team").addEventListener("change",()=>{
+ updateStats();
+ applyFilters();
+});
+
+$("type").addEventListener("change",applyFilters);
 
 $("previous").addEventListener("click",()=>{
- if(current>0){
-  current--;
-  showAction();
- }
+ if(current>0){current--;show()}
 });
 
 $("next").addEventListener("click",()=>{
- if(current<passes.length-1){
-  current++;
-  showAction();
- }
+ if(current<filtered.length-1){current++;show()}
 });
 
 $("match").addEventListener("change",()=>{
- loadedMatch=null;
- passes=[];
+ events=[];
+ filtered=[];
+ loadedId=null;
  $("action").replaceChildren();
- $("info").textContent=
-  "Clique sur Charger les vraies actions.";
  $("matchTitle").textContent="Terrain d'analyse";
- $("passCount").textContent="0";
- $("index").textContent="0";
- $("total").textContent="0";
+ $("info").textContent="Clique sur Charger les actions réelles.";
+ $("counter").textContent="Action 0 / 0";
+ $("passes").textContent="0";
+ $("shots").textContent="0";
+ $("goals").textContent="0";
  $("previous").disabled=true;
  $("next").disabled=true;
- $("team").replaceChildren(
-  new Option("Toutes les équipes","all")
- );
+ $("team").replaceChildren(new Option("Les deux équipes","all"));
+ status("Match sélectionné. Charge les actions.");
 });
 
 loadMatches();
