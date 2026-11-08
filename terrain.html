@@ -3,22 +3,22 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PITCH'AURA | Duel tactique</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#08130e;color:#fff;font-family:Arial,sans-serif}
-header{background:#102219;border-bottom:1px solid #29523b;padding:20px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+body{margin:0;background:#08130e;color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;background:#102219;border-bottom:1px solid #29523b;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
 .logo{font-size:25px;font-weight:900}
 .logo span{color:#38e888}
 a{color:#38e888;text-decoration:none}
-main{max-width:1100px;margin:auto;padding:32px 16px 70px}
-h1{font-size:clamp(28px,5vw,42px)}
+main{max-width:1100px;margin:auto;padding:30px 16px 70px}
+h1{font-size:clamp(27px,5vw,42px)}
 p{color:#b5cbbd;line-height:1.6}
 .panel{background:#10231a;border:1px solid #2b5039;border-radius:16px;padding:20px}
-.controls{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
 .field{flex:1 1 180px}
-.field label{display:block;font-size:13px;color:#b5cbbd;margin-bottom:7px}
+label{display:block;color:#b5cbbd;font-size:13px;margin-bottom:7px}
 select,button{background:#1b3b29;color:white;border:1px solid #427d54;border-radius:9px;padding:12px;font-size:14px}
 select{width:100%}
 button{cursor:pointer}
@@ -26,9 +26,9 @@ button:hover{background:#28563b}
 button:disabled{opacity:.5;cursor:not-allowed}
 .primary{background:#38e888;color:#062011;font-weight:bold}
 .primary:hover{background:#62f4a2}
-.teams{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 0;font-weight:bold}
+.teams{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0;font-weight:bold}
 .team-a{color:#38e888}
-.team-b{color:#fff}
+.team-b{color:#fff;text-align:right}
 .pitch{position:relative;width:100%;aspect-ratio:1.65;background:repeating-linear-gradient(90deg,#16643d 0%,#16643d 12.5%,#1b7046 12.5%,#1b7046 25%);border:3px solid #d5f2dc;border-radius:8px;overflow:hidden;touch-action:none}
 .midline{position:absolute;left:50%;height:100%;border-left:2px solid #ffffff88}
 .circle{position:absolute;width:20%;aspect-ratio:1;border:2px solid #ffffff88;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
@@ -44,596 +44,599 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .player.moving{box-shadow:0 0 15px #ffe36a}
 .ball{position:absolute;transform:translate(-50%,-50%);font-size:clamp(13px,2vw,20px);z-index:6;pointer-events:none}
 .arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
-.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .description{margin-top:18px;padding:16px;background:#163a26;border:1px solid #36794a;border-radius:12px;color:#d7f9e2;line-height:1.6}
 .legend{display:flex;gap:20px;flex-wrap:wrap;margin:15px 0;color:#b5cbbd;font-size:13px}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px}
 .dot.a{background:#38e888}
-.dot.b{background:white}
+.dot.b{background:#fff}
 @media(max-width:600px){header{justify-content:center}.panel{padding:11px}.player{font-size:9px}.teams{font-size:13px}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">PITCH'<span>AURA</span></div>
-  <a href="/">← Retour à l'accueil</a>
+<div class="logo">PITCH'<span>AURA</span></div>
+<a href="/">← Retour à l'accueil</a>
 </header>
 
 <main>
 <h1>⚽ Duel tactique</h1>
-<p>Compare deux équipes, choisis leurs formations et regarde leurs mouvements tactiques sur le même terrain.</p>
+<p>Compare deux clubs, découvre leurs formations et visualise leurs mouvements tactiques sur le terrain.</p>
 
 <section class="panel">
 
 <div class="controls">
-  <div class="field">
-    <label for="clubA">Équipe verte</label>
-    <select id="clubA"></select>
-  </div>
-  <div class="field">
-    <label for="clubB">Équipe blanche</label>
-    <select id="clubB"></select>
-  </div>
+<div class="field">
+<label for="clubA">Équipe verte</label>
+<select id="clubA"></select>
+</div>
+<div class="field">
+<label for="clubB">Équipe blanche</label>
+<select id="clubB"></select>
+</div>
 </div>
 
 <div class="controls">
-  <div class="field">
-    <label for="formationA">Formation verte</label>
-    <select id="formationA">
-      <option value="433">4-3-3</option>
-      <option value="4231">4-2-3-1</option>
-      <option value="352">3-5-2</option>
-      <option value="442">4-4-2</option>
-      <option value="343">3-4-3</option>
-    </select>
-  </div>
-  <div class="field">
-    <label for="formationB">Formation blanche</label>
-    <select id="formationB">
-      <option value="433">4-3-3</option>
-      <option value="4231">4-2-3-1</option>
-      <option value="352">3-5-2</option>
-      <option value="442">4-4-2</option>
-      <option value="343">3-4-3</option>
-    </select>
-  </div>
+<div class="field">
+<label for="formationA">Formation verte</label>
+<select id="formationA">
+<option value="433">4-3-3</option>
+<option value="4231">4-2-3-1</option>
+<option value="352">3-5-2</option>
+<option value="442">4-4-2</option>
+<option value="343">3-4-3</option>
+</select>
+</div>
+<div class="field">
+<label for="formationB">Formation blanche</label>
+<select id="formationB">
+<option value="433">4-3-3</option>
+<option value="4231">4-2-3-1</option>
+<option value="352">3-5-2</option>
+<option value="442">4-4-2</option>
+<option value="343">3-4-3</option>
+</select>
+</div>
 </div>
 
 <div class="controls">
-  <div class="field">
-    <label for="movement">Mouvement tactique</label>
-    <select id="movement">
-      <option value="pressing">Pressing contre relance</option>
-      <option value="counter">Contre-attaque</option>
-      <option value="overlap">Dédoublement</option>
-      <option value="compact">Bloc défensif compact</option>
-      <option value="passing">Circuit de passes</option>
-    </select>
-  </div>
-  <div class="field">
-    <label for="speed">Vitesse</label>
-    <select id="speed">
-      <option value="0.5">Lente</option>
-      <option value="1" selected>Normale</option>
-      <option value="1.5">Rapide</option>
-    </select>
-  </div>
+<div class="field">
+<label for="movement">Mouvement tactique</label>
+<select id="movement">
+<option value="pressing">Pressing contre relance</option>
+<option value="counter">Contre-attaque</option>
+<option value="overlap">Dédoublement</option>
+<option value="compact">Bloc défensif compact</option>
+<option value="passing">Circuit de passes</option>
+</select>
+</div>
+<div class="field">
+<label for="speed">Vitesse</label>
+<select id="speed">
+<option value="0.5">Lente</option>
+<option value="1" selected>Normale</option>
+<option value="1.5">Rapide</option>
+</select>
+</div>
 </div>
 
 <div class="teams">
-  <span class="team-a" id="nameA">Équipe verte</span>
-  <span>VS</span>
-  <span class="team-b" id="nameB">Équipe blanche</span>
+<span class="team-a" id="nameA">Équipe verte</span>
+<span>VS</span>
+<span class="team-b" id="nameB">Équipe blanche</span>
 </div>
 
 <div class="pitch" id="pitch">
-  <div class="midline"></div>
-  <div class="circle"></div>
-  <div class="area left"></div>
-  <div class="area right"></div>
-  <div class="goal-area left"></div>
-  <div class="goal-area right"></div>
-  <svg class="arrows" id="arrows" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <defs>
-      <marker id="arrowhead" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto">
-        <path d="M0 0 L4 2 L0 4 Z" fill="#ffe36a"></path>
-      </marker>
-    </defs>
-  </svg>
+<div class="midline"></div>
+<div class="circle"></div>
+<div class="area left"></div>
+<div class="area right"></div>
+<div class="goal-area left"></div>
+<div class="goal-area right"></div>
+<svg class="arrows" id="arrows" viewBox="0 0 100 100" preserveAspectRatio="none">
+<defs>
+<marker id="arrowhead" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto">
+<path d="M0 0 L4 2 L0 4 Z" fill="#ffe36a"/>
+</marker>
+</defs>
+</svg>
 </div>
 
 <div class="legend">
-  <span><span class="dot a"></span>Équipe verte : attaque vers la droite</span>
-  <span><span class="dot b"></span>Équipe blanche : attaque vers la gauche</span>
+<span><span class="dot a"></span>Équipe verte : attaque vers la droite</span>
+<span><span class="dot b"></span>Équipe blanche : attaque vers la gauche</span>
 </div>
 
 <div class="buttons">
-  <button class="primary" id="play">▶️ Lecture</button>
-  <button id="pause" disabled>⏸️ Pause</button>
-  <button id="restart">↺ Recommencer</button>
-  <button id="reset">Réinitialiser</button>
+<button class="primary" id="play">▶️ Lecture</button>
+<button id="pause" disabled>⏸️ Pause</button>
+<button id="restart">↺ Recommencer</button>
+<button id="reset">Réinitialiser</button>
 </div>
 
 <div class="description" id="description">
-  Choisis un mouvement puis clique sur Lecture.
+Choisis un mouvement puis clique sur Lecture.
 </div>
 
-<p>💡 Tu peux déplacer les 22 joueurs à la souris ou au doigt lorsque l'animation est arrêtée. Les mouvements sont des simulations pédagogiques, pas des séquences réelles de matchs.</p>
+<p>💡 Déplace les joueurs à la souris ou au doigt lorsque l'animation est arrêtée. Les mouvements sont des simulations tactiques illustratives, pas des données de matchs réels.</p>
 
 </section>
 </main>
 
 <script>
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-const pitch = $("pitch");
-const arrows = $("arrows");
-const clubA = $("clubA");
-const clubB = $("clubB");
-const formationA = $("formationA");
-const formationB = $("formationB");
-const movement = $("movement");
-const speed = $("speed");
-const play = $("play");
-const pause = $("pause");
-const restart = $("restart");
-const reset = $("reset");
-const description = $("description");
+const pitch=$("pitch");
+const arrows=$("arrows");
+const clubA=$("clubA");
+const clubB=$("clubB");
+const formationA=$("formationA");
+const formationB=$("formationB");
+const movement=$("movement");
+const speed=$("speed");
+const play=$("play");
+const pause=$("pause");
+const restart=$("restart");
+const reset=$("reset");
+const description=$("description");
 
-const formations = {
-  "433":[
-    [7,50],
-    [25,14],[25,38],[25,62],[25,86],
-    [43,25],[43,50],[43,75],
-    [66,17],[71,50],[66,83]
-  ],
-  "4231":[
-    [7,50],
-    [25,14],[25,38],[25,62],[25,86],
-    [40,35],[40,65],
-    [59,18],[59,50],[59,82],
-    [72,50]
-  ],
-  "352":[
-    [7,50],
-    [25,25],[25,50],[25,75],
-    [40,12],[40,35],[40,65],[40,88],
-    [56,50],
-    [71,35],[71,65]
-  ],
-  "442":[
-    [7,50],
-    [25,14],[25,38],[25,62],[25,86],
-    [49,14],[49,38],[49,62],[49,86],
-    [70,35],[70,65]
-  ],
-  "343":[
-    [7,50],
-    [25,25],[25,50],[25,75],
-    [47,14],[47,38],[47,62],[47,86],
-    [69,20],[72,50],[69,80]
-  ]
+const formations={
+"433":[[7,50],[25,14],[25,38],[25,62],[25,86],[43,25],[43,50],[43,75],[66,17],[71,50],[66,83]],
+"4231":[[7,50],[25,14],[25,38],[25,62],[25,86],[40,35],[40,65],[59,18],[59,50],[59,82],[72,50]],
+"352":[[7,50],[25,25],[25,50],[25,75],[40,12],[40,35],[40,65],[40,88],[56,50],[71,35],[71,65]],
+"442":[[7,50],[25,14],[25,38],[25,62],[25,86],[49,14],[49,38],[49,62],[49,86],[70,35],[70,65]],
+"343":[[7,50],[25,25],[25,50],[25,75],[47,14],[47,38],[47,62],[47,86],[69,20],[72,50],[69,80]]
 };
 
-const explanations = {
-  pressing:"L'équipe verte avance collectivement pour presser la relance blanche. Les défenseurs blancs cherchent des solutions de passe.",
-  counter:"L'équipe verte se projette rapidement vers l'avant pendant que l'équipe blanche recule pour protéger son but.",
-  overlap:"Un joueur vert déborde sur le côté pendant que les défenseurs blancs coulissent pour fermer l'espace.",
-  compact:"L'équipe blanche resserre ses lignes et réduit les espaces entre ses joueurs pendant que les Verts font circuler le ballon.",
-  passing:"Les joueurs verts combinent avec plusieurs passes pendant que les Blancs se déplacent pour fermer les lignes de passe."
+const explanations={
+pressing:"L'équipe verte presse la relance blanche. Les deux équipes ajustent leurs positions.",
+counter:"L'équipe verte attaque rapidement pendant que les défenseurs blancs reculent.",
+overlap:"Un joueur vert déborde sur le côté tandis que les Blancs coulissent.",
+compact:"L'équipe blanche resserre ses lignes pour réduire les espaces.",
+passing:"Les Verts combinent avec plusieurs passes pendant que les Blancs ferment les espaces."
 };
 
-let players = [];
-let ball;
-let scene = null;
-let progress = 0;
-let running = false;
-let frame = null;
-let lastTime = null;
+let players=[];
+let ball=null;
+let scene=null;
+let progress=0;
+let running=false;
+let frame=null;
+let lastTime=null;
 
-const duration = 5000;
+const duration=5000;
 
-function clamp(v,min,max) {
-  return Math.max(min,Math.min(max,v));
+function clamp(v,min,max){
+return Math.max(min,Math.min(max,v));
 }
 
-function lerp(a,b,t) {
-  return a+(b-a)*t;
+function lerp(a,b,t){
+return a+(b-a)*t;
 }
 
-function setPosition(player,x,y) {
-  player.x = clamp(x,3,97);
-  player.y = clamp(y,5,95);
-  player.el.style.left = player.x+"%";
-  player.el.style.top = player.y+"%";
+function setPosition(player,x,y){
+player.x=clamp(x,3,97);
+player.y=clamp(y,5,95);
+player.el.style.left=player.x+"%";
+player.el.style.top=player.y+"%";
 }
 
-function setBall(x,y) {
-  if (!ball) return;
-  ball.style.left = clamp(x,2,98)+"%";
-  ball.style.top = clamp(y,3,97)+"%";
+function setBall(x,y){
+if(!ball)return;
+ball.style.left=clamp(x,2,98)+"%";
+ball.style.top=clamp(y,3,97)+"%";
 }
 
-function makePlayer(team,index,position) {
-  const el = document.createElement("div");
-  el.className = "player "+team;
-  el.textContent = index+1;
+function makePlayer(team,index,position){
+const el=document.createElement("div");
+el.className="player "+team;
+el.textContent=index+1;
 
-  const player = {
-    team,index,el,x:position[0],y:position[1]
-  };
+const player={
+team,index,el,
+x:position[0],
+y:position[1]
+};
 
-  setPosition(player,player.x,player.y);
+setPosition(player,player.x,player.y);
 
-  el.addEventListener("pointerdown",e=>{
-    if (running) return;
-    e.preventDefault();
-    el.setPointerCapture(e.pointerId);
-    el.style.zIndex = "10";
-  });
+el.addEventListener("pointerdown",e=>{
+if(running)return;
+e.preventDefault();
+el.setPointerCapture(e.pointerId);
+el.style.zIndex="10";
+});
 
-  el.addEventListener("pointermove",e=>{
-    if (running || !el.hasPointerCapture(e.pointerId)) return;
-    const rect = pitch.getBoundingClientRect();
-    setPosition(
-      player,
-      (e.clientX-rect.left)/rect.width*100,
-      (e.clientY-rect.top)/rect.height*100
-    );
-  });
+el.addEventListener("pointermove",e=>{
+if(running||!el.hasPointerCapture(e.pointerId))return;
+const rect=pitch.getBoundingClientRect();
+setPosition(
+player,
+(e.clientX-rect.left)/rect.width*100,
+(e.clientY-rect.top)/rect.height*100
+);
+});
 
-  function endDrag() {
-    el.style.zIndex = "3";
-  }
-
-  el.addEventListener("pointerup",endDrag);
-  el.addEventListener("pointercancel",endDrag);
-
-  pitch.appendChild(el);
-  return player;
+function endDrag(){
+el.style.zIndex="3";
 }
 
-function basePositions(form,team) {
-  const source = formations[form] || formations["433"];
-  return source.map(([x,y])=>{
-    if (team==="a") {
-      return [x*0.76,y];
-    }
-    return [100-x*0.76,y];
-  });
+el.addEventListener("pointerup",endDrag);
+el.addEventListener("pointercancel",endDrag);
+
+pitch.appendChild(el);
+return player;
 }
 
-function stop() {
-  running = false;
-  if (frame!==null) cancelAnimationFrame(frame);
-  frame = null;
-  lastTime = null;
-  play.disabled = false;
-  pause.disabled = true;
-  players.forEach(p=>p.el.classList.remove("moving"));
+function basePositions(form,team){
+const source=formations[form]||formations["433"];
+return source.map(([x,y])=>{
+if(team==="a")return[x*0.76,y];
+return[100-x*0.76,y];
+});
 }
 
-function clearArrows() {
-  arrows.querySelectorAll("line").forEach(el=>el.remove());
+function stop(){
+running=false;
+if(frame!==null)cancelAnimationFrame(frame);
+frame=null;
+lastTime=null;
+play.disabled=false;
+pause.disabled=true;
+players.forEach(p=>p.el.classList.remove("moving"));
 }
 
-function drawArrow(x1,y1,x2,y2) {
-  const line = document.createElementNS(
-    "http://www.w3.org/2000/svg","line"
-  );
-  line.setAttribute("x1",x1);
-  line.setAttribute("y1",y1);
-  line.setAttribute("x2",x2);
-  line.setAttribute("y2",y2);
-  line.setAttribute("stroke","#ffe36a");
-  line.setAttribute("stroke-width","0.6");
-  line.setAttribute("stroke-dasharray","2 1");
-  line.setAttribute("marker-end","url(#arrowhead)");
-  arrows.appendChild(line);
+function clearArrows(){
+arrows.querySelectorAll("line").forEach(el=>el.remove());
 }
 
-function setup() {
-  stop();
-  progress = 0;
-  scene = null;
-  clearArrows();
-
-  pitch.querySelectorAll(".player,.ball")
-    .forEach(el=>el.remove());
-
-  players = [];
-
-  basePositions(formationA.value,"a")
-    .forEach((pos,i)=>players.push(makePlayer("a",i,pos)));
-
-  basePositions(formationB.value,"b")
-    .forEach((pos,i)=>players.push(makePlayer("b",i,pos)));
-
-  ball = document.createElement("div");
-  ball.className = "ball";
-  ball.textContent = "⚽";
-  pitch.appendChild(ball);
-  setBall(48,50);
-
-  description.textContent = explanations[movement.value];
+function drawArrow(x1,y1,x2,y2){
+const line=document.createElementNS(
+"http://www.w3.org/2000/svg","line"
+);
+line.setAttribute("x1",x1);
+line.setAttribute("y1",y1);
+line.setAttribute("x2",x2);
+line.setAttribute("y2",y2);
+line.setAttribute("stroke","#ffe36a");
+line.setAttribute("stroke-width","0.6");
+line.setAttribute("stroke-dasharray","2 1");
+line.setAttribute("marker-end","url(#arrowhead)");
+arrows.appendChild(line);
 }
 
-function createScene() {
-  const start = players.map(p=>[p.x,p.y]);
-  const end = start.map(p=>[...p]);
-  let ballPath = [[0,[48,50]],[1,[48,50]]];
+function setup(){
+stop();
+progress=0;
+scene=null;
+clearArrows();
 
-  const type = movement.value;
+pitch.querySelectorAll(".player,.ball")
+.forEach(el=>el.remove());
 
-  if (type==="pressing") {
-    [5,6,7,8,9,10].forEach(i=>{
-      end[i][0] = clamp(start[i][0]+15,3,97);
-    });
+players=[];
 
-    [12,13,14,15,16,17,18].forEach(i=>{
-      end[i][0] = clamp(start[i][0]-5,3,97);
-    });
+basePositions(formationA.value,"a")
+.forEach((pos,i)=>{
+players.push(makePlayer("a",i,pos));
+});
 
-    ballPath = [
-      [0,start[11]],
-      [0.45,start[13]],
-      [1,end[17]]
-    ];
-  }
+basePositions(formationB.value,"b")
+.forEach((pos,i)=>{
+players.push(makePlayer("b",i,pos));
+});
 
-  if (type==="counter") {
-    [5,6,7,8,9,10].forEach(i=>{
-      end[i][0] = clamp(start[i][0]+18,3,97);
-    });
+ball=document.createElement("div");
+ball.className="ball";
+ball.textContent="⚽";
+pitch.appendChild(ball);
+setBall(48,50);
 
-    [12,13,14,15,16,17,18,19,20,21].forEach(i=>{
-      end[i][0] = clamp(start[i][0]+10,3,97);
-    });
-
-    ballPath = [
-      [0,start[6]],
-      [0.45,end[8]],
-      [1,end[9]]
-    ];
-  }
-
-  if (type==="overlap") {
-    end[4][0] = clamp(start[4][0]+35,3,97);
-    end[4][1] = clamp(start[4][1]-6,5,95);
-
-    end[8][0] = clamp(start[8][0]-6,3,97);
-    end[15][0] = clamp(start[15][0]-10,3,97);
-    end[15][1] = clamp(start[15][1]-5,5,95);
-
-    ballPath = [
-      [0,start[8]],
-      [0.65,start[8]],
-      [1,end[4]]
-    ];
-  }
-
-  if (type==="compact") {
-    for(let i=11;i<22;i++){
-      end[i][1] = 50+(start[i][1]-50)*0.65;
-      end[i][0] = clamp(
-        50+(start[i][0]-50)*0.8,3,97
-      );
-    }
-
-    ballPath = [
-      [0,start[5]],
-      [0.5,start[6]],
-      [1,start[7]]
-    ];
-  }
-
-  if (type==="passing") {
-    [5,6,7,8,9,10].forEach(i=>{
-      end[i][0] = clamp(start[i][0]+5,3,97);
-    });
-
-    [16,17,18,19,20].forEach(i=>{
-      end[i][0] = clamp(start[i][0]-4,3,97);
-    });
-
-    ballPath = [
-      [0,start[1]],
-      [0.3,start[5]],
-      [0.65,start[6]],
-      [1,end[9]]
-    ];
-  }
-
-  end.forEach((pos,i)=>{
-    const from = start[i];
-    if (
-      Math.abs(pos[0]-from[0])>2 ||
-      Math.abs(pos[1]-from[1])>2
-    ) {
-      drawArrow(from[0],from[1],pos[0],pos[1]);
-    }
-  });
-
-  return {start,end,ballPath};
+description.textContent=explanations[movement.value];
 }
 
-function ballAt(path,t) {
-  for(let i=0;i<path.length-1;i++){
-    const [t1,p1] = path[i];
-    const [t2,p2] = path[i+1];
+function createScene(){
+const start=players.map(p=>[p.x,p.y]);
+const end=start.map(p=>[...p]);
+let ballPath=[[0,[48,50]],[1,[48,50]]];
 
-    if(t<=t2){
-      const fraction = t2===t1?1:(t-t1)/(t2-t1);
-      return [
-        lerp(p1[0],p2[0],fraction),
-        lerp(p1[1],p2[1],fraction)
-      ];
-    }
-  }
-  return path[path.length-1][1];
+const type=movement.value;
+
+if(type==="pressing"){
+[5,6,7,8,9,10].forEach(i=>{
+end[i][0]=clamp(start[i][0]+15,3,97);
+});
+[12,13,14,15,16,17,18].forEach(i=>{
+end[i][0]=clamp(start[i][0]-5,3,97);
+});
+ballPath=[
+[0,start[11]],
+[0.45,start[13]],
+[1,end[17]]
+];
 }
 
-function render(t) {
-  if(!scene) return;
-
-  players.forEach((player,i)=>{
-    const from = scene.start[i];
-    const to = scene.end[i];
-
-    setPosition(
-      player,
-      lerp(from[0],to[0],t),
-      lerp(from[1],to[1],t)
-    );
-
-    if(
-      Math.abs(from[0]-to[0])>2 ||
-      Math.abs(from[1]-to[1])>2
-    ){
-      player.el.classList.add("moving");
-    }
-  });
-
-  const pos = ballAt(scene.ballPath,t);
-  setBall(pos[0],pos[1]);
+if(type==="counter"){
+[5,6,7,8,9,10].forEach(i=>{
+end[i][0]=clamp(start[i][0]+18,3,97);
+});
+[12,13,14,15,16,17,18,19,20,21].forEach(i=>{
+end[i][0]=clamp(start[i][0]+10,3,97);
+});
+ballPath=[
+[0,start[6]],
+[0.45,end[8]],
+[1,end[9]]
+];
 }
 
-function tick(time) {
-  if(!running) return;
-
-  if(lastTime===null) lastTime=time;
-
-  const delta = time-lastTime;
-  lastTime=time;
-
-  progress += delta*Number(speed.value)/duration;
-  progress = Math.min(1,progress);
-
-  render(progress);
-
-  if(progress>=1){
-    stop();
-    description.textContent =
-      "✅ Mouvement terminé. "+explanations[movement.value];
-    return;
-  }
-
-  frame = requestAnimationFrame(tick);
+if(type==="overlap"){
+end[4][0]=clamp(start[4][0]+35,3,97);
+end[4][1]=clamp(start[4][1]-6,5,95);
+end[8][0]=clamp(start[8][0]-6,3,97);
+end[15][0]=clamp(start[15][0]-10,3,97);
+end[15][1]=clamp(start[15][1]-5,5,95);
+ballPath=[
+[0,start[8]],
+[0.65,start[8]],
+[1,end[4]]
+];
 }
 
-function startAnimation() {
-  if(running) return;
-
-  if(progress>=1) {
-    restartAnimation();
-  }
-
-  if(!scene) {
-    clearArrows();
-    scene = createScene();
-    render(0);
-  }
-
-  running = true;
-  lastTime = null;
-  play.disabled = true;
-  pause.disabled = false;
-
-  description.textContent =
-    "▶️ "+explanations[movement.value];
-
-  frame = requestAnimationFrame(tick);
+if(type==="compact"){
+for(let i=11;i<22;i++){
+end[i][1]=50+(start[i][1]-50)*0.65;
+end[i][0]=clamp(
+50+(start[i][0]-50)*0.8,3,97
+);
+}
+ballPath=[
+[0,start[5]],
+[0.5,start[6]],
+[1,start[7]]
+];
 }
 
-function pauseAnimation() {
-  if(!running) return;
-  stop();
-  description.textContent =
-    "⏸️ En pause. Clique sur Lecture pour continuer.";
+if(type==="passing"){
+[5,6,7,8,9,10].forEach(i=>{
+end[i][0]=clamp(start[i][0]+5,3,97);
+});
+[16,17,18,19,20].forEach(i=>{
+end[i][0]=clamp(start[i][0]-4,3,97);
+});
+ballPath=[
+[0,start[1]],
+[0.3,start[5]],
+[0.65,start[6]],
+[1,end[9]]
+];
 }
 
-function restartAnimation() {
-  stop();
+end.forEach((pos,i)=>{
+const from=start[i];
+if(
+Math.abs(pos[0]-from[0])>2||
+Math.abs(pos[1]-from[1])>2
+){
+drawArrow(from[0],from[1],pos[0],pos[1]);
+}
+});
 
-  if(scene){
-    players.forEach((player,i)=>{
-      const pos = scene.start[i];
-      setPosition(player,pos[0],pos[1]);
-    });
-  }
-
-  progress = 0;
-  scene = null;
-  clearArrows();
-  setBall(48,50);
-  description.textContent =
-    "↺ Prêt. "+explanations[movement.value];
+return{start,end,ballPath};
 }
 
-async function loadClubs() {
-  try {
-    const response = await fetch("/api/teams");
-    if(!response.ok) throw new Error("API indisponible");
+function ballAt(path,t){
+for(let i=0;i<path.length-1;i++){
+const[t1,p1]=path[i];
+const[t2,p2]=path[i+1];
 
-    const data = await response.json();
-    const teams = Array.isArray(data.equipes)
-      ? data.equipes : [];
-
-    if(!teams.length) throw new Error("Aucun club");
-
-    [clubA,clubB].forEach(select=>{
-      select.replaceChildren();
-      teams.forEach(team=>{
-        const option = document.createElement("option");
-        option.value = team.id;
-        option.textContent = team.nom;
-        option.dataset.formation = team.systeme || "";
-        select.appendChild(option);
-      });
-    });
-
-    clubA.value = teams.find(t=>t.id==="psg")?.id
-      || teams[0].id;
-
-    clubB.value = teams.find(t=>t.id==="inter")?.id
-      || teams.find(t=>t.id!==clubA.value)?.id
-      || teams[0].id;
-
-    updateClubs();
-  } catch(error) {
-    [clubA,clubB].forEach((select,i)=>{
-      const option = document.createElement("option");
-      option.value = i===0?"a":"b";
-      option.textContent =
-        i===0?"Équipe verte":"Équipe blanche";
-      select.replaceChildren(option);
-    });
-    updateNames();
-  }
+if(t<=t2){
+const fraction=t2===t1?1:(t-t1)/(t2-t1);
+return[
+lerp(p1[0],p2[0],fraction),
+lerp(p1[1],p2[1],fraction)
+];
+}
+}
+return path[path.length-1][1];
 }
 
-function formationCode(value) {
-  const code = String(value).replace(/[^0-9]/g,"");
-  return formations[code] ? code : "433";
+function render(t){
+if(!scene)return;
+
+players.forEach((player,i)=>{
+const from=scene.start[i];
+const to=scene.end[i];
+
+setPosition(
+player,
+lerp(from[0],to[0],t),
+lerp(from[1],to[1],t)
+);
+
+if(
+Math.abs(from[0]-to[0])>2||
+Math.abs(from[1]-to[1])>2
+){
+player.el.classList.add("moving");
+}
+});
+
+const pos=ballAt(scene.ballPath,t);
+setBall(pos[0],pos[1]);
 }
 
-function updateNames() {
-  $("nameA").textContent =
-    clubA.selectedOptions[0]?.textContent || "Équipe verte";
-  $("nameB").textContent =
-    clubB.selectedOptions[0]?.textContent || "Équipe blanche";
+function tick(time){
+if(!running)return;
+if(lastTime===null)lastTime=time;
+
+const delta=time-lastTime;
+lastTime=time;
+
+progress+=delta*Number(speed.value)/duration;
+progress=Math.min(1,progress);
+
+render(progress);
+
+if(progress>=1){
+stop();
+description.textContent=
+"✅ Mouvement terminé. "+explanations[movement.value];
+return;
 }
 
-function updateClubs() {
-  const a = clubA.selectedOptions[0];
-  const b = clubB.selectedOptions[0];
+frame=requestAnimationFrame(tick);
+}
 
-  formationA.value = formationCode(a?.dataset.formation);
-  formationB.value = formationCode(b?.dataset.formation);
+function startAnimation(){
+if(running)return;
 
-  updateNames();
-  setup();
+if(progress>=1){
+restartAnimation();
+}
+
+if(!scene){
+clearArrows();
+scene=createScene();
+render(0);
+}
+
+running=true;
+lastTime=null;
+play.disabled=true;
+pause.disabled=false;
+
+description.textContent=
+"▶️ "+explanations[movement.value];
+
+frame=requestAnimationFrame(tick);
+}
+
+function pauseAnimation(){
+if(!running)return;
+stop();
+description.textContent=
+"⏸️ En pause. Clique sur Lecture pour continuer.";
+}
+
+function restartAnimation(){
+stop();
+
+if(scene){
+players.forEach((player,i)=>{
+const pos=scene.start[i];
+setPosition(player,pos[0],pos[1]);
+});
+}
+
+progress=0;
+scene=null;
+clearArrows();
+setBall(48,50);
+description.textContent=
+"↺ Prêt. "+explanations[movement.value];
+}
+
+/* ===== V7.3 : CONNEXION AVEC L'ANALYSEUR ===== */
+
+const params=new URLSearchParams(window.location.search);
+const clubDepuisAnalyseA=params.get("a");
+const clubDepuisAnalyseB=params.get("b");
+
+function formationCode(value){
+const code=String(value||"").replace(/[^0-9]/g,"");
+return formations[code]?code:"433";
+}
+
+function updateNames(){
+$("nameA").textContent=
+clubA.selectedOptions[0]?.textContent||"Équipe verte";
+
+$("nameB").textContent=
+clubB.selectedOptions[0]?.textContent||"Équipe blanche";
+}
+
+function updateClubs(){
+const a=clubA.selectedOptions[0];
+const b=clubB.selectedOptions[0];
+
+formationA.value=formationCode(a?.dataset.formation);
+formationB.value=formationCode(b?.dataset.formation);
+
+updateNames();
+setup();
+}
+
+async function loadClubs(){
+try{
+const response=await fetch("/api/teams");
+if(!response.ok)throw new Error("API indisponible");
+
+const data=await response.json();
+const teams=Array.isArray(data.equipes)?data.equipes:[];
+
+if(!teams.length)throw new Error("Aucun club");
+
+[clubA,clubB].forEach(select=>{
+select.replaceChildren();
+
+teams.forEach(team=>{
+const option=document.createElement("option");
+option.value=team.id;
+option.textContent=team.nom;
+option.dataset.formation=team.systeme||"";
+select.appendChild(option);
+});
+});
+
+/* Club A : priorité au lien du comparateur */
+const equipeParDefautA=
+teams.find(t=>t.id==="psg")?.id||teams[0].id;
+
+clubA.value=
+teams.some(t=>t.id===clubDepuisAnalyseA)
+?clubDepuisAnalyseA
+:equipeParDefautA;
+
+/* Club B : priorité au lien du comparateur */
+const equipeParDefautB=
+teams.find(t=>t.id==="inter")?.id||
+teams.find(t=>t.id!==clubA.value)?.id||
+teams[0].id;
+
+clubB.value=
+teams.some(t=>t.id===clubDepuisAnalyseB)
+?clubDepuisAnalyseB
+:equipeParDefautB;
+
+/* Éviter deux fois le même club */
+if(clubA.value===clubB.value){
+const autre=teams.find(t=>t.id!==clubA.value);
+if(autre)clubB.value=autre.id;
+}
+
+updateClubs();
+
+if(clubDepuisAnalyseA||clubDepuisAnalyseB){
+description.textContent=
+"⚽ Duel chargé depuis l'analyseur ! "+
+"Choisis un mouvement puis clique sur Lecture.";
+}
+
+}catch(error){
+[clubA,clubB].forEach((select,i)=>{
+const option=document.createElement("option");
+option.value=i===0?"a":"b";
+option.textContent=
+i===0?"Équipe verte":"Équipe blanche";
+select.replaceChildren(option);
+});
+updateNames();
+description.textContent=
+"Les clubs n'ont pas pu être chargés. "+
+"Le terrain reste utilisable.";
+}
 }
 
 clubA.addEventListener("change",updateClubs);
@@ -652,6 +655,5 @@ reset.addEventListener("click",setup);
 setup();
 loadClubs();
 </script>
-
 </body>
 </html>
