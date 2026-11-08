@@ -5,104 +5,246 @@ const equipes = require("./equipes.json");
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
-function trouverEquipe(texte) {
-  const recherche = texte.toLowerCase();
+const alias = {
+  psg: [
+    "psg",
+    "paris saint-germain",
+    "paris sg"
+  ],
+  "real-madrid": [
+    "real madrid",
+    "réal madrid"
+  ],
+  barcelone: [
+    "barcelone",
+    "barcelona",
+    "barça",
+    "barca"
+  ],
+  "manchester-city": [
+    "manchester city",
+    "man city"
+  ]
+};
 
-  const alias = {
-    psg: ["psg", "paris saint-germain", "paris sg"],
-    "real-madrid": ["real madrid", "réal madrid"],
-    barcelone: ["barcelone", "barcelona", "barça", "barca"],
-    "manchester-city": ["manchester city", "man city"]
-  };
+function normaliser(texte) {
+  return texte
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function trouverEquipes(question) {
+  const texte = normaliser(question);
 
   return Object.keys(alias).filter(id =>
-    alias[id].some(nom => recherche.includes(nom))
+    alias[id].some(nom => {
+      const recherche = normaliser(nom);
+      const debut = texte.indexOf(recherche);
+
+      if (debut === -1) return false;
+
+      const avant = texte[debut - 1] || " ";
+      const apres = texte[debut + recherche.length] || " ";
+
+      return !/[a-z0-9]/.test(avant) &&
+             !/[a-z0-9]/.test(apres);
+    })
   );
+}
+
+function liste(elements) {
+  return elements
+    .map(element => "• " + element)
+    .join("\n");
 }
 
 function ficheEquipe(id) {
   const equipe = equipes[id];
 
   return `
-${equipe.nom.toUpperCase()}
+━━━━━━━━━━━━━━━━━━━━
 
-Système de référence : ${equipe.systeme}
-Style : ${equipe.style}
+⚽ ${equipe.nom.toUpperCase()}
 
-POINTS FORTS
-${equipe.pointsForts.map(p => "• " + p).join("\n")}
+🏆 Championnat : ${equipe.championnat}
+📋 Système de référence : ${equipe.systeme}
 
-POINTS À SURVEILLER
-${equipe.pointsFaibles.map(p => "• " + p).join("\n")}
+STYLE DE JEU
+${equipe.style}
+
+✅ POINTS FORTS
+${liste(equipe.pointsForts)}
+
+⚠️ POINTS FAIBLES
+${liste(equipe.pointsFaibles)}
+`;
+}
+
+function comparerEquipes(idA, idB) {
+  const a = equipes[idA];
+  const b = equipes[idB];
+
+  return `
+━━━━━━━━━━━━━━━━━━━━
+
+⚔️ COMPARAISON TACTIQUE
+
+${a.nom}
+Système : ${a.systeme}
+Style : ${a.style}
+
+${b.nom}
+Système : ${b.systeme}
+Style : ${b.style}
+
+━━━━━━━━━━━━━━━━━━━━
+
+🎯 DUELS TACTIQUES
+
+ATTAQUE DE ${a.nom.toUpperCase()}
+
+Points forts :
+${liste(a.pointsForts)}
+
+Faiblesses adverses à étudier :
+${liste(b.pointsFaibles)}
+
+ATTAQUE DE ${b.nom.toUpperCase()}
+
+Points forts :
+${liste(b.pointsForts)}
+
+Faiblesses adverses à étudier :
+${liste(a.pointsFaibles)}
+
+━━━━━━━━━━━━━━━━━━━━
+
+🧠 CLÉS DU MATCH
+
+1. Observer quelle équipe contrôle
+   le milieu de terrain.
+
+2. Étudier l'efficacité du pressing
+   et la sortie de balle adverse.
+
+3. Identifier les espaces disponibles
+   lors des transitions.
+
+4. Analyser les déplacements des
+   joueurs entre les lignes.
+
+5. Observer les ajustements tactiques
+   pendant la rencontre.
+
+━━━━━━━━━━━━━━━━━━━━
+
+🔮 SCÉNARIOS POSSIBLES
+
+• Une équipe pourrait imposer
+  son rythme grâce à la possession.
+
+• Les contre-attaques pourraient
+  créer des occasions importantes.
+
+• Les changements de système
+  pourraient modifier l'équilibre.
+
+• Le pressing pourrait provoquer
+  des récupérations dangereuses.
 `;
 }
 
 app.post("/api/analyze", (req, res) => {
-  const question = req.body?.question;
+  try {
+    const question = req.body?.question;
 
-  if (typeof question !== "string" ||
-      !question.trim()) {
-    return res.status(400).json({
-      erreur: "Écris une demande d'analyse."
+    if (
+      typeof question !== "string" ||
+      !question.trim()
+    ) {
+      return res.status(400).json({
+        erreur: "Écris une demande d'analyse."
+      });
+    }
+
+    if (question.length > 1000) {
+      return res.status(400).json({
+        erreur: "Ta demande est trop longue."
+      });
+    }
+
+    const ids = trouverEquipes(question);
+
+    if (ids.length === 0) {
+      return res.json({
+        analysis: `
+PITCH'AURA
+
+Cette équipe n'est pas encore
+disponible dans notre base.
+
+Équipes actuellement disponibles :
+
+• Paris Saint-Germain
+• Real Madrid
+• FC Barcelone
+• Manchester City
+
+De nouveaux clubs seront ajoutés.
+`
+      });
+    }
+
+    let analyse = `
+PITCH'AURA V2.1
+ANALYSE TACTIQUE
+`;
+
+    ids.forEach(id => {
+      analyse += ficheEquipe(id);
     });
-  }
 
-  const ids = trouverEquipe(question);
-
-  if (ids.length === 0) {
-    return res.json({
-      analysis:
-        "Cette équipe n'est pas encore dans la base PITCH'AURA. " +
-        "Essaie PSG, Real Madrid, Barcelone ou Manchester City."
-    });
-  }
-
-  let analyse = "PITCH'AURA — ANALYSE TACTIQUE\n";
-  analyse += "\n" + ids.map(ficheEquipe).join("\n");
-
-  if (ids.length >= 2) {
-    const a = equipes[ids[0]];
-    const b = equipes[ids[1]];
+    if (ids.length >= 2) {
+      analyse += comparerEquipes(ids[0], ids[1]);
+    }
 
     analyse += `
-COMPARAISON TACTIQUE
 
-${a.nom} : ${a.style}
-${b.nom} : ${b.style}
+━━━━━━━━━━━━━━━━━━━━
 
-DUEL À OBSERVER
+ℹ️ INFORMATIONS
 
-${a.nom} devra chercher à exploiter les
-espaces laissés par ${b.nom}.
+Cette analyse est construite à partir
+de profils tactiques simplifiés.
 
-${b.nom} devra adapter son organisation
-pour limiter les points forts adverses.
+Les formations et les styles peuvent
+évoluer selon les matchs.
 
-SCÉNARIOS POSSIBLES
-
-• Une équipe pourrait dominer la possession.
-• Les transitions pourraient être décisives.
-• Le pressing pourrait influencer le rythme.
+Il ne s'agit pas d'une analyse en
+temps réel ni d'une prédiction fiable.
 `;
+
+    res.json({ analysis: analyse });
+
+  } catch (error) {
+    console.error("Erreur PITCH'AURA :", error);
+
+    res.status(500).json({
+      erreur: "Impossible de générer l'analyse."
+    });
   }
-
-  analyse += `
-
-Note : cette analyse repose sur des profils
-tactiques simplifiés, pas sur des données
-en direct ni sur un match précisément identifié.
-`;
-
-  res.json({ analysis: analyse });
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(
+    path.join(__dirname, "index.html")
+  );
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("PITCH'AURA V2 démarré !");
+  console.log("PITCH'AURA V2.1 démarré !");
 });
