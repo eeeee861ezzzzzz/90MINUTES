@@ -1,0 +1,25 @@
+
+backend:
+  name: github
+  repo: TON_PSEUDO_GITHUB/90minutes
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+locale: "fr"
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    folder: "articles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Catégorie", name: "category", widget: "select", options: ["Actualités", "Analyses", "Comptes rendus"] }
+      - { label: "Championnat", name: "league", widget: "select", options: ["Ligue 1", "Premier League", "LaLiga", "Serie A", "Bundesliga", "Autre"] }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Résumé", name: "description", widget: "text" }
+      - { label: "Contenu de l'article", name: "body", widget: "markdown" }
