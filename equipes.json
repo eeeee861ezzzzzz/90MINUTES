@@ -5,46 +5,51 @@
     "championnat": "Ligue 1",
     "entraineur": "Luis Enrique",
     "systeme": "4-3-3",
-    "style": "Possession et pressing haut",
+    "style": "Possession, pressing haut et permutations offensives",
     "pointsForts": [
       "Circulation rapide du ballon",
-      "Pressing collectif",
+      "Pressing collectif après la perte",
       "Mobilité des attaquants",
       "Création d'espaces entre les lignes"
     ],
     "pointsFaibles": [
       "Espaces possibles derrière la défense haute",
-      "Vulnérabilité potentielle aux contre-attaques"
+      "Risques face aux transitions rapides",
+      "Exposition lorsque le pressing est contourné"
     ]
   },
   "real-madrid": {
     "nom": "Real Madrid",
     "championnat": "LaLiga",
     "systeme": "4-3-3",
-    "style": "Transitions rapides et attaques verticales",
+    "style": "Attaques verticales et transitions rapides",
     "pointsForts": [
       "Vitesse dans les transitions",
-      "Qualité technique",
-      "Capacité à exploiter les espaces"
+      "Qualité technique individuelle",
+      "Capacité à exploiter la profondeur",
+      "Danger sur les attaques rapides"
     ],
     "pointsFaibles": [
       "Espaces possibles entre les lignes",
-      "Difficultés potentielles face au pressing"
+      "Difficultés potentielles face au pressing",
+      "Déséquilibres possibles lors des montées offensives"
     ]
   },
   "barcelone": {
     "nom": "FC Barcelone",
     "championnat": "LaLiga",
     "systeme": "4-3-3",
-    "style": "Possession et pressing agressif",
+    "style": "Jeu de position, possession et pressing agressif",
     "pointsForts": [
-      "Jeu de position",
+      "Occupation des espaces",
       "Pressing après perte",
-      "Combinaisons dans les petits espaces"
+      "Combinaisons dans les petits espaces",
+      "Création de supériorités au milieu"
     ],
     "pointsFaibles": [
       "Espaces derrière la ligne défensive",
-      "Risques face aux attaques en profondeur"
+      "Risques face aux attaques en profondeur",
+      "Exposition si le pressing est éliminé"
     ]
   },
   "manchester-city": {
@@ -54,12 +59,286 @@
     "style": "Possession et construction patiente",
     "pointsForts": [
       "Maîtrise du ballon",
-      "Occupation des espaces",
-      "Construction depuis la défense"
+      "Occupation rationnelle des espaces",
+      "Construction depuis la défense",
+      "Création de décalages"
     ],
     "pointsFaibles": [
       "Risques lors des pertes de balle",
-      "Espaces possibles face aux transitions rapides"
+      "Espaces possibles face aux transitions",
+      "Difficultés potentielles face aux blocs compacts"
+    ]
+  },
+  "arsenal": {
+    "nom": "Arsenal",
+    "championnat": "Premier League",
+    "systeme": "4-3-3",
+    "style": "Jeu de position et pressing structuré",
+    "pointsForts": [
+      "Organisation collective",
+      "Danger sur coups de pied arrêtés",
+      "Pressing coordonné",
+      "Combinaisons sur les côtés"
+    ],
+    "pointsFaibles": [
+      "Difficultés possibles face aux blocs très bas",
+      "Espaces lors des projections offensives",
+      "Dépendance possible à la qualité de la dernière passe"
+    ]
+  },
+  "liverpool": {
+    "nom": "Liverpool",
+    "championnat": "Premier League",
+    "systeme": "4-3-3",
+    "style": "Pressing, intensité et transitions offensives",
+    "pointsForts": [
+      "Récupération rapide du ballon",
+      "Attaques verticales",
+      "Utilisation de la largeur",
+      "Intensité collective"
+    ],
+    "pointsFaibles": [
+      "Espaces derrière les latéraux",
+      "Exposition aux contre-attaques",
+      "Risques si le premier pressing est contourné"
+    ]
+  },
+  "chelsea": {
+    "nom": "Chelsea",
+    "championnat": "Premier League",
+    "systeme": "4-2-3-1",
+    "style": "Construction au sol et mobilité offensive",
+    "pointsForts": [
+      "Qualité technique",
+      "Mobilité entre les lignes",
+      "Combinaisons offensives",
+      "Capacité à accélérer le jeu"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles en transition",
+      "Déséquilibres lors des montées",
+      "Difficultés possibles face à un pressing intense"
+    ]
+  },
+  "manchester-united": {
+    "nom": "Manchester United",
+    "championnat": "Premier League",
+    "systeme": "3-4-2-1",
+    "style": "Transitions rapides et utilisation des couloirs",
+    "pointsForts": [
+      "Projection rapide vers l'avant",
+      "Utilisation des pistons",
+      "Danger dans les espaces",
+      "Possibilités de contre-attaque"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles derrière les pistons",
+      "Difficultés face aux attaques placées",
+      "Exposition aux changements d'aile"
+    ]
+  },
+  "tottenham": {
+    "nom": "Tottenham",
+    "championnat": "Premier League",
+    "systeme": "4-3-3",
+    "style": "Jeu offensif et pressing haut",
+    "pointsForts": [
+      "Volonté de jouer vers l'avant",
+      "Pressing dans le camp adverse",
+      "Utilisation de la profondeur",
+      "Mobilité offensive"
+    ],
+    "pointsFaibles": [
+      "Espaces derrière la défense",
+      "Risques face aux contre-attaques",
+      "Exposition lors des pertes de balle"
+    ]
+  },
+  "bayern": {
+    "nom": "Bayern Munich",
+    "championnat": "Bundesliga",
+    "systeme": "4-2-3-1",
+    "style": "Domination territoriale et pressing offensif",
+    "pointsForts": [
+      "Puissance offensive",
+      "Occupation du camp adverse",
+      "Pressing haut",
+      "Création d'occasions dans la surface"
+    ],
+    "pointsFaibles": [
+      "Espaces derrière la défense haute",
+      "Risques lors des pertes de balle",
+      "Exposition aux attaques rapides"
+    ]
+  },
+  "dortmund": {
+    "nom": "Borussia Dortmund",
+    "championnat": "Bundesliga",
+    "systeme": "3-4-2-1",
+    "style": "Transitions et attaques rapides",
+    "pointsForts": [
+      "Projection vers l'avant",
+      "Utilisation des couloirs",
+      "Danger dans la profondeur",
+      "Accélérations offensives"
+    ],
+    "pointsFaibles": [
+      "Espaces sur les côtés",
+      "Difficultés possibles dans la maîtrise du rythme",
+      "Risques en transition défensive"
+    ]
+  },
+  "inter": {
+    "nom": "Inter Milan",
+    "championnat": "Serie A",
+    "systeme": "3-5-2",
+    "style": "Organisation collective et utilisation des pistons",
+    "pointsForts": [
+      "Structure défensive",
+      "Combinaisons entre les attaquants",
+      "Utilisation des couloirs",
+      "Transitions organisées"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles derrière les pistons",
+      "Difficultés face aux changements de côté rapides",
+      "Risques si le milieu est dominé"
+    ]
+  },
+  "ac-milan": {
+    "nom": "AC Milan",
+    "championnat": "Serie A",
+    "systeme": "4-3-3",
+    "style": "Transitions offensives et jeu sur les côtés",
+    "pointsForts": [
+      "Accélérations sur les ailes",
+      "Capacité à attaquer la profondeur",
+      "Qualité dans les duels",
+      "Transitions rapides"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles entre les lignes",
+      "Risques lors des pertes de balle",
+      "Difficultés potentielles face aux blocs regroupés"
+    ]
+  },
+  "juventus": {
+    "nom": "Juventus",
+    "championnat": "Serie A",
+    "systeme": "4-2-3-1",
+    "style": "Organisation défensive et attaques structurées",
+    "pointsForts": [
+      "Discipline collective",
+      "Gestion des espaces",
+      "Transitions offensives",
+      "Organisation sans ballon"
+    ],
+    "pointsFaibles": [
+      "Difficultés possibles face au pressing",
+      "Création offensive parfois complexe face aux blocs bas",
+      "Espaces lors des projections"
+    ]
+  },
+  "naples": {
+    "nom": "Naples",
+    "championnat": "Serie A",
+    "systeme": "4-3-3",
+    "style": "Circulation rapide et jeu combiné",
+    "pointsForts": [
+      "Combinaisons dans les petits espaces",
+      "Mobilité offensive",
+      "Progression par le milieu",
+      "Utilisation des côtés"
+    ],
+    "pointsFaibles": [
+      "Risques face aux transitions",
+      "Espaces lors des montées offensives",
+      "Difficultés potentielles face aux blocs compacts"
+    ]
+  },
+  "marseille": {
+    "nom": "Olympique de Marseille",
+    "championnat": "Ligue 1",
+    "systeme": "4-2-3-1",
+    "style": "Construction au sol et attaques placées",
+    "pointsForts": [
+      "Recherche de la possession",
+      "Combinaisons offensives",
+      "Utilisation de la largeur",
+      "Progression collective"
+    ],
+    "pointsFaibles": [
+      "Risques lors des relances sous pression",
+      "Espaces possibles en transition",
+      "Difficultés face au pressing adverse"
+    ]
+  },
+  "monaco": {
+    "nom": "AS Monaco",
+    "championnat": "Ligue 1",
+    "systeme": "4-2-3-1",
+    "style": "Jeu dynamique et transitions offensives",
+    "pointsForts": [
+      "Vitesse des attaques",
+      "Mobilité offensive",
+      "Utilisation de la profondeur",
+      "Pressing dans le camp adverse"
+    ],
+    "pointsFaibles": [
+      "Espaces derrière la défense",
+      "Risques lors des transitions défensives",
+      "Difficultés possibles face aux équipes compactes"
+    ]
+  },
+  "lyon": {
+    "nom": "Olympique Lyonnais",
+    "championnat": "Ligue 1",
+    "systeme": "4-3-3",
+    "style": "Construction au sol et jeu offensif",
+    "pointsForts": [
+      "Combinaisons techniques",
+      "Utilisation des couloirs",
+      "Projection vers l'avant",
+      "Mobilité entre les lignes"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles en transition",
+      "Difficultés face à un pressing coordonné",
+      "Risques lors des pertes de balle"
+    ]
+  },
+  "atletico": {
+    "nom": "Atlético de Madrid",
+    "championnat": "LaLiga",
+    "systeme": "4-4-2",
+    "style": "Bloc compact et transitions rapides",
+    "pointsForts": [
+      "Organisation défensive",
+      "Solidarité collective",
+      "Transitions offensives",
+      "Gestion des espaces"
+    ],
+    "pointsFaibles": [
+      "Difficultés possibles face aux blocs très bas",
+      "Création d'occasions parfois limitée",
+      "Espaces possibles lors des sorties de pressing"
+    ]
+  },
+  "leverkusen": {
+    "nom": "Bayer Leverkusen",
+    "championnat": "Bundesliga",
+    "systeme": "3-4-2-1",
+    "style": "Jeu de position et utilisation des pistons",
+    "pointsForts": [
+      "Occupation des espaces",
+      "Combinaisons entre les lignes",
+      "Utilisation de la largeur",
+      "Mobilité offensive"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles derrière les pistons",
+      "Exposition lors des pertes de balle",
+      "Risques face aux transitions rapides"
     ]
   }
 }
