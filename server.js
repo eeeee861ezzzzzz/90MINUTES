@@ -8,6 +8,20 @@ const app = express();
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
+/* NOMS DES ENTRAÎNEURS
+   À compléter ou actualiser dans equipes.json.
+   Un nom non renseigné apparaît "À confirmer".
+*/
+
+const entraineurs = {
+  "psg": "Luis Enrique",
+  "barcelone": "Hansi Flick",
+  "arsenal": "Mikel Arteta",
+  "bayern": "Vincent Kompany",
+  "atletico": "Diego Simeone",
+  "lyon": "Paulo Fonseca"
+};
+
 const alias = {
   psg: ["psg", "paris", "paris saint germain"],
   "real-madrid": ["real madrid", "real"],
@@ -16,7 +30,9 @@ const alias = {
   arsenal: ["arsenal"],
   liverpool: ["liverpool"],
   chelsea: ["chelsea"],
-  "manchester-united": ["man utd", "man united", "manchester united"],
+  "manchester-united": [
+    "man utd", "man united", "manchester united"
+  ],
   tottenham: ["tottenham", "spurs"],
   bayern: ["bayern", "bayern munich"],
   dortmund: ["dortmund", "bvb"],
@@ -30,6 +46,8 @@ const alias = {
   atletico: ["atletico", "atletico madrid"],
   leverkusen: ["leverkusen", "bayer leverkusen"]
 };
+
+/* RECONNAISSANCE DES CLUBS */
 
 function normaliser(texte) {
   return String(texte)
@@ -76,7 +94,10 @@ function trouverEquipes(question) {
     }
 
     if (premierePosition !== Infinity) {
-      trouves.push({ id, position: premierePosition });
+      trouves.push({
+        id,
+        position: premierePosition
+      });
     }
   }
 
@@ -85,10 +106,20 @@ function trouverEquipes(question) {
     .map(item => item.id);
 }
 
+/* INFORMATIONS DES CLUBS */
+
 function liste(elements) {
   return (elements || [])
     .map(item => "• " + item)
     .join("\n");
+}
+
+function nomEntraineur(id) {
+  const equipe = equipes[id];
+
+  return equipe.entraineur ||
+    entraineurs[id] ||
+    "À confirmer";
 }
 
 function fiche(id) {
@@ -100,6 +131,7 @@ function fiche(id) {
 
 🏆 Championnat : ${e.championnat}
 📋 Formation : ${e.systeme}
+👔 Entraîneur : ${nomEntraineur(id)}
 
 STYLE DE JEU
 ${e.style}
@@ -111,6 +143,8 @@ POINTS FAIBLES
 ${liste(e.pointsFaibles)}
 `;
 }
+
+/* COMPARAISON TACTIQUE */
 
 function comparaison(idA, idB) {
   const a = equipes[idA];
@@ -154,6 +188,8 @@ SCÉNARIOS POSSIBLES
 `;
 }
 
+/* GÉNÉRATION DES ANALYSES */
+
 function genererAnalyse(ids) {
   let texte = "PITCH'AURA — ANALYSE TACTIQUE\n";
 
@@ -173,20 +209,25 @@ Analyse indicative basée sur des profils
 tactiques simplifiés.
 
 Les systèmes peuvent évoluer selon les matchs.
+Les entraîneurs peuvent également changer.
+
 Il ne s'agit pas de données en direct.
 `;
 
   return texte;
 }
 
-// Liste automatique des équipes pour le site
+/* API : LISTE DES ÉQUIPES */
+
 app.get("/api/teams", (req, res) => {
-  const clubs = Object.entries(equipes).map(([id, e]) => ({
-    id,
-    nom: e.nom,
-    championnat: e.championnat,
-    systeme: e.systeme
-  }));
+  const clubs = Object.entries(equipes)
+    .map(([id, e]) => ({
+      id,
+      nom: e.nom,
+      championnat: e.championnat,
+      systeme: e.systeme,
+      entraineur: nomEntraineur(id)
+    }));
 
   res.json({
     total: clubs.length,
@@ -194,20 +235,26 @@ app.get("/api/teams", (req, res) => {
   });
 });
 
-// Analyse par texte ou par sélection
+/* API : ANALYSE */
+
 app.post("/api/analyze", (req, res) => {
   try {
     let ids = [];
 
     if (Array.isArray(req.body?.teams)) {
       ids = req.body.teams.filter(
-        id => typeof id === "string" &&
-        Object.prototype.hasOwnProperty.call(equipes, id)
+        id =>
+          typeof id === "string" &&
+          Object.prototype.hasOwnProperty.call(
+            equipes, id
+          )
       );
 
       ids = [...new Set(ids)].slice(0, 2);
 
-    } else if (typeof req.body?.question === "string") {
+    } else if (
+      typeof req.body?.question === "string"
+    ) {
       const question = req.body.question.trim();
 
       if (!question || question.length > 1000) {
@@ -238,16 +285,23 @@ app.post("/api/analyze", (req, res) => {
 
   } catch (erreur) {
     console.error(erreur);
+
     res.status(500).json({
       erreur: "Erreur lors de l'analyse."
     });
   }
 });
 
+/* PAGE D'ACCUEIL */
+
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(
+    path.join(__dirname, "index.html")
+  );
 });
 
+/* DÉMARRAGE DU SERVEUR */
+
 app.listen(process.env.PORT || 3000, () => {
-  console.log("PITCH'AURA V6.2 est en ligne !");
+  console.log("PITCH'AURA est en ligne !");
 });
