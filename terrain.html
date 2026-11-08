@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PITCH'AURA | Tableau tactique</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #08130e;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 22px 6%;
+  background: #102219;
+  border-bottom: 1px solid #29523b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.logo {
+  font-size: 24px;
+  font-weight: 900;
+}
+.logo span { color: #38e888; }
+a { color: #38e888; text-decoration: none; }
+main {
+  max-width: 1050px;
+  margin: auto;
+  padding: 35px 18px;
+}
+h1 { font-size: clamp(28px,5vw,44px); }
+p { color: #b5cbbd; line-height: 1.6; }
+.panel {
+  background: #10231a;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid #2b5039;
+}
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+select, button {
+  background: #1b3b29;
+  border: 1px solid #427d54;
+  color: white;
+  border-radius: 9px;
+  padding: 12px 15px;
+  font-size: 15px;
+}
+button { cursor: pointer; }
+button:hover { background: #28563b; }
+.pitch {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.45;
+  background: repeating-linear-gradient(
+    90deg,
+    #16643d 0%,
+    #16643d 12.5%,
+    #1b7046 12.5%,
+    #1b7046 25%
+  );
+  border: 3px solid #d5f2dc;
+  border-radius: 8px;
+  overflow: hidden;
+  touch-action: none;
+}
+.midline {
+  position: absolute;
+  left: 50%;
+  height: 100%;
+  border-left: 2px solid #ffffff88;
+}
+.circle {
+  position: absolute;
+  width: 23%;
+  aspect-ratio: 1;
+  border: 2px solid #ffffff88;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.area {
+  position: absolute;
+  top: 27%;
+  width: 15%;
+  height: 46%;
+  border: 2px solid #ffffff88;
+}
+.area.left { left: 0; border-left: 0; }
+.area.right { right: 0; border-right: 0; }
+.player {
+  position: absolute;
+  width: clamp(24px,5vw,42px);
+  height: clamp(24px,5vw,42px);
+  border-radius: 50%;
+  background: #e9fff0;
+  color: #103a23;
+  border: 2px solid #123a23;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 3px 10px #0006;
+  z-index: 2;
+}
+.player:active { cursor: grabbing; }
+.info {
+  margin-top: 20px;
+  color: #b9d4c2;
+  font-size: 14px;
+}
+@media(max-width:600px) {
+  header { justify-content: center; }
+  .panel { padding: 12px; }
+  .player { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">PITCH'<span>AURA</span></div>
+  <a href="/">← Retour à l'accueil</a>
+</header>
+
+<main>
+  <h1>⚽ Tableau tactique</h1>
+  <p>
+    Choisis ton système de jeu et déplace les joueurs
+    pour construire ta propre organisation.
+  </p>
+
+  <section class="panel">
+    <div class="controls">
+      <select id="formation" aria-label="Formation">
+        <option value="433">4-3-3</option>
+        <option value="4231">4-2-3-1</option>
+        <option value="352">3-5-2</option>
+        <option value="442">4-4-2</option>
+        <option value="343">3-4-3</option>
+      </select>
+      <button id="reset">Réinitialiser</button>
+    </div>
+
+    <div class="pitch" id="pitch">
+      <div class="midline"></div>
+      <div class="circle"></div>
+      <div class="area left"></div>
+      <div class="area right"></div>
+    </div>
+
+    <div class="info">
+      💡 Déplace les joueurs avec la souris ou le doigt.
+      Le gardien est le numéro 1.
+    </div>
+  </section>
+</main>
+
+<script>
+const pitch = document.getElementById("pitch");
+const formation = document.getElementById("formation");
+const reset = document.getElementById("reset");
+
+const formations = {
+  "433": [
+    [8,50],
+    [27,15],[27,38],[27,62],[27,85],
+    [51,25],[51,50],[51,75],
+    [80,18],[84,50],[80,82]
+  ],
+  "4231": [
+    [8,50],
+    [27,15],[27,38],[27,62],[27,85],
+    [47,35],[47,65],
+    [67,20],[67,50],[67,80],
+    [86,50]
+  ],
+  "352": [
+    [8,50],
+    [27,25],[27,50],[27,75],
+    [47,12],[47,35],[47,65],[47,88],
+    [66,50],
+    [84,35],[84,65]
+  ],
+  "442": [
+    [8,50],
+    [27,15],[27,38],[27,62],[27,85],
+    [56,15],[56,38],[56,62],[56,85],
+    [83,35],[83,65]
+  ],
+  "343": [
+    [8,50],
+    [27,25],[27,50],[27,75],
+    [53,15],[53,38],[53,62],[53,85],
+    [82,20],[85,50],[82,80]
+  ]
+};
+
+function afficherFormation() {
+  pitch.querySelectorAll(".player").forEach(p => p.remove());
+
+  formations[formation.value].forEach((position, index) => {
+    const joueur = document.createElement("div");
+    joueur.className = "player";
+    joueur.textContent = index + 1;
+    joueur.style.left = position[0] + "%";
+    joueur.style.top = position[1] + "%";
+
+    joueur.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      joueur.setPointerCapture(event.pointerId);
+      joueur.style.zIndex = "5";
+    });
+
+    joueur.addEventListener("pointermove", event => {
+      if (!joueur.hasPointerCapture(event.pointerId)) return;
+
+      const rect = pitch.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width * 100;
+      const y = (event.clientY - rect.top) / rect.height * 100;
+
+      joueur.style.left = Math.max(4, Math.min(96,x)) + "%";
+      joueur.style.top = Math.max(6, Math.min(94,y)) + "%";
+    });
+
+    joueur.addEventListener("pointerup", () => {
+      joueur.style.zIndex = "2";
+    });
+
+    joueur.addEventListener("pointercancel", () => {
+      joueur.style.zIndex = "2";
+    });
+
+    pitch.appendChild(joueur);
+  });
+}
+
+formation.addEventListener("change", afficherFormation);
+reset.addEventListener("click", afficherFormation);
+
+afficherFormation();
+</script>
+</body>
+</html>
