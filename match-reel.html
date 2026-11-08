@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PITCH'AURA | Match réel</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#08130e;color:white;
+ font-family:Arial,sans-serif
+}
+header{
+ padding:22px 6%;background:#102219;
+ display:flex;justify-content:space-between;
+ gap:15px;flex-wrap:wrap
+}
+.logo{font-size:24px;font-weight:bold}
+.logo span{color:#38e888}
+a{color:#38e888;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:30px 16px}
+h1{font-size:32px}
+p{color:#b5cbbd;line-height:1.6}
+.panel{
+ background:#10231a;border:1px solid #2b5039;
+ padding:20px;border-radius:15px;margin:20px 0
+}
+label{display:block;margin:12px 0 7px;color:#b5cbbd}
+select,button{
+ padding:12px;background:#1b3b29;color:white;
+ border:1px solid #427d54;border-radius:8px;
+ font-size:14px
+}
+select{width:100%}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:#38e888;color:#062011;font-weight:bold}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.pitch{
+ position:relative;width:100%;aspect-ratio:1.5;
+ background:repeating-linear-gradient(
+ 90deg,#16643d 0%,#16643d 12.5%,
+ #1b7046 12.5%,#1b7046 25%);
+ border:3px solid #d5f2dc;border-radius:8px;
+ overflow:hidden
+}
+.pitch svg{width:100%;height:100%;display:block}
+.pitch line,.pitch rect,.pitch circle{
+ vector-effect:non-scaling-stroke
+}
+.info{
+ padding:16px;background:#163a26;
+ border-radius:10px;margin-top:15px;
+ line-height:1.7
+}
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:12px;margin-top:18px
+}
+.stat{
+ background:#0b1c13;border:1px solid #345640;
+ padding:15px;border-radius:10px;text-align:center
+}
+.stat strong{display:block;font-size:22px;color:#38e888}
+.stat small{color:#b5cbbd}
+#status{color:#38e888}
+@media(max-width:600px){
+ .stats{grid-template-columns:1fr}
+ h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">PITCH'<span>AURA</span></div>
+ <a href="/">← Accueil</a>
+</header>
+
+<main>
+<h1>⚽ MATCH LAB — Matchs réels</h1>
+<p>
+ Explore les passes réellement enregistrées pendant
+ un match, avec leurs positions et leurs joueurs.
+</p>
+
+<div class="panel">
+ <h2>Choisir un match</h2>
+ <p>Première compétition disponible : Euro 2024.</p>
+
+ <label for="match">Match</label>
+ <select id="match">
+  <option>Chargement des matchs...</option>
+ </select>
+
+ <label for="team">Équipe à analyser</label>
+ <select id="team">
+  <option>Toutes les équipes</option>
+ </select>
+
+ <button class="primary" id="load" disabled>
+  Charger les vraies actions
+ </button>
+
+ <p id="status">Connexion aux données...</p>
+</div>
+
+<div class="panel">
+ <h2 id="matchTitle">Terrain d'analyse</h2>
+
+ <div class="pitch">
+  <svg id="field" viewBox="0 0 120 80"
+       preserveAspectRatio="none">
+   <rect x="0" y="0" width="120" height="80"
+    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+   <line x1="60" y1="0" x2="60" y2="80"
+    stroke="#ffffffaa" stroke-width=".5"/>
+   <circle cx="60" cy="40" r="10"
+    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+   <rect x="0" y="18" width="18" height="44"
+    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+   <rect x="102" y="18" width="18" height="44"
+    fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+
+   <g id="action"></g>
+  </svg>
+ </div>
+
+ <div class="controls">
+  <button id="previous" disabled>← Action précédente</button>
+  <button class="primary" id="next" disabled>
+   Action suivante →
+  </button>
+ </div>
+
+ <div class="info" id="info">
+  Charge un match pour afficher ses vraies passes.
+ </div>
+
+ <div class="stats">
+  <div class="stat">
+   <strong id="passCount">0</strong>
+   <small>Passes enregistrées</small>
+  </div>
+  <div class="stat">
+   <strong id="index">0</strong>
+   <small>Action affichée</small>
+  </div>
+  <div class="stat">
+   <strong id="total">0</strong>
+   <small>Actions disponibles</small>
+  </div>
+ </div>
+</div>
+
+<p>
+ Source : StatsBomb Open Data.
+ Les données représentent des événements enregistrés,
+ pas une reconstitution vidéo complète.
+</p>
+<p>
+ <a href="https://github.com/hudl/open-data"
+ target="_blank" rel="noopener noreferrer">
+ Consulter la source des données StatsBomb
+ </a>
+</p>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+const BASE=
+ "https://raw.githubusercontent.com/hudl/open-data/master/data";
+
+const COMPETITION=55;
+const SEASON=282;
+
+let matches=[];
+let passes=[];
+let current=0;
+let loadedMatch=null;
+
+function status(message){
+ $("status").textContent=message;
+}
+
+async function getJSON(url){
+ const response=await fetch(url);
+ if(!response.ok){
+  throw new Error("Erreur HTTP "+response.status);
+ }
+ return response.json();
+}
+
+function matchName(m){
+ return m.home_team.home_team_name+
+ " "+m.home_score+" - "+m.away_score+
+ " "+m.away_team.away_team_name;
+}
+
+async function loadMatches(){
+ try{
+  const url=BASE+"/matches/"+
+   COMPETITION+"/"+SEASON+".json";
+
+  matches=await getJSON(url);
+
+  matches.sort((a,b)=>
+   String(b.match_date).localeCompare(
+    String(a.match_date)
+   )
+  );
+
+  const select=$("match");
+  select.replaceChildren();
+
+  matches.forEach(m=>{
+   const option=document.createElement("option");
+   option.value=m.match_id;
+   option.textContent=m.match_date+" | "+matchName(m);
+   select.appendChild(option);
+  });
+
+  $("load").disabled=false;
+  status(matches.length+" matchs disponibles.");
+
+ }catch(error){
+  status("Impossible de récupérer les matchs : "+
+   error.message);
+ }
+}
+
+function makeSVG(tag,attributes){
+ const element=document.createElementNS(
+  "http://www.w3.org/2000/svg",tag
+ );
+ Object.entries(attributes).forEach(([key,value])=>{
+  element.setAttribute(key,value);
+ });
+ return element;
+}
+
+function validPoint(point){
+ return Array.isArray(point)&&
+  point.length>=2&&
+  Number.isFinite(point[0])&&
+  Number.isFinite(point[1]);
+}
+
+function drawPass(pass){
+ const group=$("action");
+ group.replaceChildren();
+
+ const start=pass.location;
+ const end=pass.pass.end_location;
+
+ if(!validPoint(start)||!validPoint(end))return;
+
+ const line=makeSVG("line",{
+  x1:start[0],y1:start[1],
+  x2:end[0],y2:end[1],
+  stroke:"#ffe36a",
+  "stroke-width":1.2,
+  "stroke-linecap":"round"
+ });
+
+ const origin=makeSVG("circle",{
+  cx:start[0],cy:start[1],r:2,
+  fill:"#38e888",stroke:"#08130e",
+  "stroke-width":0.5
+ });
+
+ const destination=makeSVG("circle",{
+  cx:end[0],cy:end[1],r:2,
+  fill:"#ffe36a",stroke:"#08130e",
+  "stroke-width":0.5
+ });
+
+ group.append(line,origin,destination);
+
+ const dx=end[0]-start[0];
+ const dy=end[1]-start[1];
+ const angle=Math.atan2(dy,dx);
+ const size=3;
+
+ const arrow=makeSVG("polygon",{
+  points:[
+   [end[0],end[1]],
+   [
+    end[0]-size*Math.cos(angle-.5),
+    end[1]-size*Math.sin(angle-.5)
+   ],
+   [
+    end[0]-size*Math.cos(angle+.5),
+    end[1]-size*Math.sin(angle+.5)
+   ]
+  ].map(p=>p.join(",")).join(" "),
+  fill:"#ffe36a"
+ });
+
+ group.appendChild(arrow);
+}
+
+function showAction(){
+ if(!passes.length){
+  $("action").replaceChildren();
+  $("info").textContent="Aucune passe disponible.";
+  $("index").textContent="0";
+  $("total").textContent="0";
+  $("previous").disabled=true;
+  $("next").disabled=true;
+  return;
+ }
+
+ const pass=passes[current];
+ drawPass(pass);
+
+ const minute=pass.minute;
+ const second=String(pass.second).padStart(2,"0");
+ const player=pass.player?.name||"Joueur inconnu";
+ const team=pass.team?.name||"Équipe inconnue";
+ const receiver=pass.pass?.recipient?.name;
+ const outcome=pass.pass?.outcome?.name;
+
+ const parts=[
+  "Minute "+minute+":"+second,
+  "Équipe : "+team,
+  "Passeur : "+player,
+  "Destinataire : "+(receiver||"Non indiqué"),
+  "Résultat : "+(outcome||"Passe réussie ou sans résultat d'échec")
+ ];
+
+ $("info").replaceChildren();
+
+ parts.forEach(text=>{
+  const div=document.createElement("div");
+  div.textContent=text;
+  $("info").appendChild(div);
+ });
+
+ $("index").textContent=current+1;
+ $("total").textContent=passes.length;
+ $("previous").disabled=current===0;
+ $("next").disabled=current===passes.length-1;
+}
+
+function filterPasses(){
+ if(!loadedMatch)return;
+
+ const selected=$("team").value;
+
+ passes=loadedMatch.events.filter(e=>
+  e.type?.name==="Pass"&&
+  validPoint(e.location)&&
+  validPoint(e.pass?.end_location)&&
+  (selected==="all"||e.team?.name===selected)
+ );
+
+ passes.sort((a,b)=>
+  a.period-b.period||
+  a.minute-b.minute||
+  a.second-b.second||
+  String(a.timestamp||"").localeCompare(
+   String(b.timestamp||"")
+  )
+ );
+
+ current=0;
+ $("passCount").textContent=passes.length;
+ showAction();
+}
+
+async function loadRealMatch(){
+ const id=Number($("match").value);
+ const match=matches.find(m=>m.match_id===id);
+ if(!match)return;
+
+ $("load").disabled=true;
+ $("previous").disabled=true;
+ $("next").disabled=true;
+ status("Chargement des événements réels...");
+
+ try{
+  const events=await getJSON(
+   BASE+"/events/"+id+".json"
+  );
+
+  loadedMatch={match,events};
+
+  $("matchTitle").textContent=matchName(match);
+
+  const teamSelect=$("team");
+  teamSelect.replaceChildren();
+
+  const all=document.createElement("option");
+  all.value="all";
+  all.textContent="Les deux équipes";
+  teamSelect.appendChild(all);
+
+  [
+   match.home_team.home_team_name,
+   match.away_team.away_team_name
+  ].forEach(name=>{
+   const option=document.createElement("option");
+   option.value=name;
+   option.textContent=name;
+   teamSelect.appendChild(option);
+  });
+
+  filterPasses();
+
+  status("Données réelles chargées avec succès.");
+
+ }catch(error){
+  status("Erreur de chargement : "+error.message);
+ }finally{
+  $("load").disabled=false;
+ }
+}
+
+$("load").addEventListener("click",loadRealMatch);
+
+$("team").addEventListener("change",filterPasses);
+
+$("previous").addEventListener("click",()=>{
+ if(current>0){
+  current--;
+  showAction();
+ }
+});
+
+$("next").addEventListener("click",()=>{
+ if(current<passes.length-1){
+  current++;
+  showAction();
+ }
+});
+
+$("match").addEventListener("change",()=>{
+ loadedMatch=null;
+ passes=[];
+ $("action").replaceChildren();
+ $("info").textContent=
+  "Clique sur Charger les vraies actions.";
+ $("matchTitle").textContent="Terrain d'analyse";
+ $("passCount").textContent="0";
+ $("index").textContent="0";
+ $("total").textContent="0";
+ $("previous").disabled=true;
+ $("next").disabled=true;
+ $("team").replaceChildren(
+  new Option("Toutes les équipes","all")
+ );
+});
+
+loadMatches();
+</script>
+</body>
+</html>
