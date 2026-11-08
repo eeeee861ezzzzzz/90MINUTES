@@ -3,6 +3,8 @@ backend:
   name: github
   repo: eeeee861ezzzzzz/90MINUTES
   branch: main
+  base_url: https://nine0minutes-spca.onrender.com
+  auth_endpoint: auth
 
 media_folder: "images"
 public_folder: "/images"
@@ -16,10 +18,42 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Catégorie", name: "category", widget: "select", options: ["Actualités", "Analyses", "Comptes rendus"] }
-      - { label: "Championnat", name: "league", widget: "select", options: ["Ligue 1", "Premier League", "LaLiga", "Serie A", "Bundesliga", "Autre"] }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Résumé", name: "description", widget: "text" }
-      - { label: "Contenu", name: "body", widget: "markdown" }
+      - label: "Titre"
+        name: "title"
+        widget: "string"
+
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+
+      - label: "Catégorie"
+        name: "category"
+        widget: "select"
+        options:
+          - "Actualités"
+          - "Analyses"
+          - "Comptes rendus"
+
+      - label: "Championnat"
+        name: "league"
+        widget: "select"
+        options:
+          - "Ligue 1"
+          - "Premier League"
+          - "LaLiga"
+          - "Serie A"
+          - "Bundesliga"
+          - "Autre"
+
+      - label: "Image"
+        name: "image"
+        widget: "image"
+        required: false
+
+      - label: "Résumé"
+        name: "description"
+        widget: "text"
+
+      - label: "Contenu de l'article"
+        name: "body"
+        widget: "markdown"
