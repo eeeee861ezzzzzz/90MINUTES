@@ -4,113 +4,201 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PITCH'AURA | Tactical Intelligence</title>
+<title>PITCH'AURA | Tactical Intelligence 2.0</title>
 <style>
+:root{
+ --bg:#08130e;
+ --panel:#10231a;
+ --green:#38e888;
+ --border:#2b5039;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#08130e;color:#fff;font-family:Arial,sans-serif}
-header{padding:22px 6%;background:#102219;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
+header{
+ padding:20px 6%;background:#102219;
+ display:flex;justify-content:space-between;
+ align-items:center;gap:12px;flex-wrap:wrap
+}
 .logo{font-size:25px;font-weight:900}
-.logo span{color:#38e888}
-a{color:#38e888;text-decoration:none}
-main{max-width:1100px;margin:auto;padding:30px 16px 70px}
+.logo span{color:var(--green)}
+a{color:var(--green);text-decoration:none}
+main{max-width:1150px;margin:auto;padding:28px 16px 70px}
 h1{font-size:clamp(27px,5vw,40px)}
+h2{font-size:21px}
 p{color:#b8cdbf;line-height:1.6}
-.panel{background:#10231a;border:1px solid #2b5039;border-radius:15px;padding:20px;margin:20px 0}
-label{display:block;margin:14px 0 7px;color:#b8cdbf}
-select,button{padding:13px;border-radius:9px;background:#1b3b29;color:white;border:1px solid #427d54;font-size:14px}
+.panel{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:16px;padding:20px;margin:20px 0
+}
+label{display:block;margin:12px 0 7px;color:#b8cdbf}
+select,button{
+ padding:12px;border-radius:9px;
+ background:#1b3b29;color:white;
+ border:1px solid #427d54;font-size:14px
+}
 select{width:100%}
 button{cursor:pointer}
-button:disabled{opacity:.5}
-.primary{background:#38e888;color:#062011;font-weight:bold;margin-top:16px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--green);color:#062011;font-weight:bold}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.pitch{position:relative;width:100%;aspect-ratio:1.5;background:repeating-linear-gradient(90deg,#16643d 0%,#16643d 12.5%,#1b7046 12.5%,#1b7046 25%);border:2px solid white;border-radius:8px;overflow:hidden}
-.pitch svg{width:100%;height:100%}
-.zone{fill:#38e888}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.stat{padding:17px;background:#0b1c13;border:1px solid #345640;border-radius:10px;text-align:center}
-.stat strong{display:block;font-size:25px;color:#38e888}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.tabs button.active{background:var(--green);color:#062011;font-weight:bold}
+.pitch{
+ width:100%;aspect-ratio:1.5;
+ background:repeating-linear-gradient(
+ 90deg,#16643d 0%,#16643d 12.5%,
+ #1b7046 12.5%,#1b7046 25%);
+ border:2px solid white;border-radius:9px;overflow:hidden
+}
+.pitch svg{display:block;width:100%;height:100%}
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:12px;margin-top:16px
+}
+.stat{
+ background:#0b1c13;border:1px solid #345640;
+ border-radius:10px;padding:16px;text-align:center
+}
+.stat strong{display:block;color:var(--green);font-size:26px}
 .stat small{color:#b8cdbf}
-.report{background:#163a26;border-radius:12px;padding:20px;line-height:1.8}
-#status{color:#38e888}
-@media(max-width:600px){.grid,.stats{grid-template-columns:1fr}}
+.report{
+ background:#163a26;border-radius:12px;
+ padding:18px;line-height:1.8
+}
+.player-list{display:grid;gap:10px}
+.player{
+ display:flex;justify-content:space-between;
+ gap:12px;padding:12px;background:#0b1c13;
+ border:1px solid #345640;border-radius:9px
+}
+.player strong{color:var(--green)}
+#status{color:var(--green)}
+.hidden{display:none}
+@media(max-width:600px){
+ .grid,.stats{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
+
 <header>
 <div class="logo">PITCH'<span>AURA</span></div>
 <a href="/">← Accueil</a>
 </header>
 
 <main>
-<h1>🧠 Tactical Intelligence</h1>
-<p>Découvre les zones utilisées par chaque équipe à partir des événements réellement enregistrés.</p>
+<h1>🧠 Tactical Intelligence 2.0</h1>
+<p>Analyse les zones d'activité et les connexions entre joueurs grâce aux événements réels des matchs.</p>
 
 <section class="panel">
 <h2>Choisir un match</h2>
-<label>Match de l'Euro 2024</label>
-<select id="match"><option>Chargement...</option></select>
 
-<label>Équipe à analyser</label>
-<select id="team"><option>Choisir un match</option></select>
+<label for="match">Match de l'Euro 2024</label>
+<select id="match">
+<option>Chargement...</option>
+</select>
 
-<button class="primary" id="load" disabled>Analyser le match</button>
+<label for="team">Équipe à analyser</label>
+<select id="team">
+<option>Choisir un match</option>
+</select>
+
+<button class="primary" id="load" disabled style="margin-top:16px">
+Analyser le match
+</button>
+
 <p id="status">Connexion aux données...</p>
 </section>
 
 <section class="panel">
-<h2>🗺️ Carte des zones de passes</h2>
-<p>Plus une zone est claire, plus elle contient de passes enregistrées. La carte utilise les positions de départ des passes.</p>
+<h2>Visualisation tactique</h2>
+
+<div class="tabs">
+<button id="zoneTab" class="active">🗺️ Zones de passes</button>
+<button id="networkTab">🔗 Réseau de passes</button>
+</div>
+
+<p id="description">
+Répartition des positions de départ des passes enregistrées.
+</p>
 
 <div class="pitch">
 <svg viewBox="0 0 120 80" preserveAspectRatio="none">
-<rect x="0" y="0" width="120" height="80" fill="none" stroke="#fff" stroke-width=".5"/>
-<line x1="60" y1="0" x2="60" y2="80" stroke="#fff" stroke-width=".5"/>
-<circle cx="60" cy="40" r="10" fill="none" stroke="#fff" stroke-width=".5"/>
-<rect x="0" y="18" width="18" height="44" fill="none" stroke="#fff" stroke-width=".5"/>
-<rect x="102" y="18" width="18" height="44" fill="none" stroke="#fff" stroke-width=".5"/>
-<g id="zones"></g>
+<rect x="0" y="0" width="120" height="80" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<line x1="60" y1="0" x2="60" y2="80" stroke="#ffffffaa" stroke-width=".5"/>
+<circle cx="60" cy="40" r="10" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="0" y="18" width="18" height="44" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="102" y="18" width="18" height="44" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="0" y="30" width="6" height="20" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<rect x="114" y="30" width="6" height="20" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
+<g id="drawing"></g>
 </svg>
 </div>
 
-<p id="orientation">Les coordonnées sont affichées dans le repère des événements StatsBomb.</p>
+<p id="orientation">
+Le terrain utilise les coordonnées des événements StatsBomb.
+</p>
 </section>
 
 <section class="panel">
-<h2>📊 Statistiques tactiques</h2>
+<h2>📊 Statistiques</h2>
 <div class="stats">
-<div class="stat"><strong id="total">0</strong><small>Passes enregistrées</small></div>
-<div class="stat"><strong id="third">0%</strong><small>Passes dans le dernier tiers</small></div>
-<div class="stat"><strong id="side">—</strong><small>Zone latérale dominante</small></div>
+<div class="stat">
+<strong id="total">0</strong>
+<small>Passes enregistrées</small>
+</div>
+<div class="stat">
+<strong id="completed">0%</strong>
+<small>Passes réussies</small>
+</div>
+<div class="stat">
+<strong id="third">0%</strong>
+<small>Passes dans le dernier tiers</small>
+</div>
+</div>
+</section>
+
+<section class="panel">
+<h2>👥 Joueurs les plus actifs</h2>
+<div id="players" class="player-list">
+<p>Charge un match pour découvrir les joueurs.</p>
 </div>
 </section>
 
 <section class="panel">
 <h2>🧠 Rapport tactique automatique</h2>
-<div class="report" id="report">Choisis un match pour générer un rapport basé sur les données.</div>
+<div id="report" class="report">
+Choisis un match pour générer une analyse.
+</div>
 </section>
 
-<p>Source : StatsBomb Open Data. Cette analyse décrit la répartition des passes, sans prétendre mesurer à elle seule la possession, le pressing ou les intentions tactiques.</p>
+<p>
+Source : StatsBomb Open Data. Les réseaux de passes sont construits à partir des passes enregistrées, pas de déplacements simulés.
+</p>
 </main>
 
 <script>
 const $=id=>document.getElementById(id);
 const BASE="https://raw.githubusercontent.com/hudl/open-data/master/data";
+
 let matches=[];
 let events=[];
 let loadedId=null;
-
-async function getJSON(url){
- const response=await fetch(url);
- if(!response.ok)throw new Error("HTTP "+response.status);
- return response.json();
-}
+let mode="zones";
 
 function valid(p){
  return Array.isArray(p)&&p.length>=2&&
  Number.isFinite(p[0])&&Number.isFinite(p[1]);
 }
 
-function name(m){
+async function getJSON(url){
+ const r=await fetch(url);
+ if(!r.ok)throw new Error("HTTP "+r.status);
+ return r.json();
+}
+
+function matchName(m){
  return m.home_team.home_team_name+" "+
  m.home_score+" - "+m.away_score+" "+
  m.away_team.away_team_name;
@@ -124,12 +212,13 @@ async function loadMatches(){
   $("match").replaceChildren();
 
   matches.forEach(m=>{
-   const o=new Option(m.match_date+" | "+name(m),m.match_id);
-   $("match").appendChild(o);
+   $("match").appendChild(
+    new Option(m.match_date+" | "+matchName(m),m.match_id)
+   );
   });
 
-  $("load").disabled=false;
   updateTeams();
+  $("load").disabled=false;
   $("status").textContent=matches.length+" matchs disponibles.";
  }catch(e){
   $("status").textContent="Erreur : "+e.message;
@@ -141,117 +230,262 @@ function updateTeams(){
  $("team").replaceChildren();
  if(!m)return;
 
- $("team").appendChild(new Option(m.home_team.home_team_name,m.home_team.home_team_name));
- $("team").appendChild(new Option(m.away_team.away_team_name,m.away_team.away_team_name));
+ $("team").appendChild(new Option(
+  m.home_team.home_team_name,
+  m.home_team.home_team_name
+ ));
+ $("team").appendChild(new Option(
+  m.away_team.away_team_name,
+  m.away_team.away_team_name
+ ));
 }
 
-function createSVG(tag,attrs){
+function svg(tag,attrs){
  const el=document.createElementNS("http://www.w3.org/2000/svg",tag);
  Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
  return el;
 }
 
-function analyze(){
- const team=$("team").value;
+function addText(group,x,y,text,size=3){
+ const el=svg("text",{
+  x,y,
+  "text-anchor":"middle",
+  "font-size":size,
+  fill:"white",
+  stroke:"#07120c",
+  "stroke-width":.45,
+  "paint-order":"stroke"
+ });
+ el.textContent=text;
+ group.appendChild(el);
+}
 
- const passes=events.filter(e=>
+function selectedPasses(){
+ const team=$("team").value;
+ return events.filter(e=>
   e.type?.name==="Pass"&&
   e.team?.name===team&&
   valid(e.location)
  );
+}
 
- const cells=Array.from({length:12},()=>0);
-
- let attacking=0;
- let left=0;
- let center=0;
- let right=0;
+function drawZones(){
+ const passes=selectedPasses();
+ const cells=Array(12).fill(0);
 
  passes.forEach(e=>{
-  const x=e.location[0];
-  const y=e.location[1];
-
-  // 3 colonnes longitudinales, 4 bandes latérales
+  const x=e.location[0],y=e.location[1];
   const col=Math.min(2,Math.max(0,Math.floor(x/40)));
   const row=Math.min(3,Math.max(0,Math.floor(y/20)));
   cells[col*4+row]++;
-
-  if(x>=80)attacking++;
-
-  if(y<80/3)left++;
-  else if(y<160/3)center++;
-  else right++;
  });
 
  const max=Math.max(1,...cells);
- const group=$("zones");
+ const group=$("drawing");
  group.replaceChildren();
 
  for(let col=0;col<3;col++){
   for(let row=0;row<4;row++){
    const count=cells[col*4+row];
-   const opacity=count===0?0:(.12+.75*count/max);
 
-   const rect=createSVG("rect",{
-    x:col*40,y:row*20,
-    width:40,height:20,
+   group.appendChild(svg("rect",{
+    x:col*40,y:row*20,width:40,height:20,
     fill:"#38e888",
-    opacity:opacity
-   });
+    opacity:count?(.12+.75*count/max):0
+   }));
 
-   const title=createSVG("title",{});
-   title.textContent=count+" passes";
-   rect.appendChild(title);
-   group.appendChild(rect);
-
-   const label=createSVG("text",{
-    x:col*40+20,y:row*20+11,
-    "text-anchor":"middle",
-    "font-size":4,
-    "font-weight":"bold",
-    fill:"white",
-    stroke:"#07120c",
-    "stroke-width":.5,
-    "paint-order":"stroke"
-   });
-
-   label.textContent=count;
-   group.appendChild(label);
+   addText(group,col*40+20,row*20+11,count,4);
   }
  }
 
+ $("description").textContent=
+ "Carte des positions de départ des passes enregistrées.";
+}
+
+function drawNetwork(){
+ const passes=selectedPasses();
+ const players=new Map();
+ const links=new Map();
+
+ function getPlayer(id,name){
+  if(!players.has(id)){
+   players.set(id,{id,name,x:0,y:0,n:0,passes:0});
+  }
+  return players.get(id);
+ }
+
+ passes.forEach(e=>{
+  const fromId=e.player?.id;
+  const toId=e.pass?.recipient?.id;
+  const fromName=e.player?.name;
+  const toName=e.pass?.recipient?.name;
+
+  if(fromId==null||!fromName)return;
+
+  const from=getPlayer(fromId,fromName);
+  from.x+=e.location[0];
+  from.y+=e.location[1];
+  from.n++;
+  from.passes++;
+
+  // Une connexion représente uniquement une passe réussie.
+  if(
+   e.pass?.outcome==null&&
+   toId!=null&&
+   toName&&
+   valid(e.pass?.end_location)
+  ){
+   const to=getPlayer(toId,toName);
+   to.x+=e.pass.end_location[0];
+   to.y+=e.pass.end_location[1];
+   to.n++;
+
+   const key=[fromId,toId].sort((a,b)=>a-b).join("-");
+   links.set(key,(links.get(key)||0)+1);
+  }
+ });
+
+ const group=$("drawing");
+ group.replaceChildren();
+
+ const positions=new Map();
+
+ players.forEach(p=>{
+  if(p.n){
+   positions.set(p.id,{
+    x:p.x/p.n,
+    y:p.y/p.n,
+    name:p.name,
+    passes:p.passes
+   });
+  }
+ });
+
+ const maxLink=Math.max(1,...links.values());
+
+ links.forEach((count,key)=>{
+  const [a,b]=key.split("-").map(Number);
+  const p1=positions.get(a);
+  const p2=positions.get(b);
+  if(!p1||!p2||a===b)return;
+
+  const line=svg("line",{
+   x1:p1.x,y1:p1.y,
+   x2:p2.x,y2:p2.y,
+   stroke:"#ffe36a",
+   "stroke-width":.3+2.3*count/maxLink,
+   opacity:.35+.6*count/maxLink
+  });
+
+  const title=svg("title",{});
+  title.textContent=p1.name+" ↔ "+p2.name+
+   " : "+count+" passes réussies";
+  line.appendChild(title);
+  group.appendChild(line);
+ });
+
+ const maxPasses=Math.max(1,...[...positions.values()].map(p=>p.passes));
+
+ positions.forEach(p=>{
+  const circle=svg("circle",{
+   cx:p.x,cy:p.y,
+   r:2.5+2.2*p.passes/maxPasses,
+   fill:"#38e888",
+   stroke:"#07120c",
+   "stroke-width":.5
+  });
+
+  const title=svg("title",{});
+  title.textContent=p.name+" : "+p.passes+" passes tentées";
+  circle.appendChild(title);
+  group.appendChild(circle);
+
+  const shortName=p.name.split(" ").slice(-1)[0];
+  addText(group,p.x,p.y-5,shortName,2.6);
+ });
+
+ $("description").textContent=
+ "Les points représentent les positions moyennes des événements de passes. "+
+ "Les lignes relient les joueurs ayant échangé des passes réussies. "+
+ "Plus une ligne est épaisse, plus la connexion est fréquente.";
+}
+
+function updateStatsAndReport(){
+ const passes=selectedPasses();
  const total=passes.length;
- const pct=total?Math.round(attacking/total*100):0;
+ const success=passes.filter(e=>e.pass?.outcome==null).length;
+ const finalThird=passes.filter(e=>e.location[0]>=80).length;
 
- const sides=[
-  {name:"Haut de la carte",count:left},
-  {name:"Axe central",count:center},
-  {name:"Bas de la carte",count:right}
- ];
-
- sides.sort((a,b)=>b.count-a.count);
- const dominant=sides[0];
+ const successPct=total?Math.round(success/total*100):0;
+ const thirdPct=total?Math.round(finalThird/total*100):0;
 
  $("total").textContent=total;
- $("third").textContent=pct+"%";
- $("side").textContent=dominant.name;
+ $("completed").textContent=successPct+"%";
+ $("third").textContent=thirdPct+"%";
 
- const report=[
-  "Équipe analysée : "+team+".",
-  total+" passes enregistrées avec une position de départ exploitable.",
-  pct+" % de ces passes commencent dans le dernier tiers du repère StatsBomb.",
-  "La bande la plus utilisée est : "+dominant.name+
-  " ("+dominant.count+" passes).",
-  "Ces résultats décrivent les zones d'activité observées, sans établir à eux seuls la stratégie de l'entraîneur."
+ const counts=new Map();
+
+ passes.forEach(e=>{
+  const id=e.player?.id;
+  if(id==null)return;
+  if(!counts.has(id)){
+   counts.set(id,{name:e.player?.name||"Inconnu",count:0});
+  }
+  counts.get(id).count++;
+ });
+
+ const ranking=[...counts.values()]
+  .sort((a,b)=>b.count-a.count)
+  .slice(0,5);
+
+ $("players").replaceChildren();
+
+ ranking.forEach((p,i)=>{
+  const div=document.createElement("div");
+  div.className="player";
+
+  const name=document.createElement("span");
+  name.textContent=(i+1)+". "+p.name;
+
+  const value=document.createElement("strong");
+  value.textContent=p.count+" passes";
+
+  div.append(name,value);
+  $("players").appendChild(div);
+ });
+
+ const report=$("report");
+ report.replaceChildren();
+
+ const statements=[
+  "Équipe analysée : "+$("team").value+".",
+  total+" passes enregistrées avec une position exploitable.",
+  successPct+" % de ces passes sont réussies selon le résultat enregistré.",
+  thirdPct+" % commencent dans le dernier tiers du repère StatsBomb.",
+  ranking.length?
+   "Joueur ayant tenté le plus de passes : "+
+   ranking[0].name+" ("+ranking[0].count+").":
+   "Aucun joueur disponible.",
+  "Le réseau de passes permet d'identifier les connexions les plus fréquentes, "+
+  "mais ne prouve pas à lui seul une organisation tactique ou une intention de jeu."
  ];
 
- $("report").replaceChildren();
-
- report.forEach(sentence=>{
+ statements.forEach(sentence=>{
   const p=document.createElement("p");
   p.textContent=sentence;
-  $("report").appendChild(p);
+  report.appendChild(p);
  });
+}
+
+function render(){
+ if(!events.length)return;
+ updateStatsAndReport();
+
+ $("zoneTab").classList.toggle("active",mode==="zones");
+ $("networkTab").classList.toggle("active",mode==="network");
+
+ if(mode==="zones")drawZones();
+ else drawNetwork();
 }
 
 async function loadMatch(){
@@ -259,7 +493,7 @@ async function loadMatch(){
  if(!id)return;
 
  $("load").disabled=true;
- $("status").textContent="Analyse en cours...";
+ $("status").textContent="Chargement des données réelles...";
 
  try{
   if(loadedId!==id){
@@ -267,8 +501,8 @@ async function loadMatch(){
    loadedId=id;
   }
 
-  analyze();
-  $("status").textContent="Analyse terminée : données réelles.";
+  render();
+  $("status").textContent="Analyse terminée !";
  }catch(e){
   $("status").textContent="Erreur : "+e.message;
  }finally{
@@ -278,11 +512,22 @@ async function loadMatch(){
 
 $("match").addEventListener("change",()=>{
  updateTeams();
+ events=[];
+ loadedId=null;
+ $("drawing").replaceChildren();
  $("status").textContent="Match sélectionné. Lance l'analyse.";
 });
 
-$("team").addEventListener("change",()=>{
- if(loadedId===Number($("match").value))analyze();
+$("team").addEventListener("change",render);
+
+$("zoneTab").addEventListener("click",()=>{
+ mode="zones";
+ render();
+});
+
+$("networkTab").addEventListener("click",()=>{
+ mode="network";
+ render();
 });
 
 $("load").addEventListener("click",loadMatch);
