@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07130e">
-<meta name="description" content="PITCH'AURA : analyses tactiques et tableau de football interactif.">
 <title>PITCH'AURA | Le football autrement</title>
 
 <style>
@@ -13,195 +12,319 @@
   --bg:#07130e;
   --panel:#10231a;
   --green:#38e888;
-  --text:#f5fff8;
   --muted:#a3b8aa;
   --border:#294a36;
 }
+
 * { box-sizing:border-box; }
+
 html { scroll-behavior:smooth; }
+
 body {
   margin:0;
   background:var(--bg);
-  color:var(--text);
+  color:white;
   font-family:Arial,sans-serif;
 }
+
 header {
-  position:sticky;
-  top:0;
-  z-index:10;
   background:#0b1b13;
   border-bottom:1px solid var(--border);
   padding:20px 6%;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:15px;
   flex-wrap:wrap;
 }
-.logo { font-size:25px; font-weight:900; }
+
+.logo {
+  font-size:25px;
+  font-weight:900;
+}
+
 .green { color:var(--green); }
-nav { display:flex; gap:18px; flex-wrap:wrap; }
+
+nav {
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+}
+
 nav a {
   color:#d2e5d8;
   text-decoration:none;
   font-size:14px;
 }
-nav a:hover,.terrain-link { color:var(--green); }
+
+nav a:hover { color:var(--green); }
+
 main {
-  max-width:1150px;
+  max-width:1100px;
   margin:auto;
-  padding:0 20px 80px;
+  padding:0 20px 70px;
 }
-.hero { padding:75px 0 60px; text-align:center; }
-.eyebrow {
-  display:inline-block;
-  color:var(--green);
-  border:1px solid var(--border);
-  border-radius:30px;
-  padding:9px 17px;
-  font-size:12px;
-  letter-spacing:2px;
+
+.hero {
+  padding:75px 0 50px;
+  text-align:center;
 }
+
 h1 {
-  font-size:clamp(38px,7vw,75px);
-  letter-spacing:-2px;
-  margin:24px 0;
+  font-size:clamp(38px,7vw,70px);
+  margin:15px 0;
 }
+
 .hero p {
   color:var(--muted);
-  max-width:620px;
-  margin:auto;
   line-height:1.8;
-  font-size:17px;
 }
-.hero-stats {
+
+.stats {
   display:flex;
   justify-content:center;
-  gap:35px;
   flex-wrap:wrap;
-  margin-top:35px;
+  gap:35px;
+  margin-top:30px;
 }
+
 .stat strong {
   display:block;
+  font-size:28px;
   color:var(--green);
-  font-size:25px;
 }
-.stat span { font-size:12px; color:var(--muted); }
-.section-title { font-size:27px; margin:45px 0 20px; }
-.panel,.card,.feature {
+
+.stat span {
+  color:var(--muted);
+  font-size:12px;
+}
+
+h2 { margin-top:0; }
+
+.panel,.result-card,.feature {
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
   padding:25px;
 }
+
 .panel p,.feature p {
   color:var(--muted);
   line-height:1.7;
 }
-textarea {
-  width:100%;
-  min-height:125px;
-  background:#091911;
-  border:1px solid #345640;
-  border-radius:12px;
-  padding:18px;
-  color:white;
-  font:16px Arial,sans-serif;
-  resize:vertical;
-  outline:none;
+
+.mode-tabs {
+  display:flex;
+  gap:10px;
+  margin:25px 0;
 }
-textarea:focus { border-color:var(--green); }
-button { cursor:pointer; font-weight:bold; }
-.primary,.terrain-button {
-  display:inline-block;
+
+.mode-tab {
+  flex:1;
+  background:#14291d;
+  color:white;
+  border:1px solid var(--border);
+  padding:15px;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.mode-tab.active {
+  background:var(--green);
+  color:#062011;
+}
+
+textarea,input {
+  width:100%;
+  background:#091911;
+  color:white;
+  border:1px solid #345640;
+  border-radius:10px;
+  padding:15px;
+  font:16px Arial,sans-serif;
+}
+
+textarea {
+  min-height:120px;
+  resize:vertical;
+}
+
+input:focus,textarea:focus {
+  outline:1px solid var(--green);
+}
+
+label {
+  display:block;
+  margin-bottom:10px;
+  color:#d8efdf;
+}
+
+.primary {
+  width:100%;
   background:var(--green);
   color:#062011;
   border:0;
-  padding:16px 24px;
   border-radius:10px;
-  margin-top:15px;
-  text-decoration:none;
-  font-size:14px;
+  padding:17px;
+  margin-top:18px;
+  font-weight:bold;
+  cursor:pointer;
 }
-.primary:disabled { opacity:.6; cursor:wait; }
+
+.primary:disabled {
+  opacity:.5;
+  cursor:not-allowed;
+}
+
 .examples {
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin-top:18px;
+  margin-top:15px;
 }
+
 .example {
   background:#193526;
   color:#d3f4de;
   border:1px solid #356549;
-  border-radius:30px;
-  padding:10px 14px;
+  border-radius:20px;
+  padding:10px 13px;
+  cursor:pointer;
 }
+
+.team-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.team-list {
+  background:#091911;
+  border:1px solid #345640;
+  border-radius:12px;
+  max-height:230px;
+  overflow-y:auto;
+  margin-top:8px;
+}
+
+.team-item {
+  display:block;
+  width:100%;
+  padding:13px;
+  background:transparent;
+  border:0;
+  border-bottom:1px solid #223e2c;
+  color:white;
+  text-align:left;
+  cursor:pointer;
+}
+
+.team-item:hover {
+  background:#1b3b28;
+}
+
+.team-item.selected {
+  background:#215c37;
+  color:#baffd0;
+}
+
+.team-item small {
+  display:block;
+  color:#a3b8aa;
+  margin-top:5px;
+}
+
+.selected-team {
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #39764d;
+  background:#153b25;
+  color:var(--green);
+  min-height:45px;
+}
+
+.hidden { display:none !important; }
+
+#resultats { margin-top:30px; }
+
+.result-title {
+  background:#17462a;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+
+.result-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.result-card {
+  min-width:0;
+  border-top:3px solid var(--green);
+}
+
+.result-card h3 {
+  color:var(--green);
+  font-size:18px;
+  margin-top:0;
+}
+
+.result-card pre {
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font:14px/1.8 Arial,sans-serif;
+  color:#d8e9dd;
+}
+
+.full { grid-column:1/-1; }
+
 .terrain-banner {
   background:linear-gradient(120deg,#153f28,#0d2117);
   border:1px solid #39764d;
-  border-radius:20px;
+  border-radius:18px;
   padding:30px;
-  margin-top:30px;
+  margin-top:35px;
 }
-.terrain-banner p { color:#c3e6cd; line-height:1.7; }
-#resultats { margin-top:30px; }
-.result-header {
-  padding:25px;
-  margin-bottom:20px;
-  background:#17462a;
-  border:1px solid #39764d;
-  border-radius:16px;
+
+.terrain-banner p { color:#c3e6cd; }
+
+.terrain-button {
+  display:inline-block;
+  padding:15px 22px;
+  background:var(--green);
+  color:#062011;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
 }
-.result-header h2 { margin-top:0; }
-.result-header p { color:#c3e6cd; }
-.cards {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:18px;
-}
-.card { min-width:0; }
-.card h3 { margin-top:0; }
-.card p,.card li {
-  color:#d0e2d5;
-  line-height:1.8;
-}
-.card ul { padding-left:20px; }
-.card.full { grid-column:1/-1; }
-.good { border-top:3px solid #38e888; }
-.weak { border-top:3px solid #f3a84b; }
-.compare { border-top:3px solid #63b7ff; }
-.tactics { border-top:3px solid #b28cff; }
-.notice {
-  background:#14251c;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:18px;
-  color:var(--muted);
-  line-height:1.7;
-  margin-top:20px;
-  white-space:pre-wrap;
-}
+
 .features {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  gap:15px;
 }
-.feature-icon { font-size:30px; }
+
 footer {
   text-align:center;
   border-top:1px solid var(--border);
   padding:30px;
   color:var(--muted);
   font-size:13px;
+  line-height:1.7;
 }
+
 footer button {
+  color:var(--green);
   background:none;
   border:0;
-  color:var(--green);
   text-decoration:underline;
-  padding:8px;
+  cursor:pointer;
 }
+
 .cookie-banner {
   position:fixed;
   bottom:15px;
@@ -215,176 +338,250 @@ footer button {
   z-index:100;
   box-shadow:0 8px 35px #0009;
 }
-.cookie-banner h3 { margin:0 0 10px; }
+
 .cookie-banner p {
   color:#d0e2d5;
-  line-height:1.6;
   font-size:14px;
+  line-height:1.6;
 }
+
 .cookie-actions {
   display:flex;
   gap:10px;
-  flex-wrap:wrap;
 }
+
 .cookie-actions button {
   flex:1;
-  min-width:140px;
   padding:13px;
   border-radius:9px;
+  cursor:pointer;
+}
+
+.accept {
+  background:var(--green);
+  color:#062011;
+  border:0;
+}
+
+.reject {
+  background:#10231a;
+  color:white;
   border:1px solid #4a9163;
 }
-.accept { background:var(--green); color:#062011; }
-.reject { background:#10231a; color:white; }
-.hidden { display:none !important; }
+
 @media(max-width:700px) {
   header,nav { justify-content:center; }
-  nav { gap:12px; }
-  .hero { padding:55px 0 35px; }
-  .cards,.features { grid-template-columns:1fr; }
-  .card.full { grid-column:auto; }
+  .team-grid,.result-grid,.features {
+    grid-template-columns:1fr;
+  }
+  .full { grid-column:auto; }
+  .hero { padding:50px 0 35px; }
   .panel { padding:18px; }
 }
 </style>
 </head>
 
 <body>
+
 <header>
-  <div class="logo">PITCH'<span class="green">AURA</span></div>
+  <div class="logo">
+    PITCH'<span class="green">AURA</span>
+  </div>
   <nav>
     <a href="#accueil">Accueil</a>
     <a href="#analyse">Analyseur</a>
-    <a href="/terrain.html" class="terrain-link">⚽ Terrain tactique</a>
+    <a href="/terrain.html">⚽ Terrain tactique</a>
     <a href="#decouvrir">Découvrir</a>
   </nav>
 </header>
 
 <main>
-  <section class="hero" id="accueil">
-    <span class="eyebrow">FOOTBALL • TACTIQUE • ANALYSE</span>
-    <h1>LE FOOTBALL.<br><span class="green">AUTREMENT.</span></h1>
-    <p>
-      Comprends les systèmes de jeu, découvre les forces
-      et faiblesses des équipes et explore les confrontations tactiques.
-    </p>
-    <div class="hero-stats">
-      <div class="stat">
-        <strong>4</strong><span>CLUBS DISPONIBLES</span>
-      </div>
-      <div class="stat">
-        <strong>5</strong><span>FORMATIONS TACTIQUES</span>
-      </div>
-      <div class="stat">
-        <strong>100%</strong><span>ACCÈS GRATUIT</span>
-      </div>
-    </div>
-  </section>
 
-  <section id="analyse">
-    <h2 class="section-title">⚽ Analyseur tactique</h2>
-    <div class="panel">
-      <h2>Décode le jeu.</h2>
-      <p>
-        Écris le nom d'une ou deux équipes pour obtenir
-        leurs profils et une comparaison.
-      </p>
-      <form id="formulaire">
-        <textarea id="question" maxlength="1000" required
-          placeholder="Exemple : Analyse le PSG contre le Real Madrid"></textarea>
-        <button class="primary" id="bouton" type="submit">
+<section class="hero" id="accueil">
+  <p class="green">LA NOUVELLE EXPÉRIENCE TACTIQUE</p>
+  <h1>LE FOOTBALL.<br>
+    <span class="green">AUTREMENT.</span>
+  </h1>
+  <p>
+    Analyse les équipes, compare leurs systèmes
+    et découvre les stratégies du football.
+  </p>
+
+  <div class="stats">
+    <div class="stat">
+      <strong id="total-clubs">20</strong>
+      <span>CLUBS DISPONIBLES</span>
+    </div>
+    <div class="stat">
+      <strong>5</strong>
+      <span>FORMATIONS TACTIQUES</span>
+    </div>
+    <div class="stat">
+      <strong>100%</strong>
+      <span>GRATUIT</span>
+    </div>
+  </div>
+</section>
+
+<section id="analyse">
+  <h2>⚽ Analyseur PITCH'AURA</h2>
+
+  <div class="panel">
+    <h2>Choisis ta méthode</h2>
+    <p>
+      Écris librement ta demande ou sélectionne
+      deux clubs pour les comparer.
+    </p>
+
+    <div class="mode-tabs">
+      <button id="tab-texte" class="mode-tab active"
+        type="button">
+        ✍️ Écrire
+      </button>
+      <button id="tab-selection" class="mode-tab"
+        type="button">
+        ⚔️ Sélectionner
+      </button>
+    </div>
+
+    <div id="mode-texte">
+      <form id="form-texte">
+        <label for="question">Ta demande d'analyse</label>
+        <textarea id="question" maxlength="1000"
+          placeholder="Analyse PSG contre Arsenal"
+          required></textarea>
+
+        <button class="primary" type="submit">
           Générer mon analyse →
         </button>
       </form>
 
       <div class="examples">
         <button class="example" type="button"
-          data-question="Analyse le PSG contre le Real Madrid">
-          PSG vs Real Madrid
+          data-question="Analyse PSG contre Real Madrid">
+          PSG vs Real
         </button>
         <button class="example" type="button"
-          data-question="Compare Barcelone et Manchester City">
-          Barça vs Man City
+          data-question="Analyse Marseille contre Lyon">
+          OM vs OL
         </button>
         <button class="example" type="button"
-          data-question="Analyse le FC Barcelone">
-          FC Barcelone
+          data-question="Analyse Bayern contre Arsenal">
+          Bayern vs Arsenal
         </button>
       </div>
     </div>
-    <div id="resultats" class="hidden" aria-live="polite"></div>
-  </section>
 
-  <section class="terrain-banner">
-    <h2>⚽ Construis ta propre tactique</h2>
-    <p>
-      Choisis une formation 4-3-3, 4-2-3-1, 3-5-2,
-      4-4-2 ou 3-4-3 et déplace les joueurs.
-    </p>
-    <a class="terrain-button" href="/terrain.html">
-      Ouvrir le terrain tactique →
-    </a>
-  </section>
+    <div id="mode-selection" class="hidden">
+      <div class="team-grid">
 
-  <section id="decouvrir">
-    <h2 class="section-title">Découvre PITCH'AURA</h2>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">🧠</div>
-        <h3>Lecture tactique</h3>
-        <p>Comprends les systèmes et principes de jeu.</p>
+        <div>
+          <label for="recherche-a">Équipe 1</label>
+          <input id="recherche-a" type="search"
+            placeholder="Rechercher un club..."
+            autocomplete="off">
+          <div id="liste-a" class="team-list"></div>
+          <div id="choix-a" class="selected-team">
+            Aucune équipe sélectionnée
+          </div>
+        </div>
+
+        <div>
+          <label for="recherche-b">Équipe 2</label>
+          <input id="recherche-b" type="search"
+            placeholder="Rechercher un club..."
+            autocomplete="off">
+          <div id="liste-b" class="team-list"></div>
+          <div id="choix-b" class="selected-team">
+            Aucune équipe sélectionnée
+          </div>
+        </div>
+
       </div>
-      <div class="feature">
-        <div class="feature-icon">⚔️</div>
-        <h3>Comparateur</h3>
-        <p>Compare les profils de deux équipes.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📋</div>
-        <h3>Tableau tactique</h3>
-        <p>Construis tes formations et déplace les joueurs.</p>
-      </div>
+
+      <button id="comparer" class="primary"
+        type="button" disabled>
+        ⚔️ Comparer les équipes
+      </button>
     </div>
-  </section>
+  </div>
+
+  <div id="resultats" class="hidden"
+    aria-live="polite"></div>
+</section>
+
+<section class="terrain-banner">
+  <h2>⚽ Terrain tactique interactif</h2>
+  <p>
+    Construis ta formation et déplace les joueurs
+    directement sur le terrain.
+  </p>
+  <a href="/terrain.html" class="terrain-button">
+    Ouvrir le terrain tactique →
+  </a>
+</section>
+
+<section id="decouvrir" style="margin-top:45px">
+  <h2>Découvre PITCH'AURA</h2>
+  <div class="features">
+    <div class="feature">
+      <h3>🧠 Analyse tactique</h3>
+      <p>Découvre les styles et systèmes de jeu.</p>
+    </div>
+    <div class="feature">
+      <h3>⚔️ Comparateur</h3>
+      <p>Compare deux équipes rapidement.</p>
+    </div>
+    <div class="feature">
+      <h3>📋 Terrain interactif</h3>
+      <p>Teste différentes formations.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
   PITCH'AURA © 2026 — Le football autrement.
-  <p>Analyses indicatives, sans données en direct.</p>
   <p>
+    Analyses indicatives sans données en direct.
     Statistiques facultatives via Google Analytics.
-    En cas d'acceptation, Google peut traiter des
-    informations relatives à votre navigation.
   </p>
-  <button type="button" id="cookie-settings">
+  <p>
+    Google peut traiter des données de navigation
+    uniquement si les statistiques sont acceptées.
+  </p>
+  <button id="cookie-settings" type="button">
     Gérer mes cookies
   </button>
 </footer>
 
 <div id="cookie-banner" class="cookie-banner hidden"
-     role="dialog" aria-label="Cookies statistiques">
+  role="dialog" aria-label="Cookies statistiques">
   <h3>🍪 Respect de ta vie privée</h3>
   <p>
-    PITCH'AURA souhaite utiliser Google Analytics pour
-    mesurer les visites et améliorer le site.
-    Ces statistiques sont facultatives.
-    Tu peux accepter ou refuser librement.
-    Ton choix peut être modifié depuis le bas de page.
+    PITCH'AURA utilise Google Analytics uniquement
+    avec ton accord pour mesurer les visites.
+    Tu peux refuser sans perdre de fonctionnalités,
+    et modifier ton choix à tout moment.
   </p>
   <div class="cookie-actions">
-    <button type="button" class="reject" id="refuser">
+    <button id="refuser" class="reject" type="button">
       Refuser
     </button>
-    <button type="button" class="accept" id="accepter">
+    <button id="accepter" class="accept" type="button">
       Accepter
     </button>
   </div>
 </div>
 
 <script>
-/* GOOGLE ANALYTICS : CHARGEMENT APRÈS CONSENTEMENT */
+/* ===== GOOGLE ANALYTICS ===== */
 
 const GA_ID = "G-38M7HYNKJ9";
 const CONSENT_KEY = "pitchaura_analytics_consent";
-const cookieBanner = document.getElementById("cookie-banner");
+const banner = document.getElementById("cookie-banner");
+
 let analyticsLoaded = false;
 
 function lireConsentement() {
@@ -398,13 +595,12 @@ function lireConsentement() {
 function enregistrerConsentement(valeur) {
   try {
     localStorage.setItem(CONSENT_KEY, valeur);
-  } catch {
-    // Le site reste utilisable sans stockage local.
-  }
+  } catch {}
 }
 
 function activerAnalytics() {
   if (analyticsLoaded) return;
+
   analyticsLoaded = true;
 
   window.dataLayer = window.dataLayer || [];
@@ -413,245 +609,284 @@ function activerAnalytics() {
   };
 
   window.gtag("js", new Date());
-  window.gtag("config", GA_ID, {
-    anonymize_ip: true
-  });
+  window.gtag("config", GA_ID);
 
   const script = document.createElement("script");
   script.async = true;
   script.src =
     "https://www.googletagmanager.com/gtag/js?id=" +
     encodeURIComponent(GA_ID);
+
   document.head.appendChild(script);
 }
 
 function choisirCookies(choix) {
   enregistrerConsentement(choix);
-  cookieBanner.classList.add("hidden");
+  banner.classList.add("hidden");
 
   if (choix === "oui") {
     activerAnalytics();
   } else {
     window["ga-disable-" + GA_ID] = true;
+
     if (analyticsLoaded) {
       location.reload();
     }
   }
 }
 
-document.getElementById("accepter").addEventListener(
-  "click", () => choisirCookies("oui")
-);
+document.getElementById("accepter").onclick =
+  () => choisirCookies("oui");
 
-document.getElementById("refuser").addEventListener(
-  "click", () => choisirCookies("non")
-);
+document.getElementById("refuser").onclick =
+  () => choisirCookies("non");
 
-document.getElementById("cookie-settings").addEventListener(
-  "click", () => cookieBanner.classList.remove("hidden")
-);
+document.getElementById("cookie-settings").onclick =
+  () => banner.classList.remove("hidden");
 
-const choix = lireConsentement();
+const consentement = lireConsentement();
 
-if (choix === "oui") {
+if (consentement === "oui") {
   activerAnalytics();
-} else if (choix !== "non") {
-  cookieBanner.classList.remove("hidden");
+} else if (consentement !== "non") {
+  banner.classList.remove("hidden");
 }
 
-/* ANALYSEUR PITCH'AURA */
+/* ===== PITCH'AURA ===== */
 
-const formulaire = document.getElementById("formulaire");
-const question = document.getElementById("question");
-const bouton = document.getElementById("bouton");
-const resultats = document.getElementById("resultats");
+let clubs = [];
+let equipeA = null;
+let equipeB = null;
+let chargement = false;
 
-const noms = [
-  "Paris Saint-Germain",
-  "Real Madrid",
-  "FC Barcelone",
-  "Manchester City"
-];
+const $ = id => document.getElementById(id);
 
-function element(tag, classe, texte) {
-  const el = document.createElement(tag);
-  if (classe) el.className = classe;
-  if (texte !== undefined) el.textContent = texte;
-  return el;
+function normaliser(texte) {
+  return String(texte)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 }
 
-function creerCarte(titre, contenu, classe = "") {
-  const carte = element("article", "card " + classe);
-  carte.appendChild(element("h3", "", titre));
+function changerMode(mode) {
+  const texte = mode === "texte";
 
-  const lignes = contenu.split("\n")
-    .map(x => x.trim()).filter(Boolean);
-  let liste = null;
+  $("mode-texte").classList.toggle("hidden", !texte);
+  $("mode-selection").classList.toggle("hidden", texte);
 
-  for (const ligne of lignes) {
-    if (ligne.startsWith("•")) {
-      if (!liste) {
-        liste = element("ul");
-        carte.appendChild(liste);
-      }
-      liste.appendChild(
-        element("li", "", ligne.slice(1).trim())
-      );
-    } else {
-      liste = null;
-      carte.appendChild(element("p", "", ligne));
+  $("tab-texte").classList.toggle("active", texte);
+  $("tab-selection").classList.toggle("active", !texte);
+}
+
+$("tab-texte").onclick = () => changerMode("texte");
+$("tab-selection").onclick = () => changerMode("selection");
+
+async function chargerClubs() {
+  try {
+    const reponse = await fetch("/api/teams");
+
+    if (!reponse.ok) {
+      throw new Error("Liste indisponible");
     }
+
+    const data = await reponse.json();
+
+    clubs = data.equipes;
+    $("total-clubs").textContent = data.total;
+
+    afficherListe("a");
+    afficherListe("b");
+
+  } catch (erreur) {
+    $("liste-a").textContent = "Impossible de charger les clubs.";
+    $("liste-b").textContent = "Impossible de charger les clubs.";
   }
-  return carte;
 }
+
+function afficherListe(cote) {
+  const recherche = $("recherche-" + cote);
+  const liste = $("liste-" + cote);
+  const terme = normaliser(recherche.value);
+
+  liste.replaceChildren();
+
+  const filtres = clubs.filter(club =>
+    normaliser(club.nom).includes(terme) ||
+    normaliser(club.championnat).includes(terme)
+  );
+
+  if (filtres.length === 0) {
+    liste.textContent = "Aucun club trouvé.";
+    return;
+  }
+
+  filtres.forEach(club => {
+    const bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "team-item";
+
+    const nom = document.createElement("strong");
+    nom.textContent = club.nom;
+
+    const infos = document.createElement("small");
+    infos.textContent =
+      club.championnat + " • " + club.systeme;
+
+    bouton.append(nom, infos);
+
+    const selection = cote === "a" ? equipeA : equipeB;
+
+    if (selection === club.id) {
+      bouton.classList.add("selected");
+    }
+
+    bouton.onclick = () => {
+      if (cote === "a") {
+        equipeA = club.id;
+      } else {
+        equipeB = club.id;
+      }
+
+      $("choix-" + cote).textContent = "✓ " + club.nom;
+
+      afficherListe(cote);
+      actualiserBouton();
+    };
+
+    liste.appendChild(bouton);
+  });
+}
+
+function actualiserBouton() {
+  const valide =
+    equipeA &&
+    equipeB &&
+    equipeA !== equipeB;
+
+  $("comparer").disabled = !valide || chargement;
+}
+
+$("recherche-a").oninput = () => afficherListe("a");
+$("recherche-b").oninput = () => afficherListe("b");
+
+/* ===== AFFICHAGE DES ANALYSES ===== */
 
 function afficherAnalyse(texte) {
-  resultats.replaceChildren();
-  resultats.classList.remove("hidden");
+  const zone = $("resultats");
+  zone.replaceChildren();
+  zone.classList.remove("hidden");
 
-  const entete = element("div", "result-header");
-  entete.appendChild(
-    element("h2", "", "PITCH'AURA — Rapport tactique")
-  );
-  entete.appendChild(
-    element("p", "",
-      "Analyse basée sur les profils enregistrés dans notre base.")
-  );
-  resultats.appendChild(entete);
+  const entete = document.createElement("div");
+  entete.className = "result-title";
+
+  const titre = document.createElement("h2");
+  titre.textContent = "📊 Rapport tactique PITCH'AURA";
+
+  entete.appendChild(titre);
+  zone.appendChild(entete);
+
+  const grille = document.createElement("div");
+  grille.className = "result-grid";
 
   const sections = texte.split(/━{5,}/)
-    .map(s => s.trim()).filter(Boolean);
-  const grille = element("div", "cards");
+    .map(s => s.trim())
+    .filter(Boolean);
 
-  for (const section of sections) {
-    const lignes = section.split("\n")
-      .map(s => s.trim()).filter(Boolean);
-    if (!lignes.length) continue;
+  sections.forEach(section => {
+    const lignes = section.split("\n");
+    const premiere = lignes[0].trim();
 
-    const contenu = lignes.join("\n");
+    const carte = document.createElement("article");
+    carte.className = "result-card";
 
-    if (contenu.includes("POINTS FORTS") &&
-        contenu.includes("POINTS FAIBLES")) {
+    const titreCarte = document.createElement("h3");
+    titreCarte.textContent = premiere;
 
-      const equipe = noms.find(n =>
-        contenu.includes(n.toUpperCase())
-      );
-      const titre = equipe || "Profil d'équipe";
+    const contenu = document.createElement("pre");
+    contenu.textContent = lignes.slice(1).join("\n").trim();
 
-      const debut = contenu.split("POINTS FORTS")[0];
-      const forts = contenu.split("POINTS FORTS")[1]
-        .split("POINTS FAIBLES")[0];
-      const faibles = contenu.split("POINTS FAIBLES")[1];
-
-      grille.appendChild(creerCarte(
-        "⚽ " + titre,
-        debut.replace(titre.toUpperCase(), ""),
-        "full"
-      ));
-      grille.appendChild(
-        creerCarte("✅ Points forts", forts, "good")
-      );
-      grille.appendChild(
-        creerCarte("⚠️ Points faibles", faibles, "weak")
-      );
-
-    } else if (contenu.includes("COMPARAISON TACTIQUE")) {
-      grille.appendChild(creerCarte(
-        "⚔️ Comparaison tactique",
-        contenu.replace("COMPARAISON TACTIQUE", ""),
-        "compare full"
-      ));
-
-    } else if (contenu.includes("DUELS TACTIQUES")) {
-      grille.appendChild(creerCarte(
-        "🎯 Duels tactiques",
-        contenu.replace("DUELS TACTIQUES", ""),
-        "tactics full"
-      ));
-
-    } else if (contenu.includes("CLÉS DU MATCH")) {
-      grille.appendChild(creerCarte(
-        "🧠 Clés du match",
-        contenu.replace("CLÉS DU MATCH", ""),
-        "full"
-      ));
-
-    } else if (contenu.includes("SCÉNARIOS POSSIBLES")) {
-      grille.appendChild(creerCarte(
-        "🔮 Scénarios possibles",
-        contenu.replace("SCÉNARIOS POSSIBLES", ""),
-        "full"
-      ));
-
-    } else if (contenu.includes("INFORMATIONS")) {
-      resultats.appendChild(
-        element("div", "notice", contenu)
-      );
-
-    } else if (!contenu.includes("PITCH'AURA V2.1")) {
-      grille.appendChild(
-        creerCarte("Analyse", contenu, "full")
-      );
+    if (
+      premiere.includes("COMPARAISON") ||
+      premiere.includes("DUELS") ||
+      premiere.includes("CLÉS") ||
+      premiere.includes("SCÉNARIOS") ||
+      premiere.includes("INFORMATIONS")
+    ) {
+      carte.classList.add("full");
     }
-  }
 
-  resultats.insertBefore(
-    grille,
-    resultats.querySelector(".notice")
-  );
+    carte.append(titreCarte, contenu);
+    grille.appendChild(carte);
+  });
 
-  resultats.scrollIntoView({
+  zone.appendChild(grille);
+
+  zone.scrollIntoView({
     behavior:"smooth",
     block:"start"
   });
 }
 
-formulaire.addEventListener("submit", async event => {
-  event.preventDefault();
+async function lancerAnalyse(demande) {
+  if (chargement) return;
 
-  bouton.disabled = true;
-  bouton.textContent = "Analyse en cours...";
-  resultats.classList.remove("hidden");
-  resultats.replaceChildren(
-    element("div", "notice", "Préparation de l'analyse...")
-  );
+  chargement = true;
+  actualiserBouton();
+
+  const zone = $("resultats");
+  zone.classList.remove("hidden");
+  zone.textContent = "⏳ Analyse en cours...";
 
   try {
     const reponse = await fetch("/api/analyze", {
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({question:question.value})
+      body:JSON.stringify(demande)
     });
 
-    const donnees = await reponse.json();
+    const data = await reponse.json();
 
     if (!reponse.ok) {
-      throw new Error(
-        donnees.erreur || "Erreur du serveur"
-      );
+      throw new Error(data.erreur || "Erreur du serveur");
     }
 
-    afficherAnalyse(
-      donnees.analysis || "Aucune analyse disponible."
-    );
+    afficherAnalyse(data.analysis || "Aucun résultat.");
 
   } catch (erreur) {
-    resultats.replaceChildren(
-      element("div", "notice", "Erreur : " + erreur.message)
-    );
+    zone.textContent = "Erreur : " + erreur.message;
   } finally {
-    bouton.disabled = false;
-    bouton.textContent = "Générer mon analyse →";
+    chargement = false;
+    actualiserBouton();
+  }
+}
+
+$("form-texte").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const question = $("question").value.trim();
+
+  if (question) {
+    lancerAnalyse({ question });
   }
 });
 
+$("comparer").onclick = () => {
+  if (equipeA && equipeB && equipeA !== equipeB) {
+    lancerAnalyse({
+      teams:[equipeA,equipeB]
+    });
+  }
+};
+
 document.querySelectorAll("[data-question]").forEach(b => {
-  b.addEventListener("click", () => {
-    question.value = b.dataset.question;
-    formulaire.requestSubmit();
-  });
+  b.onclick = () => {
+    $("question").value = b.dataset.question;
+    $("form-texte").requestSubmit();
+  };
 });
+
+chargerClubs();
 </script>
 </body>
 </html>
-
