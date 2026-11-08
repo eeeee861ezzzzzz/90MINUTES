@@ -1,0 +1,25 @@
+
+backend:
+  name: github
+  repo: eeeee861ezzzzzz/90minutes
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    folder: "articles"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Championnat", name: "league", widget: "select", options: ["Ligue 1", "Premier League", "LaLiga", "Serie A", "Bundesliga"] }
+      - { label: "Catégorie", name: "category", widget: "select", options: ["Analyse", "Compte rendu"] }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Introduction", name: "excerpt", widget: "text" }
+      - { label: "Analyse complète", name: "body", widget: "markdown" }
