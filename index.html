@@ -3,267 +3,246 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07130e">
+<meta name="description" content="PITCH'AURA : analyses tactiques et tableau de football interactif.">
 <title>PITCH'AURA | Le football autrement</title>
 
 <style>
 :root {
-  --bg: #07130e;
-  --panel: #10231a;
-  --green: #38e888;
-  --text: #f5fff8;
-  --muted: #a3b8aa;
-  --border: #294a36;
+  --bg:#07130e;
+  --panel:#10231a;
+  --green:#38e888;
+  --text:#f5fff8;
+  --muted:#a3b8aa;
+  --border:#294a36;
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
 header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #0b1b13;
-  border-bottom: 1px solid var(--border);
-  padding: 20px 6%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#0b1b13;
+  border-bottom:1px solid var(--border);
+  padding:20px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
 }
-.logo {
-  font-size: 25px;
-  font-weight: 900;
-}
-.green { color: var(--green); }
-nav {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+.logo { font-size:25px; font-weight:900; }
+.green { color:var(--green); }
+nav { display:flex; gap:18px; flex-wrap:wrap; }
 nav a {
-  color: #d2e5d8;
-  text-decoration: none;
-  font-size: 14px;
+  color:#d2e5d8;
+  text-decoration:none;
+  font-size:14px;
 }
-nav a:hover { color: var(--green); }
-nav .terrain-link {
-  color: var(--green);
-  font-weight: bold;
-}
+nav a:hover,.terrain-link { color:var(--green); }
 main {
-  max-width: 1150px;
-  margin: auto;
-  padding: 0 20px 80px;
+  max-width:1150px;
+  margin:auto;
+  padding:0 20px 80px;
 }
-.hero {
-  padding: 80px 0 65px;
-  text-align: center;
-}
+.hero { padding:75px 0 60px; text-align:center; }
 .eyebrow {
-  display: inline-block;
-  color: var(--green);
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  padding: 9px 17px;
-  font-size: 12px;
-  letter-spacing: 2px;
+  display:inline-block;
+  color:var(--green);
+  border:1px solid var(--border);
+  border-radius:30px;
+  padding:9px 17px;
+  font-size:12px;
+  letter-spacing:2px;
 }
 h1 {
-  font-size: clamp(38px, 7vw, 75px);
-  letter-spacing: -2px;
-  margin: 24px 0;
+  font-size:clamp(38px,7vw,75px);
+  letter-spacing:-2px;
+  margin:24px 0;
 }
 .hero p {
-  color: var(--muted);
-  max-width: 620px;
-  margin: auto;
-  line-height: 1.8;
-  font-size: 17px;
+  color:var(--muted);
+  max-width:620px;
+  margin:auto;
+  line-height:1.8;
+  font-size:17px;
 }
 .hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 35px;
-  flex-wrap: wrap;
-  margin-top: 35px;
+  display:flex;
+  justify-content:center;
+  gap:35px;
+  flex-wrap:wrap;
+  margin-top:35px;
 }
 .stat strong {
-  display: block;
-  color: var(--green);
-  font-size: 25px;
+  display:block;
+  color:var(--green);
+  font-size:25px;
 }
-.stat span {
-  font-size: 12px;
-  color: var(--muted);
+.stat span { font-size:12px; color:var(--muted); }
+.section-title { font-size:27px; margin:45px 0 20px; }
+.panel,.card,.feature {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:25px;
 }
-.section-title {
-  font-size: 27px;
-  margin: 45px 0 20px;
-}
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 30px;
-}
-.panel p {
-  color: var(--muted);
-  line-height: 1.7;
+.panel p,.feature p {
+  color:var(--muted);
+  line-height:1.7;
 }
 textarea {
-  width: 100%;
-  min-height: 125px;
-  background: #091911;
-  border: 1px solid #345640;
-  border-radius: 12px;
-  padding: 18px;
-  color: white;
-  font: 16px Arial, sans-serif;
-  resize: vertical;
-  outline: none;
+  width:100%;
+  min-height:125px;
+  background:#091911;
+  border:1px solid #345640;
+  border-radius:12px;
+  padding:18px;
+  color:white;
+  font:16px Arial,sans-serif;
+  resize:vertical;
+  outline:none;
 }
-textarea:focus { border-color: var(--green); }
-button {
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
+textarea:focus { border-color:var(--green); }
+button { cursor:pointer; font-weight:bold; }
+.primary,.terrain-button {
+  display:inline-block;
+  background:var(--green);
+  color:#062011;
+  border:0;
+  padding:16px 24px;
+  border-radius:10px;
+  margin-top:15px;
+  text-decoration:none;
+  font-size:14px;
 }
-.primary {
-  background: var(--green);
-  color: #062011;
-  padding: 16px 25px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-.primary:disabled {
-  opacity: .6;
-  cursor: wait;
-}
+.primary:disabled { opacity:.6; cursor:wait; }
 .examples {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
 }
 .example {
-  background: #193526;
-  color: #d3f4de;
-  border: 1px solid #356549;
-  border-radius: 30px;
-  padding: 10px 14px;
+  background:#193526;
+  color:#d3f4de;
+  border:1px solid #356549;
+  border-radius:30px;
+  padding:10px 14px;
 }
-.example:hover { background: #245539; }
 .terrain-banner {
-  background: linear-gradient(120deg,#153f28,#0d2117);
-  border: 1px solid #39764d;
-  border-radius: 20px;
-  padding: 30px;
-  margin-top: 25px;
+  background:linear-gradient(120deg,#153f28,#0d2117);
+  border:1px solid #39764d;
+  border-radius:20px;
+  padding:30px;
+  margin-top:30px;
 }
-.terrain-banner h2 { margin-top: 0; }
-.terrain-banner p {
-  color: #c3e6cd;
-  line-height: 1.7;
-}
-.terrain-button {
-  display: inline-block;
-  background: var(--green);
-  color: #062011;
-  padding: 15px 22px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 8px;
-}
-#resultats { margin-top: 30px; }
+.terrain-banner p { color:#c3e6cd; line-height:1.7; }
+#resultats { margin-top:30px; }
 .result-header {
-  margin-bottom: 25px;
-  padding: 25px;
-  border-radius: 16px;
-  background: linear-gradient(120deg,#17462a,#0b2015);
-  border: 1px solid #39764d;
+  padding:25px;
+  margin-bottom:20px;
+  background:#17462a;
+  border:1px solid #39764d;
+  border-radius:16px;
 }
-.result-header h2 { margin: 0 0 10px; }
-.result-header p {
-  color: #c3e6cd;
-  margin: 0;
-}
+.result-header h2 { margin-top:0; }
+.result-header p { color:#c3e6cd; }
 .cards {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 18px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
 }
-.card {
-  min-width: 0;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 25px;
+.card { min-width:0; }
+.card h3 { margin-top:0; }
+.card p,.card li {
+  color:#d0e2d5;
+  line-height:1.8;
 }
-.card h3 {
-  margin-top: 0;
-  font-size: 19px;
-}
-.card p, .card li {
-  color: #d0e2d5;
-  line-height: 1.8;
-}
-.card ul { padding-left: 20px; }
-.card li { margin-bottom: 6px; }
-.card.full { grid-column: 1 / -1; }
-.good { border-top: 3px solid #38e888; }
-.weak { border-top: 3px solid #f3a84b; }
-.compare { border-top: 3px solid #63b7ff; }
-.tactics { border-top: 3px solid #b28cff; }
+.card ul { padding-left:20px; }
+.card.full { grid-column:1/-1; }
+.good { border-top:3px solid #38e888; }
+.weak { border-top:3px solid #f3a84b; }
+.compare { border-top:3px solid #63b7ff; }
+.tactics { border-top:3px solid #b28cff; }
 .notice {
-  background: #14251c;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-top: 20px;
-  white-space: pre-wrap;
+  background:#14251c;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-top:20px;
+  white-space:pre-wrap;
 }
 .features {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
-.feature {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 25px;
-  border-radius: 16px;
-}
-.feature-icon { font-size: 30px; }
-.feature p {
-  color: var(--muted);
-  line-height: 1.7;
-}
+.feature-icon { font-size:30px; }
 footer {
-  text-align: center;
-  border-top: 1px solid var(--border);
-  padding: 30px;
-  color: var(--muted);
-  font-size: 13px;
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:30px;
+  color:var(--muted);
+  font-size:13px;
 }
-.hidden { display: none; }
+footer button {
+  background:none;
+  border:0;
+  color:var(--green);
+  text-decoration:underline;
+  padding:8px;
+}
+.cookie-banner {
+  position:fixed;
+  bottom:15px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(94%,650px);
+  background:#193526;
+  border:1px solid #4a9163;
+  border-radius:18px;
+  padding:22px;
+  z-index:100;
+  box-shadow:0 8px 35px #0009;
+}
+.cookie-banner h3 { margin:0 0 10px; }
+.cookie-banner p {
+  color:#d0e2d5;
+  line-height:1.6;
+  font-size:14px;
+}
+.cookie-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.cookie-actions button {
+  flex:1;
+  min-width:140px;
+  padding:13px;
+  border-radius:9px;
+  border:1px solid #4a9163;
+}
+.accept { background:var(--green); color:#062011; }
+.reject { background:#10231a; color:white; }
+.hidden { display:none !important; }
 @media(max-width:700px) {
-  header { justify-content: center; }
-  nav { justify-content: center; gap: 12px; }
-  .hero { padding: 55px 0 35px; }
-  .cards,.features { grid-template-columns: 1fr; }
-  .panel { padding: 18px; }
-  .card.full { grid-column: auto; }
+  header,nav { justify-content:center; }
+  nav { gap:12px; }
+  .hero { padding:55px 0 35px; }
+  .cards,.features { grid-template-columns:1fr; }
+  .card.full { grid-column:auto; }
+  .panel { padding:18px; }
 }
 </style>
 </head>
@@ -285,8 +264,7 @@ footer {
     <h1>LE FOOTBALL.<br><span class="green">AUTREMENT.</span></h1>
     <p>
       Comprends les systèmes de jeu, découvre les forces
-      et les faiblesses des équipes et explore les
-      confrontations tactiques.
+      et faiblesses des équipes et explore les confrontations tactiques.
     </p>
     <div class="hero-stats">
       <div class="stat">
@@ -306,10 +284,9 @@ footer {
     <div class="panel">
       <h2>Décode le jeu.</h2>
       <p>
-        Écris le nom d'une équipe ou de deux équipes
-        pour obtenir leurs profils et une comparaison.
+        Écris le nom d'une ou deux équipes pour obtenir
+        leurs profils et une comparaison.
       </p>
-
       <form id="formulaire">
         <textarea id="question" maxlength="1000" required
           placeholder="Exemple : Analyse le PSG contre le Real Madrid"></textarea>
@@ -333,17 +310,14 @@ footer {
         </button>
       </div>
     </div>
-
     <div id="resultats" class="hidden" aria-live="polite"></div>
   </section>
 
   <section class="terrain-banner">
     <h2>⚽ Construis ta propre tactique</h2>
     <p>
-      Passe de l'analyse à la pratique.
       Choisis une formation 4-3-3, 4-2-3-1, 3-5-2,
-      4-4-2 ou 3-4-3, puis déplace les 11 joueurs
-      sur notre tableau tactique interactif.
+      4-4-2 ou 3-4-3 et déplace les joueurs.
     </p>
     <a class="terrain-button" href="/terrain.html">
       Ouvrir le terrain tactique →
@@ -351,17 +325,17 @@ footer {
   </section>
 
   <section id="decouvrir">
-    <h2 class="section-title">Explore une autre vision du football</h2>
+    <h2 class="section-title">Découvre PITCH'AURA</h2>
     <div class="features">
       <div class="feature">
         <div class="feature-icon">🧠</div>
         <h3>Lecture tactique</h3>
-        <p>Comprends les systèmes et les principes de jeu.</p>
+        <p>Comprends les systèmes et principes de jeu.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">⚔️</div>
         <h3>Comparateur</h3>
-        <p>Confronte les forces et faiblesses de deux équipes.</p>
+        <p>Compare les profils de deux équipes.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">📋</div>
@@ -374,10 +348,119 @@ footer {
 
 <footer>
   PITCH'AURA © 2026 — Le football autrement.
-  <p>Profils tactiques indicatifs, sans données en direct.</p>
+  <p>Analyses indicatives, sans données en direct.</p>
+  <p>
+    Statistiques facultatives via Google Analytics.
+    En cas d'acceptation, Google peut traiter des
+    informations relatives à votre navigation.
+  </p>
+  <button type="button" id="cookie-settings">
+    Gérer mes cookies
+  </button>
 </footer>
 
+<div id="cookie-banner" class="cookie-banner hidden"
+     role="dialog" aria-label="Cookies statistiques">
+  <h3>🍪 Respect de ta vie privée</h3>
+  <p>
+    PITCH'AURA souhaite utiliser Google Analytics pour
+    mesurer les visites et améliorer le site.
+    Ces statistiques sont facultatives.
+    Tu peux accepter ou refuser librement.
+    Ton choix peut être modifié depuis le bas de page.
+  </p>
+  <div class="cookie-actions">
+    <button type="button" class="reject" id="refuser">
+      Refuser
+    </button>
+    <button type="button" class="accept" id="accepter">
+      Accepter
+    </button>
+  </div>
+</div>
+
 <script>
+/* GOOGLE ANALYTICS : CHARGEMENT APRÈS CONSENTEMENT */
+
+const GA_ID = "G-38M7HYNKJ9";
+const CONSENT_KEY = "pitchaura_analytics_consent";
+const cookieBanner = document.getElementById("cookie-banner");
+let analyticsLoaded = false;
+
+function lireConsentement() {
+  try {
+    return localStorage.getItem(CONSENT_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function enregistrerConsentement(valeur) {
+  try {
+    localStorage.setItem(CONSENT_KEY, valeur);
+  } catch {
+    // Le site reste utilisable sans stockage local.
+  }
+}
+
+function activerAnalytics() {
+  if (analyticsLoaded) return;
+  analyticsLoaded = true;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function() {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", GA_ID, {
+    anonymize_ip: true
+  });
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src =
+    "https://www.googletagmanager.com/gtag/js?id=" +
+    encodeURIComponent(GA_ID);
+  document.head.appendChild(script);
+}
+
+function choisirCookies(choix) {
+  enregistrerConsentement(choix);
+  cookieBanner.classList.add("hidden");
+
+  if (choix === "oui") {
+    activerAnalytics();
+  } else {
+    window["ga-disable-" + GA_ID] = true;
+    if (analyticsLoaded) {
+      location.reload();
+    }
+  }
+}
+
+document.getElementById("accepter").addEventListener(
+  "click", () => choisirCookies("oui")
+);
+
+document.getElementById("refuser").addEventListener(
+  "click", () => choisirCookies("non")
+);
+
+document.getElementById("cookie-settings").addEventListener(
+  "click", () => cookieBanner.classList.remove("hidden")
+);
+
+const choix = lireConsentement();
+
+if (choix === "oui") {
+  activerAnalytics();
+} else if (choix !== "non") {
+  cookieBanner.classList.remove("hidden");
+}
+
+/* ANALYSEUR PITCH'AURA */
+
 const formulaire = document.getElementById("formulaire");
 const question = document.getElementById("question");
 const bouton = document.getElementById("bouton");
@@ -516,9 +599,10 @@ function afficherAnalyse(texte) {
     grille,
     resultats.querySelector(".notice")
   );
+
   resultats.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+    behavior:"smooth",
+    block:"start"
   });
 }
 
@@ -534,9 +618,9 @@ formulaire.addEventListener("submit", async event => {
 
   try {
     const reponse = await fetch("/api/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: question.value })
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({question:question.value})
     });
 
     const donnees = await reponse.json();
@@ -570,3 +654,4 @@ document.querySelectorAll("[data-question]").forEach(b => {
 </script>
 </body>
 </html>
+
