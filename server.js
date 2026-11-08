@@ -1,13 +1,13 @@
 
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const crypto = require("crypto");
 const equipes = require("./equipes.json");
 
 const app = express();
 
 const SITE_URL = "https://nine0minutes-spca.onrender.com";
-
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
@@ -15,7 +15,44 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
 /* =========================================
-   90MINUTES - CONNEXION GITHUB
+   90MINUTES - ARTICLES
+========================================= */
+
+const ARTICLES_DIR = path.join(__dirname, "articles");
+
+app.get("/api/articles", (req, res) => {
+  try {
+    if (!fs.existsSync(ARTICLES_DIR)) {
+      return res.json([]);
+    }
+
+    const articles = fs.readdirSync(ARTICLES_DIR)
+      .filter(nom => nom.endsWith(".json"))
+      .map(nom => {
+        const fichier = path.join(ARTICLES_DIR, nom);
+        const contenu = fs.readFileSync(fichier, "utf8");
+
+        return {
+          id: nom.replace(/\.json$/, ""),
+          ...JSON.parse(contenu)
+        };
+      })
+      .sort((a, b) =>
+        String(b.date || "").localeCompare(String(a.date || ""))
+      );
+
+    res.json(articles);
+  } catch (erreur) {
+    console.error("Erreur articles :", erreur.message);
+
+    res.status(500).json({
+      erreur: "Impossible de charger les articles."
+    });
+  }
+});
+
+/* =========================================
+   90MINUTES - AUTHENTIFICATION GITHUB
 ========================================= */
 
 function lireCookies(req) {
@@ -532,7 +569,7 @@ app.get("/", (req, res) => {
 });
 
 /* =========================================
-   DÉMARRAGE DE 90MINUTES
+   DÉMARRAGE
 ========================================= */
 
 const PORT = process.env.PORT || 3000;
