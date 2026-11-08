@@ -8,19 +8,36 @@ const app = express();
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
-/* NOMS DES ENTRAÎNEURS
-   À compléter ou actualiser dans equipes.json.
-   Un nom non renseigné apparaît "À confirmer".
-*/
+/* =========================================
+   PITCH'AURA - ENTRAÎNEURS DES 20 CLUBS
+========================================= */
 
 const entraineurs = {
   "psg": "Luis Enrique",
+  "real-madrid": "José Mourinho",
   "barcelone": "Hansi Flick",
+  "manchester-city": "Enzo Maresca",
   "arsenal": "Mikel Arteta",
+  "liverpool": "Andoni Iraola",
+  "chelsea": "Xabi Alonso",
+  "manchester-united": "Michael Carrick",
+  "tottenham": "Roberto De Zerbi",
   "bayern": "Vincent Kompany",
+  "dortmund": "Niko Kovač",
+  "inter": "Cristian Chivu",
+  "ac-milan": "Rúben Amorim",
+  "juventus": "Luciano Spalletti",
+  "naples": "Massimiliano Allegri",
+  "marseille": "Bruno Genesio",
+  "monaco": "Filipe Luís",
+  "lyon": "Paulo Fonseca",
   "atletico": "Diego Simeone",
-  "lyon": "Paulo Fonseca"
+  "leverkusen": "Carles Martínez Novell"
 };
+
+/* =========================================
+   RECONNAISSANCE DES CLUBS
+========================================= */
 
 const alias = {
   psg: ["psg", "paris", "paris saint germain"],
@@ -31,7 +48,9 @@ const alias = {
   liverpool: ["liverpool"],
   chelsea: ["chelsea"],
   "manchester-united": [
-    "man utd", "man united", "manchester united"
+    "man utd",
+    "man united",
+    "manchester united"
   ],
   tottenham: ["tottenham", "spurs"],
   bayern: ["bayern", "bayern munich"],
@@ -46,8 +65,6 @@ const alias = {
   atletico: ["atletico", "atletico madrid"],
   leverkusen: ["leverkusen", "bayer leverkusen"]
 };
-
-/* RECONNAISSANCE DES CLUBS */
 
 function normaliser(texte) {
   return String(texte)
@@ -75,6 +92,7 @@ function trouverEquipes(question) {
 
     for (const nom of noms) {
       const valeur = normaliser(nom);
+
       if (!valeur) continue;
 
       const regex = new RegExp(
@@ -106,7 +124,9 @@ function trouverEquipes(question) {
     .map(item => item.id);
 }
 
-/* INFORMATIONS DES CLUBS */
+/* =========================================
+   INFORMATIONS DES ÉQUIPES
+========================================= */
 
 function liste(elements) {
   return (elements || [])
@@ -117,9 +137,11 @@ function liste(elements) {
 function nomEntraineur(id) {
   const equipe = equipes[id];
 
-  return equipe.entraineur ||
+  return (
     entraineurs[id] ||
-    "À confirmer";
+    equipe.entraineur ||
+    "À confirmer"
+  );
 }
 
 function fiche(id) {
@@ -144,7 +166,9 @@ ${liste(e.pointsFaibles)}
 `;
 }
 
-/* COMPARAISON TACTIQUE */
+/* =========================================
+   COMPARAISON TACTIQUE
+========================================= */
 
 function comparaison(idA, idB) {
   const a = equipes[idA];
@@ -152,43 +176,59 @@ function comparaison(idA, idB) {
 
   return `
 ━━━━━━━━━━━━━━━━━━━━
-COMPARAISON TACTIQUE
+⚔️ DUEL TACTIQUE
 
-${a.nom} : ${a.systeme}
+${a.nom.toUpperCase()}
+📋 ${a.systeme}
+👔 ${nomEntraineur(idA)}
+
+CONTRE
+
+${b.nom.toUpperCase()}
+📋 ${b.systeme}
+👔 ${nomEntraineur(idB)}
+
+━━━━━━━━━━━━━━━━━━━━
+ANALYSE DES STYLES
+
+${a.nom}
 ${a.style}
 
-${b.nom} : ${b.systeme}
+${b.nom}
 ${b.style}
 
 ━━━━━━━━━━━━━━━━━━━━
-DUELS TACTIQUES
+POINTS À EXPLOITER
 
-${a.nom} peut chercher à exploiter :
+${a.nom} pourrait exploiter :
 ${liste(b.pointsFaibles)}
 
-${b.nom} peut chercher à exploiter :
+${b.nom} pourrait exploiter :
 ${liste(a.pointsFaibles)}
 
 ━━━━━━━━━━━━━━━━━━━━
-CLÉS DU MATCH
+CLÉS TACTIQUES
 
-• Observer la bataille du milieu de terrain.
-• Étudier les sorties de balle sous pression.
-• Identifier les espaces derrière les défenses.
-• Comparer les transitions offensives.
-• Observer les ajustements des entraîneurs.
+• La bataille du milieu de terrain.
+• Le pressing et les sorties de balle.
+• Les espaces laissés derrière les défenses.
+• Les transitions offensives et défensives.
+• Les ajustements des entraîneurs.
 
 ━━━━━━━━━━━━━━━━━━━━
 SCÉNARIOS POSSIBLES
 
-• Une équipe pourrait contrôler la possession.
-• Le pressing pourrait provoquer des récupérations hautes.
-• Les contre-attaques pourraient créer des occasions.
-• Les changements tactiques pourraient modifier le match.
+• Une équipe pourrait dominer la possession.
+• Le pressing pourrait provoquer des erreurs.
+• Les contre-attaques pourraient être décisives.
+• Les changements tactiques pourraient
+  modifier le déroulement du match.
 `;
 }
 
-/* GÉNÉRATION DES ANALYSES */
+/* =========================================
+   GÉNÉRATION DES ANALYSES
+========================================= */
 
 function genererAnalyse(ids) {
   let texte = "PITCH'AURA — ANALYSE TACTIQUE\n";
@@ -203,26 +243,29 @@ function genererAnalyse(ids) {
 
   texte += `
 ━━━━━━━━━━━━━━━━━━━━
-INFORMATIONS
+NOTE PITCH'AURA
 
-Analyse indicative basée sur des profils
-tactiques simplifiés.
+Cette analyse est indicative et repose
+sur des profils tactiques simplifiés.
 
-Les systèmes peuvent évoluer selon les matchs.
-Les entraîneurs peuvent également changer.
+Les formations et les entraîneurs
+peuvent évoluer au cours de la saison.
 
-Il ne s'agit pas de données en direct.
+Il ne s'agit pas d'une analyse
+automatique de données de match en direct.
 `;
 
   return texte;
 }
 
-/* API : LISTE DES ÉQUIPES */
+/* =========================================
+   API - LISTE DES CLUBS
+========================================= */
 
 app.get("/api/teams", (req, res) => {
   const clubs = Object.entries(equipes)
     .map(([id, e]) => ({
-      id,
+      id: id,
       nom: e.nom,
       championnat: e.championnat,
       systeme: e.systeme,
@@ -235,7 +278,9 @@ app.get("/api/teams", (req, res) => {
   });
 });
 
-/* API : ANALYSE */
+/* =========================================
+   API - ANALYSE TACTIQUE
+========================================= */
 
 app.post("/api/analyze", (req, res) => {
   try {
@@ -246,7 +291,8 @@ app.post("/api/analyze", (req, res) => {
         id =>
           typeof id === "string" &&
           Object.prototype.hasOwnProperty.call(
-            equipes, id
+            equipes,
+            id
           )
       );
 
@@ -279,20 +325,22 @@ app.post("/api/analyze", (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       analysis: genererAnalyse(ids)
     });
 
   } catch (erreur) {
     console.error(erreur);
 
-    res.status(500).json({
+    return res.status(500).json({
       erreur: "Erreur lors de l'analyse."
     });
   }
 });
 
-/* PAGE D'ACCUEIL */
+/* =========================================
+   PAGE D'ACCUEIL
+========================================= */
 
 app.get("/", (req, res) => {
   res.sendFile(
@@ -300,8 +348,14 @@ app.get("/", (req, res) => {
   );
 });
 
-/* DÉMARRAGE DU SERVEUR */
+/* =========================================
+   DÉMARRAGE DE PITCH'AURA
+========================================= */
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("PITCH'AURA est en ligne !");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(
+    `PITCH'AURA est en ligne sur le port ${PORT}`
+  );
 });
