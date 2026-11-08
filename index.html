@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PITCH'AURA | Le football autrement</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #08120e;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      background: #102019;
+      border-bottom: 1px solid #245037;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .logo { font-size: 25px; font-weight: bold; }
+    .green { color: #35df80; }
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      margin-left: 15px;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 65px 20px;
+    }
+    h1 { font-size: clamp(32px, 6vw, 55px); }
+    p { color: #bacac0; line-height: 1.7; }
+    .panel {
+      background: #12251b;
+      border: 1px solid #28543b;
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 35px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #346548;
+      background: #09170f;
+      color: white;
+      font-size: 16px;
+      resize: vertical;
+    }
+    button {
+      background: #35df80;
+      color: #06120a;
+      border: none;
+      border-radius: 9px;
+      padding: 15px 24px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:disabled { opacity: .6; cursor: wait; }
+    #resultat {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .feature {
+      background: #102019;
+      border-radius: 12px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">PITCH'<span class="green">AURA</span></div>
+    <nav>
+      <a href="#accueil">Accueil</a>
+      <a href="#analyse">Analyses</a>
+      <a href="#fonctionnalites">Découvrir</a>
+    </nav>
+  </header>
+
+  <main id="accueil">
+    <h1>Le football, <span class="green">autrement.</span></h1>
+    <p>
+      Explore les tactiques, comprends les matchs
+      et découvre le football sous un nouvel angle.
+    </p>
+
+    <section class="panel" id="analyse">
+      <h2>⚽ Analyse tactique</h2>
+      <p>Quel match ou quelle équipe veux-tu analyser ?</p>
+
+      <form id="formulaire">
+        <textarea id="question" required
+          placeholder="Exemple : Analyse tactiquement le PSG contre le Real Madrid."></textarea>
+        <button id="bouton" type="submit">
+          Générer mon analyse
+        </button>
+      </form>
+
+      <div id="resultat" aria-live="polite"></div>
+    </section>
+
+    <section id="fonctionnalites">
+      <h2>Découvre PITCH'AURA</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>🧠 Intelligence artificielle</h3>
+          <p>Des analyses tactiques détaillées.</p>
+        </div>
+        <div class="feature">
+          <h3>📊 Statistiques</h3>
+          <p>Comprends les performances des équipes.</p>
+        </div>
+        <div class="feature">
+          <h3>🌍 Communauté</h3>
+          <p>Partage ta vision du football.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const formulaire = document.getElementById("formulaire");
+    const question = document.getElementById("question");
+    const resultat = document.getElementById("resultat");
+    const bouton = document.getElementById("bouton");
+
+    formulaire.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      bouton.disabled = true;
+      resultat.textContent = "Analyse en cours...";
+
+      try {
+        const reponse = await fetch("/api/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: question.value })
+        });
+
+        if (!reponse.ok) {
+          throw new Error("Le serveur d'analyse n'est pas disponible.");
+        }
+
+        const donnees = await reponse.json();
+        resultat.textContent =
+          donnees.analysis || donnees.analyse ||
+          donnees.result || donnees.response ||
+          "Aucune analyse reçue.";
+      } catch (erreur) {
+        resultat.textContent =
+          "L'analyse IA n'est pas encore connectée. " +
+          "Nous allons configurer le serveur.";
+      } finally {
+        bouton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
