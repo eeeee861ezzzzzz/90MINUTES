@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rédaction | 90MINUTES</title>
+
   <style>
     * { box-sizing: border-box; }
 
@@ -77,12 +78,21 @@
       gap: 18px;
     }
 
-    button {
+    button, .bouton {
+      display: inline-block;
       border: none;
       border-radius: 7px;
       padding: 14px 20px;
+      font: inherit;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .primary {
@@ -95,6 +105,11 @@
       color: #101923;
     }
 
+    .gold {
+      background: #d8b46a;
+      color: #101923;
+    }
+
     .actions {
       display: flex;
       gap: 12px;
@@ -102,9 +117,22 @@
       margin-top: 25px;
     }
 
+    .connexion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .connexion p {
+      margin-bottom: 0;
+    }
+
     #message {
       margin-top: 15px;
       font-weight: bold;
+      white-space: pre-wrap;
     }
 
     .preview {
@@ -140,6 +168,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <header>
@@ -148,14 +177,56 @@
 </header>
 
 <main>
+
+  <div class="panel">
+    <div class="connexion">
+      <div>
+        <h2>Administration</h2>
+        <p id="statutConnexion">
+          Vérification de la connexion...
+        </p>
+      </div>
+
+      <div class="actions" style="margin-top:0">
+        <a
+          id="boutonConnexion"
+          class="bouton gold"
+          href="/auth"
+          hidden
+        >
+          Se connecter avec GitHub
+        </a>
+
+        <button
+          id="boutonDeconnexion"
+          type="button"
+          class="secondary"
+          onclick="deconnecter()"
+          hidden
+        >
+          Se déconnecter
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="panel">
     <h2>Nouvel article</h2>
-    <p>Rédige ton analyse et prépare-la avant publication.</p>
+
+    <p>
+      Rédige ton analyse, enregistre ton brouillon,
+      prévisualise puis publie sur 90MINUTES.
+    </p>
 
     <form id="articleForm">
+
       <label for="titre">Titre de l'article</label>
-      <input id="titre" maxlength="150" required
-        placeholder="Ex : Comment le pressing a changé le match">
+      <input
+        id="titre"
+        maxlength="150"
+        required
+        placeholder="Ex : Comment le pressing a changé le match"
+      >
 
       <div class="grid">
         <div>
@@ -185,11 +256,18 @@
       <div class="grid">
         <div>
           <label for="equipeA">Équipe à domicile</label>
-          <input id="equipeA" placeholder="Ex : PSG">
+          <input
+            id="equipeA"
+            placeholder="Ex : PSG"
+          >
         </div>
+
         <div>
           <label for="equipeB">Équipe à l'extérieur</label>
-          <input id="equipeB" placeholder="Ex : Marseille">
+          <input
+            id="equipeB"
+            placeholder="Ex : Marseille"
+          >
         </div>
       </div>
 
@@ -198,6 +276,7 @@
           <label for="scoreA">Buts domicile</label>
           <input id="scoreA" type="number" min="0" max="99">
         </div>
+
         <div>
           <label for="scoreB">Buts extérieur</label>
           <input id="scoreB" type="number" min="0" max="99">
@@ -205,40 +284,81 @@
       </div>
 
       <label for="image">URL de la photo de couverture</label>
-      <input id="image" type="url"
-        placeholder="https://exemple.com/photo.jpg">
+      <input
+        id="image"
+        type="url"
+        placeholder="https://exemple.com/photo.jpg"
+      >
 
       <label for="introduction">Introduction</label>
-      <textarea id="introduction" required
-        placeholder="Présente le contexte et l'enjeu du match..."></textarea>
+      <textarea
+        id="introduction"
+        required
+        placeholder="Présente le contexte et l'enjeu du match..."
+      ></textarea>
 
       <label for="analyse">Analyse tactique détaillée</label>
-      <textarea id="analyse" required
+      <textarea
+        id="analyse"
+        required
         style="min-height:300px"
-        placeholder="Explique les systèmes, le pressing, les transitions, les ajustements et les moments décisifs..."></textarea>
+        placeholder="Explique les systèmes, le pressing, les transitions et les moments décisifs..."
+      ></textarea>
 
       <label for="verdict">Le verdict 90MINUTES</label>
-      <textarea id="verdict"
-        placeholder="Ton bilan personnel du match..."></textarea>
+      <textarea
+        id="verdict"
+        placeholder="Ton bilan personnel du match..."
+      ></textarea>
 
       <div class="actions">
-        <button type="button" class="secondary" onclick="enregistrer()">
+
+        <button
+          type="button"
+          class="secondary"
+          onclick="enregistrer()"
+        >
           Enregistrer le brouillon
         </button>
-        <button type="button" class="primary" onclick="previsualiser()">
+
+        <button
+          type="button"
+          class="primary"
+          onclick="previsualiser()"
+        >
           Prévisualiser l'article
         </button>
+
+        <button
+          id="boutonPublier"
+          type="button"
+          class="gold"
+          onclick="publier()"
+          disabled
+        >
+          Publier l'article
+        </button>
+
       </div>
 
       <p id="message" role="status"></p>
+
     </form>
   </div>
 
   <article class="panel preview" id="preview">
+
     <p class="category" id="previewCategorie"></p>
+
     <h2 id="previewTitre"></h2>
+
     <p id="previewMatch"></p>
-    <img id="previewImage" alt="Couverture de l'article" hidden>
+
+    <img
+      id="previewImage"
+      alt="Couverture de l'article"
+      hidden
+    >
 
     <h3>Introduction</h3>
     <section id="previewIntroduction"></section>
@@ -248,48 +368,128 @@
 
     <h3>Le verdict 90MINUTES</h3>
     <section id="previewVerdict"></section>
+
   </article>
+
 </main>
 
 <script>
   const champs = [
-    "titre", "categorie", "championnat",
-    "equipeA", "equipeB", "scoreA", "scoreB",
-    "image", "introduction", "analyse", "verdict"
+    "titre",
+    "categorie",
+    "championnat",
+    "equipeA",
+    "equipeB",
+    "scoreA",
+    "scoreB",
+    "image",
+    "introduction",
+    "analyse",
+    "verdict"
   ];
+
+  let connecte = false;
+  let publicationEnCours = false;
 
   function valeur(id) {
     return document.getElementById(id).value.trim();
   }
 
-  function enregistrer() {
-    const brouillon = {};
+  function afficherMessage(texte, erreur = false) {
+    const element = document.getElementById("message");
 
-    champs.forEach(id => {
-      brouillon[id] = valeur(id);
-    });
-
-    localStorage.setItem(
-      "90minutes-brouillon",
-      JSON.stringify(brouillon)
-    );
-
-    document.getElementById("message").textContent =
-      "Brouillon enregistré sur ce navigateur.";
+    element.textContent = texte;
+    element.style.color = erreur
+      ? "#b42318"
+      : "#17663a";
   }
 
-  function previsualiser() {
-    const titre = valeur("titre");
-    const introduction = valeur("introduction");
-    const analyse = valeur("analyse");
+  function donneesFormulaire() {
+    const article = {};
 
-    if (!titre || !introduction || !analyse) {
-      document.getElementById("message").textContent =
-        "Complète le titre, l'introduction et l'analyse.";
-      return;
+    champs.forEach(id => {
+      article[id] = valeur(id);
+    });
+
+    return article;
+  }
+
+  function articleValide() {
+    const formulaire = document.getElementById("articleForm");
+
+    if (!formulaire.reportValidity()) {
+      return false;
     }
 
-    document.getElementById("previewTitre").textContent = titre;
+    if (
+      !valeur("titre") ||
+      !valeur("introduction") ||
+      !valeur("analyse")
+    ) {
+      afficherMessage(
+        "Complète le titre, l'introduction et l'analyse.",
+        true
+      );
+
+      return false;
+    }
+
+    return true;
+  }
+
+  // ==================================
+  // BROUILLON LOCAL
+  // ==================================
+
+  function enregistrer() {
+    try {
+      localStorage.setItem(
+        "90minutes-brouillon",
+        JSON.stringify(donneesFormulaire())
+      );
+
+      afficherMessage(
+        "Brouillon enregistré sur ce navigateur."
+      );
+    } catch {
+      afficherMessage(
+        "Impossible d'enregistrer le brouillon.",
+        true
+      );
+    }
+  }
+
+  function chargerBrouillon() {
+    try {
+      const sauvegarde = localStorage.getItem(
+        "90minutes-brouillon"
+      );
+
+      if (!sauvegarde) return;
+
+      const brouillon = JSON.parse(sauvegarde);
+
+      champs.forEach(id => {
+        if (typeof brouillon[id] === "string") {
+          document.getElementById(id).value =
+            brouillon[id];
+        }
+      });
+
+    } catch {
+      console.error("Brouillon invalide.");
+    }
+  }
+
+  // ==================================
+  // PRÉVISUALISATION
+  // ==================================
+
+  function previsualiser() {
+    if (!articleValide()) return;
+
+    document.getElementById("previewTitre").textContent =
+      valeur("titre");
 
     document.getElementById("previewCategorie").textContent =
       valeur("categorie") + " · " + valeur("championnat");
@@ -299,48 +499,225 @@
     const scoreA = valeur("scoreA");
     const scoreB = valeur("scoreB");
 
+    let resultat = "";
+
+    if (equipeA && equipeB) {
+      resultat = equipeA;
+
+      if (scoreA !== "" && scoreB !== "") {
+        resultat += " " + scoreA + " - " + scoreB;
+      } else {
+        resultat += " contre";
+      }
+
+      resultat += " " + equipeB;
+    }
+
     document.getElementById("previewMatch").textContent =
-      equipeA && equipeB
-        ? equipeA + " " + scoreA + " - " + scoreB + " " + equipeB
-        : "";
+      resultat;
 
     const photo = document.getElementById("previewImage");
     const url = valeur("image");
 
     photo.hidden = !url;
-    if (url) photo.src = url;
-    else photo.removeAttribute("src");
 
-    document.getElementById("previewIntroduction").textContent =
-      introduction;
+    if (url) {
+      photo.src = url;
+    } else {
+      photo.removeAttribute("src");
+    }
 
-    document.getElementById("previewAnalyse").textContent =
-      analyse;
+    document.getElementById(
+      "previewIntroduction"
+    ).textContent = valeur("introduction");
 
-    document.getElementById("previewVerdict").textContent =
-      valeur("verdict");
+    document.getElementById(
+      "previewAnalyse"
+    ).textContent = valeur("analyse");
 
-    document.getElementById("preview").style.display = "block";
+    document.getElementById(
+      "previewVerdict"
+    ).textContent = valeur("verdict");
+
+    document.getElementById("preview").style.display =
+      "block";
+
     document.getElementById("preview").scrollIntoView({
       behavior: "smooth"
     });
   }
 
-  const sauvegarde = localStorage.getItem("90minutes-brouillon");
+  // ==================================
+  // CONNEXION GITHUB
+  // ==================================
 
-  if (sauvegarde) {
+  function mettreAJourConnexion() {
+    document.getElementById(
+      "boutonConnexion"
+    ).hidden = connecte;
+
+    document.getElementById(
+      "boutonDeconnexion"
+    ).hidden = !connecte;
+
+    document.getElementById(
+      "boutonPublier"
+    ).disabled = !connecte || publicationEnCours;
+
+    document.getElementById(
+      "statutConnexion"
+    ).textContent = connecte
+      ? "Connecté en tant qu'administrateur 90MINUTES."
+      : "Connecte-toi avec GitHub pour publier.";
+  }
+
+  async function verifierConnexion() {
     try {
-      const brouillon = JSON.parse(sauvegarde);
-
-      champs.forEach(id => {
-        if (typeof brouillon[id] === "string") {
-          document.getElementById(id).value = brouillon[id];
-        }
+      const reponse = await fetch("/api/me", {
+        credentials: "same-origin",
+        cache: "no-store"
       });
+
+      if (!reponse.ok) {
+        throw new Error("Vérification impossible.");
+      }
+
+      const donnees = await reponse.json();
+
+      connecte = donnees.authenticated === true;
+
+    } catch {
+      connecte = false;
+
+      document.getElementById(
+        "statutConnexion"
+      ).textContent =
+        "Impossible de vérifier la connexion.";
+    }
+
+    mettreAJourConnexion();
+  }
+
+  async function deconnecter() {
+    try {
+      await fetch("/api/logout", {
+        method: "POST",
+        credentials: "same-origin"
+      });
+    } catch {
+      afficherMessage(
+        "Erreur lors de la déconnexion.",
+        true
+      );
+
+      return;
+    }
+
+    connecte = false;
+    mettreAJourConnexion();
+
+    afficherMessage("Tu es déconnecté.");
+  }
+
+  // ==================================
+  // PUBLICATION GITHUB
+  // ==================================
+
+  async function publier() {
+    if (publicationEnCours) return;
+
+    if (!connecte) {
+      afficherMessage(
+        "Connecte-toi avec GitHub avant de publier.",
+        true
+      );
+
+      return;
+    }
+
+    if (!articleValide()) return;
+
+    const confirmation = confirm(
+      "Publier cet article sur 90MINUTES ?"
+    );
+
+    if (!confirmation) return;
+
+    const formulaire = donneesFormulaire();
+
+    const article = {
+      titre: formulaire.titre,
+      categorie: formulaire.categorie,
+      championnat: formulaire.championnat,
+
+      domicile: formulaire.equipeA,
+      exterieur: formulaire.equipeB,
+
+      scoreDomicile: formulaire.scoreA,
+      scoreExterieur: formulaire.scoreB,
+
+      introduction: formulaire.introduction,
+      analyse: formulaire.analyse,
+      verdict: formulaire.verdict
+    };
+
+    publicationEnCours = true;
+    mettreAJourConnexion();
+
+    afficherMessage(
+      "Publication en cours sur GitHub..."
+    );
+
+    try {
+      const reponse = await fetch("/api/publish", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(article)
+      });
+
+      const resultat = await reponse.json();
+
+      if (!reponse.ok) {
+        if (reponse.status === 401) {
+          connecte = false;
+        }
+
+        throw new Error(
+          resultat.erreur ||
+          "Publication impossible."
+        );
+      }
+
+      afficherMessage(
+        "Article enregistré sur GitHub ! " +
+        "Il sera visible après le déploiement Render."
+      );
+
+      localStorage.removeItem(
+        "90minutes-brouillon"
+      );
+
     } catch (erreur) {
-      console.error("Brouillon invalide.");
+      afficherMessage(
+        erreur.message,
+        true
+      );
+    } finally {
+      publicationEnCours = false;
+      mettreAJourConnexion();
     }
   }
+
+  // ==================================
+  // INITIALISATION
+  // ==================================
+
+  chargerBrouillon();
+  verifierConnexion();
+
 </script>
 
 </body>
