@@ -3,138 +3,301 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07130e">
 <title>PITCH'AURA | Le football autrement</title>
 
 <style>
-:root {
+:root{
   --bg:#07130e;
   --panel:#10231a;
   --green:#38e888;
   --muted:#a3b8aa;
   --border:#294a36;
 }
-
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-
-body {
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
   margin:0;
   background:var(--bg);
   color:white;
   font-family:Arial,sans-serif;
 }
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+button:disabled{opacity:.5;cursor:not-allowed}
+.hidden{display:none!important}
+.green{color:var(--green)}
 
-header {
-  background:#0b1b13;
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#0b1b13f5;
   border-bottom:1px solid var(--border);
-  padding:20px 6%;
+  padding:18px 6%;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.logo {
-  font-size:25px;
-  font-weight:900;
-}
-
-.green { color:var(--green); }
-
-nav {
-  display:flex;
-  flex-wrap:wrap;
   gap:20px;
 }
-
-nav a {
-  color:#d2e5d8;
-  text-decoration:none;
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+nav{
+  display:flex;
+  align-items:center;
+  gap:23px;
+  flex-wrap:wrap;
+}
+nav a{
+  color:#c5d9cd;
   font-size:14px;
 }
+nav a:hover{color:var(--green)}
+.nav-cta{
+  background:var(--green);
+  color:#062011;
+  padding:12px 17px;
+  border-radius:10px;
+  font-weight:bold;
+}
+nav .nav-cta{color:#062011}
 
-nav a:hover { color:var(--green); }
-
-main {
-  max-width:1100px;
+main{
+  max-width:1180px;
   margin:auto;
-  padding:0 20px 70px;
+  padding:0 22px 80px;
 }
 
-.hero {
-  padding:75px 0 50px;
-  text-align:center;
-}
+/* ACCUEIL */
 
-h1 {
-  font-size:clamp(38px,7vw,70px);
-  margin:15px 0;
+.hero{
+  min-height:600px;
+  display:grid;
+  grid-template-columns:1.05fr 1fr;
+  align-items:center;
+  gap:50px;
+  padding:90px 0;
 }
-
-.hero p {
+.eyebrow{
+  display:inline-block;
+  color:var(--green);
+  background:#123823;
+  border:1px solid #276642;
+  padding:10px 15px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+.hero h1{
+  font-size:clamp(42px,5vw,70px);
+  line-height:1.07;
+  letter-spacing:-2px;
+  margin:25px 0;
+}
+.hero-description{
+  font-size:17px;
   color:var(--muted);
   line-height:1.8;
+  max-width:520px;
 }
-
-.stats {
+.hero-actions{
   display:flex;
-  justify-content:center;
+  gap:12px;
   flex-wrap:wrap;
-  gap:35px;
   margin-top:30px;
 }
+.btn{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  padding:16px 22px;
+  border-radius:11px;
+  font-size:14px;
+  font-weight:bold;
+  border:1px solid transparent;
+}
+.btn-green{
+  background:var(--green);
+  color:#062011;
+}
+.btn-green:hover{background:#75f4ab}
+.btn-outline{
+  background:#11271b;
+  border-color:#37674a;
+  color:white;
+}
+.btn-outline:hover{border-color:var(--green)}
 
-.stat strong {
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:35px;
+  margin-top:45px;
+}
+.stat strong{
   display:block;
-  font-size:28px;
   color:var(--green);
+  font-size:28px;
+}
+.stat span{
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.5px;
 }
 
-.stat span {
-  color:var(--muted);
+/* APERÇU TACTIQUE */
+
+.preview{
+  background:linear-gradient(145deg,#153b29,#0a1911);
+  border:1px solid #326747;
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 25px 65px #0006;
+}
+.preview-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.preview-header strong{font-size:15px}
+.preview-tag{
+  color:var(--green);
+  background:#19452b;
+  padding:8px 11px;
+  border-radius:20px;
+  font-size:11px;
+}
+.preview-pitch{
+  position:relative;
+  width:100%;
+  aspect-ratio:1.45;
+  border:2px solid #d5f2dcb3;
+  border-radius:8px;
+  overflow:hidden;
+  background:repeating-linear-gradient(
+    90deg,
+    #155d3b 0%,
+    #155d3b 12.5%,
+    #1b6c45 12.5%,
+    #1b6c45 25%
+  );
+}
+.pitch-mid{
+  position:absolute;
+  left:50%;
+  height:100%;
+  border-left:2px solid #ffffff80;
+}
+.pitch-circle{
+  position:absolute;
+  width:25%;
+  aspect-ratio:1;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border:2px solid #ffffff80;
+  border-radius:50%;
+}
+.pitch-box{
+  position:absolute;
+  top:25%;
+  height:50%;
+  width:17%;
+  border:2px solid #ffffff80;
+}
+.pitch-box.left{left:0;border-left:0}
+.pitch-box.right{right:0;border-right:0}
+.preview-player{
+  position:absolute;
+  width:clamp(13px,1.8vw,22px);
+  height:clamp(13px,1.8vw,22px);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:9px;
+  font-weight:bold;
+  box-shadow:0 2px 5px #0007;
+}
+.preview-player.a{
+  background:var(--green);
+  color:#07311b;
+}
+.preview-player.b{
+  background:#f3f6ff;
+  color:#142a40;
+}
+.preview-ball{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:16px;
+}
+.preview-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:16px;
+  color:#c8e5d1;
   font-size:12px;
 }
+.preview-footer span:first-child{color:var(--green)}
 
-h2 { margin-top:0; }
+/* SECTIONS */
 
-.panel,.result-card,.feature {
+.section{
+  margin-top:75px;
+  scroll-margin-top:100px;
+}
+.section-heading{
+  margin-bottom:24px;
+}
+.section-heading h2{
+  font-size:clamp(26px,4vw,36px);
+  margin:0 0 10px;
+}
+.section-heading p{
+  color:var(--muted);
+  line-height:1.7;
+}
+.panel,.result-card,.feature{
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
   padding:25px;
 }
-
-.panel p,.feature p {
+.panel p,.feature p{
   color:var(--muted);
   line-height:1.7;
 }
-
-.mode-tabs {
+.mode-tabs{
   display:flex;
-  gap:10px;
+  gap:12px;
   margin:25px 0;
 }
-
-.mode-tab {
+.mode-tab{
   flex:1;
+  padding:15px;
   background:#14291d;
   color:white;
   border:1px solid var(--border);
-  padding:15px;
   border-radius:10px;
   font-weight:bold;
-  cursor:pointer;
 }
-
-.mode-tab.active {
+.mode-tab.active{
   background:var(--green);
   color:#062011;
 }
-
-textarea,input {
+textarea,input{
   width:100%;
   background:#091911;
   color:white;
@@ -143,23 +306,19 @@ textarea,input {
   padding:15px;
   font:16px Arial,sans-serif;
 }
-
-textarea {
-  min-height:120px;
+textarea{
+  min-height:125px;
   resize:vertical;
 }
-
-input:focus,textarea:focus {
+textarea:focus,input:focus{
   outline:1px solid var(--green);
 }
-
-label {
+label{
   display:block;
-  margin-bottom:10px;
+  margin:0 0 10px;
   color:#d8efdf;
 }
-
-.primary {
+.primary{
   width:100%;
   background:var(--green);
   color:#062011;
@@ -168,37 +327,27 @@ label {
   padding:17px;
   margin-top:18px;
   font-weight:bold;
-  cursor:pointer;
 }
-
-.primary:disabled {
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-.examples {
+.primary:hover:not(:disabled){background:#75f4ab}
+.examples{
   display:flex;
-  flex-wrap:wrap;
   gap:10px;
+  flex-wrap:wrap;
   margin-top:15px;
 }
-
-.example {
+.example{
   background:#193526;
   color:#d3f4de;
   border:1px solid #356549;
   border-radius:20px;
   padding:10px 13px;
-  cursor:pointer;
 }
-
-.team-grid {
+.team-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:20px;
 }
-
-.team-list {
+.team-list{
   background:#091911;
   border:1px solid #345640;
   border-radius:12px;
@@ -206,8 +355,7 @@ label {
   overflow-y:auto;
   margin-top:8px;
 }
-
-.team-item {
+.team-item{
   display:block;
   width:100%;
   padding:13px;
@@ -216,23 +364,18 @@ label {
   border-bottom:1px solid #223e2c;
   color:white;
   text-align:left;
-  cursor:pointer;
 }
-
-.team-item:hover { background:#1b3b28; }
-
-.team-item.selected {
+.team-item:hover{background:#1b3b28}
+.team-item.selected{
   background:#215c37;
   color:#baffd0;
 }
-
-.team-item small {
+.team-item small{
   display:block;
   color:#a3b8aa;
   margin-top:5px;
 }
-
-.selected-team {
+.selected-team{
   margin-top:12px;
   padding:12px;
   border-radius:10px;
@@ -242,61 +385,47 @@ label {
   min-height:45px;
 }
 
-.hidden { display:none !important; }
+/* RÉSULTATS */
 
-#resultats {
+#resultats{
   margin-top:30px;
-  scroll-margin-top:20px;
+  scroll-margin-top:100px;
 }
-
-.result-title {
+.result-title{
   background:#17462a;
   padding:20px;
   border-radius:15px;
   margin-bottom:20px;
 }
-
-.result-title h2 {
+.result-title h2{
   color:var(--green);
   margin:0;
 }
-
-.result-title p {
-  color:#c7e8d1;
-  margin-bottom:0;
-}
-
-.result-grid {
+.result-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:15px;
   align-items:start;
 }
-
-.result-card {
+.result-card{
   min-width:0;
   border-top:3px solid var(--green);
-  height:auto;
 }
-
-.result-card h3 {
+.result-card h3{
   color:var(--green);
   font-size:18px;
   margin:0 0 15px;
   overflow-wrap:anywhere;
 }
-
-.result-card pre {
+.result-card pre{
   white-space:pre-wrap;
   overflow-wrap:anywhere;
   font:14px/1.8 Arial,sans-serif;
   color:#d8e9dd;
   margin:0;
 }
-
-.full { grid-column:1/-1; }
-
-.duel-action {
+.full{grid-column:1/-1}
+.duel-action{
   background:linear-gradient(120deg,#17462a,#0d2117);
   border:1px solid #39764d;
   border-radius:16px;
@@ -304,63 +433,55 @@ label {
   margin-top:20px;
   text-align:center;
 }
-
-.duel-action h3 {
-  color:var(--green);
-  margin-top:0;
+.duel-action h3{color:var(--green)}
+.duel-action p{color:#c3e6cd}
+.terrain-button{
+  display:inline-block;
+  padding:15px 22px;
+  background:var(--green);
+  color:#062011;
+  border-radius:10px;
+  font-weight:bold;
 }
+.terrain-button:hover{background:#75f4ab}
 
-.duel-action p {
-  color:#c3e6cd;
-  line-height:1.6;
-}
+/* DÉCOUVRIR */
 
-.terrain-banner {
+.terrain-banner{
   background:linear-gradient(120deg,#153f28,#0d2117);
   border:1px solid #39764d;
   border-radius:18px;
   padding:30px;
   margin-top:35px;
 }
-
-.terrain-banner p { color:#c3e6cd; }
-
-.terrain-button {
-  display:inline-block;
-  padding:15px 22px;
-  background:var(--green);
-  color:#062011;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
+.terrain-banner p{
+  color:#c3e6cd;
+  line-height:1.7;
 }
-
-.terrain-button:hover { background:#69f4a4; }
-
-.features {
+.features{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:15px;
 }
+.feature h3{margin-top:0}
+.feature{transition:transform .2s}
+.feature:hover{transform:translateY(-3px)}
 
-footer {
+footer{
   text-align:center;
   border-top:1px solid var(--border);
-  padding:30px;
+  padding:35px 20px;
   color:var(--muted);
   font-size:13px;
   line-height:1.7;
 }
-
-footer button {
+footer button{
   color:var(--green);
   background:none;
   border:0;
   text-decoration:underline;
-  cursor:pointer;
 }
-
-.cookie-banner {
+.cookie-banner{
   position:fixed;
   bottom:15px;
   left:50%;
@@ -373,47 +494,57 @@ footer button {
   z-index:100;
   box-shadow:0 8px 35px #0009;
 }
-
-.cookie-banner p {
+.cookie-banner p{
   color:#d0e2d5;
   font-size:14px;
   line-height:1.6;
 }
-
-.cookie-actions {
+.cookie-actions{
   display:flex;
   gap:10px;
 }
-
-.cookie-actions button {
+.cookie-actions button{
   flex:1;
   padding:13px;
   border-radius:9px;
-  cursor:pointer;
 }
-
-.accept {
+.accept{
   background:var(--green);
   color:#062011;
   border:0;
 }
-
-.reject {
+.reject{
   background:#10231a;
   color:white;
   border:1px solid #4a9163;
 }
 
-@media(max-width:700px) {
-  header,nav { justify-content:center; }
-
-  .team-grid,.result-grid,.features {
+@media(max-width:850px){
+  .hero{
+    grid-template-columns:1fr;
+    gap:35px;
+    padding:60px 0;
+    min-height:auto;
+  }
+  .hero-content{text-align:center}
+  .hero-description{margin:auto}
+  .hero-actions,.stats{justify-content:center}
+  .preview{max-width:650px;width:100%;margin:auto}
+  header{justify-content:center}
+}
+@media(max-width:650px){
+  nav{justify-content:center;gap:12px}
+  nav a{font-size:12px}
+  .hero h1{letter-spacing:-1px}
+  .team-grid,.result-grid,.features{
     grid-template-columns:1fr;
   }
-
-  .full { grid-column:auto; }
-  .hero { padding:50px 0 35px; }
-  .panel,.result-card { padding:18px; }
+  .full{grid-column:auto}
+  .panel,.result-card{padding:18px}
+  .hero-actions .btn{width:100%}
+  .stats{gap:20px}
+  .mode-tabs{gap:7px}
+  .preview-player{width:17px;height:17px}
 }
 </style>
 </head>
@@ -428,50 +559,93 @@ footer button {
   <nav>
     <a href="#accueil">Accueil</a>
     <a href="#analyse">Analyseur</a>
-    <a href="/terrain.html">⚽ Terrain tactique</a>
+    <a href="/terrain.html">Terrain tactique</a>
     <a href="#decouvrir">Découvrir</a>
+    <a href="#analyse" class="nav-cta">Commencer →</a>
   </nav>
 </header>
 
 <main>
 
 <section class="hero" id="accueil">
-  <p class="green">LA NOUVELLE EXPÉRIENCE TACTIQUE</p>
 
-  <h1>
-    LE FOOTBALL.<br>
-    <span class="green">AUTREMENT.</span>
-  </h1>
+  <div class="hero-content">
+    <span class="eyebrow">
+      ⚽ LA NOUVELLE EXPÉRIENCE TACTIQUE
+    </span>
 
-  <p>
-    Analyse les équipes, compare leurs systèmes
-    et découvre les stratégies du football.
-  </p>
+    <h1>
+      COMPRENDS<br>
+      LE FOOTBALL.<br>
+      <span class="green">AUTREMENT.</span>
+    </h1>
 
-  <div class="stats">
-    <div class="stat">
-      <strong id="total-clubs">20</strong>
-      <span>CLUBS DISPONIBLES</span>
+    <p class="hero-description">
+      Analyse les équipes, compare leurs stratégies
+      et visualise les mouvements sur le terrain.
+      Une nouvelle façon de découvrir le football.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#analyse" class="btn btn-green">
+        ⚡ Commencer une analyse →
+      </a>
+
+      <a href="/terrain.html" class="btn btn-outline">
+        ⚽ Explorer le terrain
+      </a>
     </div>
 
-    <div class="stat">
-      <strong>5</strong>
-      <span>FORMATIONS TACTIQUES</span>
-    </div>
-
-    <div class="stat">
-      <strong>100%</strong>
-      <span>GRATUIT</span>
+    <div class="stats">
+      <div class="stat">
+        <strong id="total-clubs">20</strong>
+        <span>CLUBS DISPONIBLES</span>
+      </div>
+      <div class="stat">
+        <strong>5</strong>
+        <span>FORMATIONS TACTIQUES</span>
+      </div>
+      <div class="stat">
+        <strong>100%</strong>
+        <span>GRATUIT</span>
+      </div>
     </div>
   </div>
+
+  <div class="preview">
+    <div class="preview-header">
+      <strong>⚽ Aperçu tactique</strong>
+      <span class="preview-tag">22 JOUEURS</span>
+    </div>
+
+    <div class="preview-pitch" id="preview-pitch">
+      <div class="pitch-mid"></div>
+      <div class="pitch-circle"></div>
+      <div class="pitch-box left"></div>
+      <div class="pitch-box right"></div>
+      <div class="preview-ball">⚽</div>
+    </div>
+
+    <div class="preview-footer">
+      <span>● Équipe A — 4-3-3</span>
+      <span>Équipe B — 4-3-3 ●</span>
+    </div>
+  </div>
+
 </section>
 
-<section id="analyse">
-  <h2>⚽ Analyseur PITCH'AURA</h2>
+<section class="section" id="analyse">
+
+  <div class="section-heading">
+    <h2>🧠 Analyseur PITCH'AURA</h2>
+    <p>
+      Décrypte les systèmes de jeu et compare
+      les approches tactiques de tes clubs préférés.
+    </p>
+  </div>
 
   <div class="panel">
     <h2>Choisis ta méthode</h2>
-
     <p>
       Écris librement ta demande ou sélectionne
       deux clubs pour les comparer.
@@ -480,7 +654,6 @@ footer button {
     <div class="mode-tabs">
       <button id="tab-texte" class="mode-tab active"
         type="button">✍️ Écrire</button>
-
       <button id="tab-selection" class="mode-tab"
         type="button">⚔️ Sélectionner</button>
     </div>
@@ -488,7 +661,6 @@ footer button {
     <div id="mode-texte">
       <form id="form-texte">
         <label for="question">Ta demande d'analyse</label>
-
         <textarea id="question" maxlength="1000"
           placeholder="Analyse PSG contre Arsenal"
           required></textarea>
@@ -503,12 +675,10 @@ footer button {
           data-question="Analyse PSG contre Real Madrid">
           PSG vs Real
         </button>
-
         <button class="example" type="button"
           data-question="Analyse Marseille contre Lyon">
           OM vs OL
         </button>
-
         <button class="example" type="button"
           data-question="Analyse Bayern contre Arsenal">
           Bayern vs Arsenal
@@ -518,15 +688,12 @@ footer button {
 
     <div id="mode-selection" class="hidden">
       <div class="team-grid">
-
         <div>
           <label for="recherche-a">Équipe 1</label>
           <input id="recherche-a" type="search"
             placeholder="Rechercher un club..."
             autocomplete="off">
-
           <div id="liste-a" class="team-list"></div>
-
           <div id="choix-a" class="selected-team">
             Aucune équipe sélectionnée
           </div>
@@ -537,14 +704,11 @@ footer button {
           <input id="recherche-b" type="search"
             placeholder="Rechercher un club..."
             autocomplete="off">
-
           <div id="liste-b" class="team-list"></div>
-
           <div id="choix-b" class="selected-team">
             Aucune équipe sélectionnée
           </div>
         </div>
-
       </div>
 
       <button id="comparer" class="primary"
@@ -556,39 +720,52 @@ footer button {
 
   <div id="resultats" class="hidden"
     aria-live="polite"></div>
+
 </section>
 
-<section class="terrain-banner">
-  <h2>⚽ Laboratoire tactique interactif</h2>
-
-  <p>
-    Retrouve 22 joueurs sur le terrain,
-    teste le pressing, les contre-attaques,
-    les dédoublements et les circuits de passes.
-  </p>
-
-  <a href="/terrain.html" class="terrain-button">
-    Ouvrir le terrain tactique →
-  </a>
+<section class="section">
+  <div class="terrain-banner">
+    <h2>⚽ Laboratoire tactique interactif</h2>
+    <p>
+      Retrouve 22 joueurs sur le terrain.
+      Teste le pressing, les contre-attaques,
+      les dédoublements et les circuits de passes.
+    </p>
+    <a href="/terrain.html" class="terrain-button">
+      Explorer le terrain tactique →
+    </a>
+  </div>
 </section>
 
-<section id="decouvrir" style="margin-top:45px">
-  <h2>Découvre PITCH'AURA</h2>
+<section class="section" id="decouvrir">
+  <div class="section-heading">
+    <h2>Découvre PITCH'AURA</h2>
+    <p>Une plateforme pensée pour comprendre le jeu.</p>
+  </div>
 
   <div class="features">
     <div class="feature">
       <h3>🧠 Analyse tactique</h3>
-      <p>Découvre les styles et systèmes de jeu.</p>
+      <p>
+        Découvre les forces, les faiblesses
+        et les systèmes de jeu des équipes.
+      </p>
     </div>
 
     <div class="feature">
       <h3>⚔️ Comparateur</h3>
-      <p>Compare deux équipes rapidement.</p>
+      <p>
+        Compare deux clubs et découvre
+        leurs différences tactiques.
+      </p>
     </div>
 
     <div class="feature">
       <h3>📋 Terrain interactif</h3>
-      <p>Teste des mouvements avec 22 joueurs.</p>
+      <p>
+        Visualise les formations et simule
+        des mouvements avec 22 joueurs.
+      </p>
     </div>
   </div>
 </section>
@@ -615,21 +792,17 @@ footer button {
 
 <div id="cookie-banner" class="cookie-banner hidden"
   role="dialog" aria-label="Cookies statistiques">
-
   <h3>🍪 Respect de ta vie privée</h3>
-
   <p>
     PITCH'AURA utilise Google Analytics uniquement
     avec ton accord pour mesurer les visites.
-    Tu peux refuser sans perdre de fonctionnalités,
+    Tu peux refuser sans perdre de fonctionnalités
     et modifier ton choix à tout moment.
   </p>
-
   <div class="cookie-actions">
     <button id="refuser" class="reject" type="button">
       Refuser
     </button>
-
     <button id="accepter" class="accept" type="button">
       Accepter
     </button>
@@ -637,94 +810,114 @@ footer button {
 </div>
 
 <script>
+/* ===== APERÇU DU TERRAIN ===== */
+
+const preview=document.getElementById("preview-pitch");
+
+const positions=[
+  [8,50],
+  [24,15],[24,38],[24,62],[24,85],
+  [43,25],[43,50],[43,75],
+  [67,18],[70,50],[67,82]
+];
+
+function ajouterJoueur(cote,index,x,y){
+  const joueur=document.createElement("div");
+  joueur.className="preview-player "+cote;
+  joueur.textContent=index+1;
+  joueur.style.left=x+"%";
+  joueur.style.top=y+"%";
+  preview.appendChild(joueur);
+}
+
+positions.forEach((pos,i)=>{
+  ajouterJoueur("a",i,pos[0]*0.75,pos[1]);
+  ajouterJoueur("b",i,100-pos[0]*0.75,pos[1]);
+});
+
 /* ===== GOOGLE ANALYTICS ===== */
 
-const GA_ID = "G-38M7HYNKJ9";
-const CONSENT_KEY = "pitchaura_analytics_consent";
-const banner = document.getElementById("cookie-banner");
+const GA_ID="G-38M7HYNKJ9";
+const CONSENT_KEY="pitchaura_analytics_consent";
+const banner=document.getElementById("cookie-banner");
 
-let analyticsLoaded = false;
+let analyticsLoaded=false;
 
-function lireConsentement() {
-  try {
+function lireConsentement(){
+  try{
     return localStorage.getItem(CONSENT_KEY);
-  } catch {
+  }catch{
     return null;
   }
 }
 
-function enregistrerConsentement(valeur) {
-  try {
+function enregistrerConsentement(valeur){
+  try{
     localStorage.setItem(CONSENT_KEY,valeur);
-  } catch {}
+  }catch{}
 }
 
-function activerAnalytics() {
-  if(analyticsLoaded) return;
+function activerAnalytics(){
+  if(analyticsLoaded)return;
+  analyticsLoaded=true;
 
-  analyticsLoaded = true;
-
-  window.dataLayer = window.dataLayer || [];
-
-  window.gtag = function() {
+  window.dataLayer=window.dataLayer||[];
+  window.gtag=function(){
     window.dataLayer.push(arguments);
   };
 
   window.gtag("js",new Date());
   window.gtag("config",GA_ID);
 
-  const script = document.createElement("script");
-  script.async = true;
-  script.src =
-    "https://www.googletagmanager.com/gtag/js?id=" +
+  const script=document.createElement("script");
+  script.async=true;
+  script.src=
+    "https://www.googletagmanager.com/gtag/js?id="+
     encodeURIComponent(GA_ID);
 
   document.head.appendChild(script);
 }
 
-function choisirCookies(choix) {
+function choisirCookies(choix){
   enregistrerConsentement(choix);
   banner.classList.add("hidden");
 
-  if(choix==="oui") {
-    window["ga-disable-"+GA_ID] = false;
+  if(choix==="oui"){
+    window["ga-disable-"+GA_ID]=false;
     activerAnalytics();
-  } else {
-    window["ga-disable-"+GA_ID] = true;
-
-    if(analyticsLoaded) {
-      location.reload();
-    }
+  }else{
+    window["ga-disable-"+GA_ID]=true;
+    if(analyticsLoaded)location.reload();
   }
 }
 
-document.getElementById("accepter").onclick =
-  () => choisirCookies("oui");
+document.getElementById("accepter").onclick=
+  ()=>choisirCookies("oui");
 
-document.getElementById("refuser").onclick =
-  () => choisirCookies("non");
+document.getElementById("refuser").onclick=
+  ()=>choisirCookies("non");
 
-document.getElementById("cookie-settings").onclick =
-  () => banner.classList.remove("hidden");
+document.getElementById("cookie-settings").onclick=
+  ()=>banner.classList.remove("hidden");
 
-const consentement = lireConsentement();
+const consentement=lireConsentement();
 
-if(consentement==="oui") {
+if(consentement==="oui"){
   activerAnalytics();
-} else if(consentement!=="non") {
+}else if(consentement!=="non"){
   banner.classList.remove("hidden");
 }
 
-/* ===== PITCH'AURA ===== */
+/* ===== ANALYSEUR ===== */
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-let clubs = [];
-let equipeA = null;
-let equipeB = null;
-let chargement = false;
+let clubs=[];
+let equipeA=null;
+let equipeB=null;
+let chargement=false;
 
-function normaliser(texte) {
+function normaliser(texte){
   return String(texte)
     .toLowerCase()
     .normalize("NFD")
@@ -732,8 +925,8 @@ function normaliser(texte) {
     .trim();
 }
 
-function changerMode(mode) {
-  const texte = mode==="texte";
+function changerMode(mode){
+  const texte=mode==="texte";
 
   $("mode-texte").classList.toggle("hidden",!texte);
   $("mode-selection").classList.toggle("hidden",texte);
@@ -742,85 +935,81 @@ function changerMode(mode) {
   $("tab-selection").classList.toggle("active",!texte);
 }
 
-$("tab-texte").onclick = () => changerMode("texte");
-$("tab-selection").onclick = () => changerMode("selection");
+$("tab-texte").onclick=()=>changerMode("texte");
+$("tab-selection").onclick=()=>changerMode("selection");
 
-/* ===== CHARGEMENT DES CLUBS ===== */
+async function chargerClubs(){
+  try{
+    const reponse=await fetch("/api/teams");
 
-async function chargerClubs() {
-  try {
-    const reponse = await fetch("/api/teams");
-
-    if(!reponse.ok) {
+    if(!reponse.ok){
       throw new Error("Liste indisponible");
     }
 
-    const data = await reponse.json();
+    const data=await reponse.json();
 
-    clubs = Array.isArray(data.equipes)
-      ? data.equipes : [];
+    clubs=Array.isArray(data.equipes)
+      ?data.equipes:[];
 
-    $("total-clubs").textContent = clubs.length;
+    $("total-clubs").textContent=clubs.length;
 
     afficherListe("a");
     afficherListe("b");
 
-  } catch(erreur) {
-    $("liste-a").textContent =
+  }catch(erreur){
+    $("liste-a").textContent=
       "Impossible de charger les clubs.";
 
-    $("liste-b").textContent =
+    $("liste-b").textContent=
       "Impossible de charger les clubs.";
   }
 }
 
-function afficherListe(cote) {
-  const recherche = $("recherche-"+cote);
-  const liste = $("liste-"+cote);
-  const terme = normaliser(recherche.value);
+function afficherListe(cote){
+  const recherche=$("recherche-"+cote);
+  const liste=$("liste-"+cote);
+  const terme=normaliser(recherche.value);
 
   liste.replaceChildren();
 
-  const filtres = clubs.filter(club =>
-    normaliser(club.nom).includes(terme) ||
+  const filtres=clubs.filter(club=>
+    normaliser(club.nom).includes(terme)||
     normaliser(club.championnat).includes(terme)
   );
 
-  if(filtres.length===0) {
-    liste.textContent = "Aucun club trouvé.";
+  if(!filtres.length){
+    liste.textContent="Aucun club trouvé.";
     return;
   }
 
-  filtres.forEach(club => {
-    const bouton = document.createElement("button");
-    bouton.type = "button";
-    bouton.className = "team-item";
+  filtres.forEach(club=>{
+    const bouton=document.createElement("button");
+    bouton.type="button";
+    bouton.className="team-item";
 
-    const nom = document.createElement("strong");
-    nom.textContent = club.nom;
+    const nom=document.createElement("strong");
+    nom.textContent=club.nom;
 
-    const infos = document.createElement("small");
-    infos.textContent =
+    const infos=document.createElement("small");
+    infos.textContent=
       club.championnat+" • "+club.systeme;
 
     bouton.append(nom,infos);
 
-    const selection =
-      cote==="a" ? equipeA : equipeB;
+    const selection=cote==="a"?equipeA:equipeB;
 
-    if(selection===club.id) {
+    if(selection===club.id){
       bouton.classList.add("selected");
     }
 
-    bouton.onclick = () => {
-      if(cote==="a") {
-        equipeA = club.id;
-      } else {
-        equipeB = club.id;
+    bouton.onclick=()=>{
+      if(cote==="a"){
+        equipeA=club.id;
+      }else{
+        equipeB=club.id;
       }
 
-      $("choix-"+cote).textContent =
-        "✓ "+club.nom;
+      $("choix-"+cote).textContent="✓ "+club.nom;
 
       afficherListe(cote);
       actualiserBouton();
@@ -830,21 +1019,17 @@ function afficherListe(cote) {
   });
 }
 
-function actualiserBouton() {
-  const valide =
-    equipeA &&
-    equipeB &&
-    equipeA!==equipeB;
-
-  $("comparer").disabled = !valide || chargement;
+function actualiserBouton(){
+  const valide=equipeA&&equipeB&&equipeA!==equipeB;
+  $("comparer").disabled=!valide||chargement;
 }
 
-$("recherche-a").oninput = () => afficherListe("a");
-$("recherche-b").oninput = () => afficherListe("b");
+$("recherche-a").oninput=()=>afficherListe("a");
+$("recherche-b").oninput=()=>afficherListe("b");
 
 /* ===== RECONNAISSANCE DES CLUBS ===== */
 
-const aliasClubs = {
+const aliasClubs={
   "psg":["psg","paris saint germain","paris"],
   "real-madrid":["real madrid","real"],
   "barcelone":["barcelone","barca","fc barcelona"],
@@ -867,39 +1052,39 @@ const aliasClubs = {
   "leverkusen":["leverkusen","bayer leverkusen"]
 };
 
-function reconnaitreEquipes(question) {
-  const texte = " "+normaliser(question)+" ";
-  const trouves = [];
+function reconnaitreEquipes(question){
+  const texte=" "+normaliser(question)+" ";
+  const trouves=[];
 
-  clubs.forEach(club => {
-    const alias = [
+  clubs.forEach(club=>{
+    const alias=[
       club.nom,
       club.id.replace(/-/g," "),
-      ...(aliasClubs[club.id] || [])
+      ...(aliasClubs[club.id]||[])
     ];
 
-    let premierIndex = Infinity;
+    let premierIndex=Infinity;
 
-    alias.forEach(nom => {
-      const mot = normaliser(nom);
-      if(!mot) return;
+    alias.forEach(nom=>{
+      const mot=normaliser(nom);
+      if(!mot)return;
 
-      const expression = new RegExp(
+      const expression=new RegExp(
         "(^|[^a-z0-9])"+
         mot.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+
         "(?=$|[^a-z0-9])"
       );
 
-      const resultat = expression.exec(texte);
+      const resultat=expression.exec(texte);
 
-      if(resultat) {
-        premierIndex = Math.min(
+      if(resultat){
+        premierIndex=Math.min(
           premierIndex,resultat.index
         );
       }
     });
 
-    if(premierIndex!==Infinity) {
+    if(premierIndex!==Infinity){
       trouves.push({
         id:club.id,
         index:premierIndex
@@ -914,72 +1099,63 @@ function reconnaitreEquipes(question) {
 
 /* ===== AFFICHAGE DES ANALYSES ===== */
 
-function creerCarte(titre,contenu,pleineLargeur=false) {
-  const carte = document.createElement("article");
-  carte.className = "result-card";
+function creerCarte(titre,contenu,pleineLargeur=false){
+  const carte=document.createElement("article");
+  carte.className="result-card";
 
-  if(pleineLargeur) {
-    carte.classList.add("full");
-  }
+  if(pleineLargeur)carte.classList.add("full");
 
-  const h3 = document.createElement("h3");
-  h3.textContent = titre;
+  const h3=document.createElement("h3");
+  h3.textContent=titre;
 
-  const pre = document.createElement("pre");
-  pre.textContent = contenu;
+  const pre=document.createElement("pre");
+  pre.textContent=contenu;
 
   carte.append(h3,pre);
   return carte;
 }
 
-function afficherAnalyse(texte,equipes=[]) {
-  const zone = $("resultats");
+function afficherAnalyse(texte,equipes=[]){
+  const zone=$("resultats");
   zone.replaceChildren();
   zone.classList.remove("hidden");
 
-  const entete = document.createElement("div");
-  entete.className = "result-title";
+  const entete=document.createElement("div");
+  entete.className="result-title";
 
-  const titre = document.createElement("h2");
-  titre.textContent = "📊 Rapport tactique PITCH'AURA";
+  const titre=document.createElement("h2");
+  titre.textContent="📊 Rapport tactique PITCH'AURA";
 
   entete.appendChild(titre);
   zone.appendChild(entete);
 
-  const grille = document.createElement("div");
-  grille.className = "result-grid";
+  const grille=document.createElement("div");
+  grille.className="result-grid";
 
-  const sections = String(texte)
+  const sections=String(texte)
     .split(/━{5,}/)
     .map(s=>s.trim())
     .filter(Boolean);
 
-  let nombreCartes = 0;
+  let nombreCartes=0;
 
-  sections.forEach(section => {
-    const lignes = section.split("\n");
-    const premiere = lignes[0].trim();
-    const contenu = lignes.slice(1).join("\n").trim();
+  sections.forEach(section=>{
+    const lignes=section.split("\n");
+    const premiere=lignes[0].trim();
+    const contenu=lignes.slice(1).join("\n").trim();
 
-    const titreNormalise = normaliser(premiere);
+    const titreNormalise=normaliser(premiere);
 
-    // CORRECTION V7.2 :
-    // Ne pas créer une carte vide pour
-    // "PITCH'AURA — ANALYSE TACTIQUE".
     if(
-      titreNormalise.includes("pitch'aura") &&
+      titreNormalise.includes("pitch'aura")&&
       titreNormalise.includes("analyse tactique")
-    ) {
+    ){
       return;
     }
 
-    if(!contenu) {
-      // Un titre isolé ne doit pas devenir
-      // un grand rectangle vide.
-      return;
-    }
+    if(!contenu)return;
 
-    const pleineLargeur = [
+    const pleineLargeur=[
       "comparaison",
       "duels",
       "cles",
@@ -995,42 +1171,36 @@ function afficherAnalyse(texte,equipes=[]) {
     nombreCartes++;
   });
 
-  if(nombreCartes===0) {
+  if(nombreCartes===0){
     grille.appendChild(
-      creerCarte(
-        "Analyse",
-        String(texte).trim(),
-        true
-      )
+      creerCarte("Analyse",String(texte).trim(),true)
     );
   }
 
   zone.appendChild(grille);
 
-  /* ===== BOUTON DUEL TACTIQUE ===== */
+  if(equipes.length===2&&equipes[0]!==equipes[1]){
+    const bloc=document.createElement("div");
+    bloc.className="duel-action";
 
-  if(equipes.length===2 && equipes[0]!==equipes[1]) {
-    const bloc = document.createElement("div");
-    bloc.className = "duel-action";
+    const h3=document.createElement("h3");
+    h3.textContent="⚽ Passe de l'analyse au terrain !";
 
-    const h3 = document.createElement("h3");
-    h3.textContent = "⚽ Passe de l'analyse au terrain !";
-
-    const p = document.createElement("p");
-    p.textContent =
-      "Visualise les formations et les mouvements " +
+    const p=document.createElement("p");
+    p.textContent=
+      "Visualise les formations et les mouvements "+
       "tactiques des deux équipes.";
 
-    const lien = document.createElement("a");
-    lien.className = "terrain-button";
-    lien.textContent = "⚽ Voir le duel tactique →";
+    const lien=document.createElement("a");
+    lien.className="terrain-button";
+    lien.textContent="⚽ Voir le duel tactique →";
 
-    const params = new URLSearchParams({
+    const params=new URLSearchParams({
       a:equipes[0],
       b:equipes[1]
     });
 
-    lien.href = "/terrain.html?"+params.toString();
+    lien.href="/terrain.html?"+params.toString();
 
     bloc.append(h3,p,lien);
     zone.appendChild(bloc);
@@ -1042,52 +1212,46 @@ function afficherAnalyse(texte,equipes=[]) {
   });
 }
 
-/* ===== ANALYSEUR ===== */
+async function lancerAnalyse(demande){
+  if(chargement)return;
 
-async function lancerAnalyse(demande) {
-  if(chargement) return;
-
-  chargement = true;
+  chargement=true;
   actualiserBouton();
 
-  const zone = $("resultats");
+  const zone=$("resultats");
   zone.classList.remove("hidden");
-  zone.textContent = "⏳ Analyse en cours...";
+  zone.textContent="⏳ Analyse en cours...";
 
-  try {
-    const reponse = await fetch("/api/analyze",{
+  try{
+    const reponse=await fetch("/api/analyze",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
+      headers:{"Content-Type":"application/json"},
       body:JSON.stringify(demande)
     });
 
-    const data = await reponse.json();
+    const data=await reponse.json();
 
-    if(!reponse.ok) {
-      throw new Error(
-        data.erreur || "Erreur du serveur"
-      );
+    if(!reponse.ok){
+      throw new Error(data.erreur||"Erreur du serveur");
     }
 
-    let equipes = [];
+    let equipes=[];
 
-    if(Array.isArray(demande.teams)) {
-      equipes = demande.teams;
-    } else if(demande.question) {
-      equipes = reconnaitreEquipes(demande.question);
+    if(Array.isArray(demande.teams)){
+      equipes=demande.teams;
+    }else if(demande.question){
+      equipes=reconnaitreEquipes(demande.question);
     }
 
     afficherAnalyse(
-      data.analysis || "Aucun résultat.",
+      data.analysis||"Aucun résultat.",
       equipes
     );
 
-  } catch(erreur) {
-    zone.textContent = "Erreur : "+erreur.message;
-  } finally {
-    chargement = false;
+  }catch(erreur){
+    zone.textContent="Erreur : "+erreur.message;
+  }finally{
+    chargement=false;
     actualiserBouton();
   }
 }
@@ -1095,15 +1259,15 @@ async function lancerAnalyse(demande) {
 $("form-texte").addEventListener("submit",event=>{
   event.preventDefault();
 
-  const question = $("question").value.trim();
+  const question=$("question").value.trim();
 
-  if(question) {
+  if(question){
     lancerAnalyse({question});
   }
 });
 
-$("comparer").onclick = () => {
-  if(equipeA && equipeB && equipeA!==equipeB) {
+$("comparer").onclick=()=>{
+  if(equipeA&&equipeB&&equipeA!==equipeB){
     lancerAnalyse({
       teams:[equipeA,equipeB]
     });
@@ -1112,8 +1276,8 @@ $("comparer").onclick = () => {
 
 document.querySelectorAll("[data-question]")
   .forEach(bouton=>{
-    bouton.onclick = () => {
-      $("question").value = bouton.dataset.question;
+    bouton.onclick=()=>{
+      $("question").value=bouton.dataset.question;
       $("form-texte").requestSubmit();
     };
   });
