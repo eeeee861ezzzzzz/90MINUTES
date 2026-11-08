@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="90MINUTE — Le football décrypté. Analyses tactiques, comptes rendus et notes des joueurs.">
-<title>90MINUTE. — Le football décrypté</title>
+<meta name="description" content="90MINUTE — Analyses tactiques et décryptages du football européen.">
+<title>90MINUTE. | Le football décrypté</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -43,61 +43,45 @@ a {color:inherit;text-decoration:none}
 img {display:block;width:100%;object-fit:cover}
 .container {width:min(1200px,94%);margin:auto}
 .topbar {
-  background:var(--navy);
-  color:#dce4ed;
-  padding:9px 0;
-  font-size:11px;
-  letter-spacing:1px;
+  background:var(--navy);color:#dce4ed;
+  padding:9px 0;font-size:11px;letter-spacing:1px;
 }
 .topbar-inner {display:flex;justify-content:space-between;gap:12px}
 header {background:var(--surface);border-bottom:1px solid var(--border)}
 .header-inner {
-  min-height:105px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
+  min-height:105px;display:flex;justify-content:space-between;
+  align-items:center;gap:15px;
 }
 .brand {display:flex;align-items:center;gap:13px}
 .brand-icon {
-  width:62px;height:62px;
-  background:var(--navy);
-  color:white;border-radius:13px;
-  display:grid;place-items:center;
+  width:62px;height:62px;background:var(--navy);
+  color:white;border-radius:13px;display:grid;place-items:center;
   font:italic 900 43px "Barlow Condensed",sans-serif;
   position:relative;overflow:hidden;
 }
 .brand-icon:after {
-  content:"";position:absolute;
-  width:50px;height:17px;
-  bottom:6px;left:6px;
-  border-bottom:4px solid var(--gold);
+  content:"";position:absolute;width:50px;height:17px;
+  bottom:6px;left:6px;border-bottom:4px solid var(--gold);
   border-radius:50%;transform:rotate(-12deg);
 }
-.brand-title {
-  font:900 43px/.9 "Barlow Condensed",sans-serif;
-}
+.brand-title {font:900 43px/.9 "Barlow Condensed",sans-serif}
 .brand-title span {color:var(--goldtext)}
 .brand-subtitle {
-  color:var(--muted);
-  font-size:10px;
-  letter-spacing:2px;
-  margin-top:7px;
+  color:var(--muted);font-size:10px;
+  letter-spacing:2px;margin-top:7px;
 }
 .header-actions {display:flex;gap:10px}
 .icon-button {
   width:43px;height:43px;border-radius:50%;
   border:1px solid var(--border);
-  background:var(--surface);color:var(--text);
-  font-size:20px;
+  background:var(--surface);color:var(--text);font-size:20px;
 }
 nav {background:var(--surface);border-bottom:1px solid var(--border)}
 .nav-inner {display:flex;gap:27px;overflow-x:auto}
 .nav-link {
   border:0;border-bottom:3px solid transparent;
-  background:none;color:var(--text);
-  padding:17px 0;font-size:12px;
-  font-weight:800;white-space:nowrap;
+  background:none;color:var(--text);padding:17px 0;
+  font-size:12px;font-weight:800;white-space:nowrap;
 }
 .nav-link.active {color:var(--goldtext);border-bottom-color:var(--gold)}
 .page {display:none}
@@ -112,19 +96,15 @@ h3 {font-size:27px;font-weight:800}
 .intro {padding:42px 0 26px}
 .intro p {max-width:680px;color:var(--muted)}
 .eyebrow {
-  color:var(--goldtext);
-  font-size:12px;font-weight:800;
+  color:var(--goldtext);font-size:12px;font-weight:800;
   letter-spacing:1.3px;text-transform:uppercase;
 }
 .news-layout {
-  display:grid;
-  grid-template-columns:1.7fr 1fr;
-  gap:20px;
+  display:grid;grid-template-columns:1.7fr 1fr;gap:20px;
 }
 .main-story,.side-story {
-  position:relative;overflow:hidden;
-  border-radius:7px;background:var(--navy);
-  color:white;cursor:pointer;
+  position:relative;overflow:hidden;border-radius:7px;
+  background:var(--navy);color:white;cursor:pointer;
 }
 .main-story {min-height:470px}
 .main-story img {height:470px}
@@ -145,35 +125,28 @@ h3 {font-size:27px;font-weight:800}
 .side-story h3 {font-size:25px;margin:9px 0}
 .main-story p {color:#e2e7ee}
 .category {
-  display:inline-block;
-  background:var(--gold);color:var(--navy);
-  padding:5px 9px;border-radius:3px;
-  font-size:10px;font-weight:800;
-  text-transform:uppercase;
+  display:inline-block;background:var(--gold);
+  color:var(--navy);padding:5px 9px;border-radius:3px;
+  font-size:10px;font-weight:800;text-transform:uppercase;
 }
 .meta {font-size:12px;color:var(--muted)}
 .main-story .meta,.side-story .meta {color:#e2e7ee}
 .section-heading {
-  margin:46px 0 20px;
-  padding-bottom:12px;
+  margin:46px 0 20px;padding-bottom:12px;
   border-bottom:2px solid var(--text);
-  display:flex;justify-content:space-between;align-items:center;
-  gap:15px;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:15px;
 }
 .section-heading button {
-  border:0;background:none;
-  color:var(--goldtext);font-weight:800;font-size:12px;
+  border:0;background:none;color:var(--goldtext);
+  font-weight:800;font-size:12px;
 }
 .articles-grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:22px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;
 }
 .article-card {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:6px;overflow:hidden;
-  transition:transform .2s;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;transition:transform .2s;
 }
 .article-card:hover {transform:translateY(-3px)}
 .article-card img {height:190px}
@@ -182,9 +155,8 @@ h3 {font-size:27px;font-weight:800}
 .card-body p {font-size:13px;color:var(--muted)}
 .leagues {display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .league-box {
-  border:1px solid var(--border);
-  background:var(--surface);color:var(--text);
-  border-radius:6px;padding:22px 8px;text-align:center;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);border-radius:6px;padding:22px 8px;text-align:center;
 }
 .league-box:hover {border-color:var(--gold)}
 .league-box strong {font-size:13px}
@@ -216,65 +188,104 @@ h3 {font-size:27px;font-weight:800}
   font-size:11px;letter-spacing:1px;font-weight:800;
 }
 .scoreline {
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;gap:15px;
-  margin:17px 0;text-align:center;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:15px;margin:17px 0;text-align:center;
 }
 .team-name {font-weight:800;font-size:16px}
-.score {
-  font:900 clamp(40px,7vw,68px) "Barlow Condensed",sans-serif;
-}
+.score {font:900 clamp(40px,7vw,68px) "Barlow Condensed",sans-serif}
 .scorers {text-align:center;color:#d6dfeb;font-size:12px}
 .demo {
-  background:var(--surface);
-  border-left:4px solid var(--gold);
+  background:var(--surface);border-left:4px solid var(--gold);
   padding:15px 19px;margin:22px 0;
   font-size:13px;color:var(--muted);
 }
-.timeline {border-left:2px solid var(--gold);margin:22px 0 22px 12px}
-.timeline-event {
-  position:relative;padding:0 0 23px 23px;
+.analysis-section {
+  margin:28px 0;
 }
-.timeline-event:before {
-  content:"";position:absolute;left:-7px;top:5px;
-  width:12px;height:12px;border-radius:50%;
-  background:var(--gold);
+.analysis-section h3 {
+  font-size:29px;margin-bottom:12px;
 }
-.timeline-event strong {color:var(--goldtext)}
-.timeline-event p {margin:3px 0;font-size:14px}
+.analysis-section p {
+  margin:0 0 16px;
+}
+.analysis-highlight {
+  border-left:4px solid var(--gold);
+  background:var(--surface);
+  padding:20px 23px;margin:24px 0;
+}
+.analysis-highlight strong {
+  color:var(--goldtext);
+  font-size:12px;letter-spacing:1px;
+}
 .lineups {
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:16px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
 }
 .lineup-card {
-  border:1px solid var(--border);
-  background:var(--surface);border-radius:6px;
-  padding:20px;
+  border:1px solid var(--border);background:var(--surface);
+  border-radius:6px;padding:20px;
 }
 .lineup-card h3 {font-size:24px;margin-bottom:12px}
 .lineup-card p {font-size:13px;margin:7px 0}
-.tactical-points {
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:13px;margin:20px 0;
-}
-.tactical-point {
+.duel {
   background:var(--surface);
   border:1px solid var(--border);
-  border-top:3px solid var(--gold);
-  padding:17px;border-radius:4px;
+  border-radius:8px;
+  overflow:hidden;
+  margin:24px 0;
 }
-.tactical-point strong {font-size:13px}
-.tactical-point p {font-size:12px;margin:8px 0 0}
+.duel-header {
+  background:var(--navy);color:white;
+  padding:23px;text-align:center;
+}
+.duel-header h3 {font-size:32px}
+.duel-header p {color:#cbd5e1;font-size:13px;margin:7px 0 0}
+.duel-row {
+  display:grid;grid-template-columns:1fr 130px 1fr;
+  align-items:center;gap:12px;
+  padding:20px;border-bottom:1px solid var(--border);
+}
+.duel-row:last-child {border-bottom:0}
+.duel-side {font-size:13px;line-height:1.65}
+.duel-side strong {display:block;color:var(--goldtext);margin-bottom:5px}
+.duel-label {
+  text-align:center;font-size:11px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.7px;
+}
+.duel-label span {
+  display:block;color:var(--muted);font-weight:500;
+  text-transform:none;letter-spacing:0;margin-top:5px;
+}
+.verdict {
+  background:var(--navy);
+  color:white;border-radius:8px;
+  padding:29px;margin:28px 0;
+  border-top:5px solid var(--gold);
+}
+.verdict h3 {
+  color:var(--gold);font-size:34px;margin:10px 0;
+}
+.verdict p {color:#e3e9f0}
+.verdict ul {padding-left:20px}
+.verdict li {margin:10px 0}
+.ratings-secondary {
+  margin:35px 0;
+  border-top:1px solid var(--border);
+  padding-top:22px;
+}
+.ratings-secondary h2 {font-size:28px}
+.ratings-secondary>p {
+  color:var(--muted);font-size:13px;
+}
 .rating-table {
   width:100%;border-collapse:collapse;
   background:var(--surface);
   border:1px solid var(--border);
+  margin-top:15px;
 }
 .rating-table th,.rating-table td {
   padding:12px;text-align:left;
   border-bottom:1px solid var(--border);
-  font-size:13px;
+  font-size:12px;
 }
 .rating-table th {font-weight:800}
 .rating-number {
@@ -282,24 +293,38 @@ h3 {font-size:27px;font-weight:800}
   padding:5px 9px;border-radius:4px;
   font-weight:800;white-space:nowrap;
 }
-.verdict {
-  border-left:5px solid var(--gold);
-  background:var(--surface);
-  padding:24px;margin:25px 0;
+.previous-matches {
+  margin-top:45px;
+  border-top:2px solid var(--text);
+  padding-top:22px;
 }
-.verdict h3 {margin-bottom:10px}
-.related {
+.previous-matches>p {
+  color:var(--muted);font-size:13px;
+}
+.previous-grid {
   display:grid;grid-template-columns:1fr 1fr;
-  gap:16px;margin-top:20px;
+  gap:17px;margin-top:22px;
 }
-.related button {
+.previous-card {
   border:1px solid var(--border);
-  background:var(--surface);color:var(--text);
-  padding:17px;text-align:left;border-radius:5px;
-  font-weight:700;
+  background:var(--surface);
+  color:var(--text);
+  border-radius:6px;overflow:hidden;
+  text-align:left;padding:0;
 }
-footer {background:var(--navy);color:white;margin-top:70px;padding:40px 0}
-.footer-inner {display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.previous-card img {height:130px}
+.previous-card-content {padding:15px}
+.previous-card strong {
+  display:block;font-size:15px;margin:8px 0;
+}
+.previous-card small {color:var(--muted)}
+footer {
+  background:var(--navy);color:white;
+  margin-top:70px;padding:40px 0;
+}
+.footer-inner {
+  display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap;
+}
 footer p {color:#bdc8d5;font-size:12px}
 @media(max-width:900px) {
   .news-layout {grid-template-columns:1fr}
@@ -323,11 +348,14 @@ footer p {color:#bdc8d5;font-size:12px}
   .article-card img {height:215px}
   .leagues {grid-template-columns:repeat(2,1fr)}
   .lineups {grid-template-columns:1fr}
-  .tactical-points {grid-template-columns:1fr}
   .section-heading h2 {font-size:30px}
   .scoreboard {padding:18px}
   .team-name {font-size:13px}
-  .related {grid-template-columns:1fr}
+  .duel-row {grid-template-columns:1fr;gap:8px}
+  .duel-label {grid-row:1;text-align:left}
+  .duel-side {padding:8px 0}
+  .previous-grid {grid-template-columns:1fr}
+  .verdict {padding:22px}
 }
 </style>
 </head>
@@ -450,73 +478,88 @@ footer p {color:#bdc8d5;font-size:12px}
 <script>
 /*
   DONNÉES DE DÉMONSTRATION
-  Les équipes, scores et événements ci-dessous sont fictifs.
-  Ils servent uniquement à tester le format des articles.
+  Les équipes et les scores sont fictifs.
+  Aucun événement n'est présenté comme un vrai résultat.
 */
 
 const demoMatch = {
-  competition: "Ligue 1",
-  home: "Équipe A",
-  away: "Équipe B",
-  homeScore: 2,
-  awayScore: 1,
-  formationHome: "4-3-3",
-  formationAway: "4-2-3-1",
-  scorers: [
-    "24' — Joueur A (Équipe A)",
-    "58' — Joueur B (Équipe B)",
-    "81' — Joueur C (Équipe A)"
+  competition:"Ligue 1",
+  home:"Équipe A",
+  away:"Équipe B",
+  homeScore:2,
+  awayScore:1,
+  formationHome:"4-3-3",
+  formationAway:"4-2-3-1",
+  scorers:[
+    "24' — Joueur A",
+    "58' — Joueur B",
+    "81' — Joueur C"
   ],
-  timeline: [
-    {minute:"24'", text:"L'Équipe A ouvre le score après une phase offensive collective."},
-    {minute:"45'", text:"La première période se termine sur un avantage pour l'Équipe A."},
-    {minute:"58'", text:"L'Équipe B égalise et relance la rencontre."},
-    {minute:"70'", text:"Un ajustement tactique modifie l'équilibre au milieu."},
-    {minute:"81'", text:"L'Équipe A reprend l'avantage."},
-    {minute:"90'", text:"Fin de la rencontre fictive."}
+  analysis:[
+    {
+      heading:"Une première période dominée par le pressing",
+      text:"Dans cet exemple fictif, l'Équipe A choisit de presser haut pour empêcher son adversaire de construire tranquillement. Les trois attaquants orientent la relance vers les côtés, tandis que les milieux ferment les passes intérieures. Cette organisation permet à l'Équipe A de récupérer plusieurs ballons dans des zones avancées."
+    },
+    {
+      heading:"La réponse tactique de l'Équipe B",
+      text:"L'Équipe B tente de contourner la première ligne de pression grâce à des déplacements entre les lignes. Son meneur de jeu décroche davantage pour proposer une solution. Ce changement de positionnement permet progressivement de déséquilibrer le bloc adverse."
+    },
+    {
+      heading:"Le tournant : un ajustement au milieu",
+      text:"Après une période plus compliquée, l'Équipe A resserre son organisation au milieu. Ses joueurs se rapprochent pour mieux protéger l'axe et retrouver des possibilités de transition. Ce changement explique la reprise du contrôle dans la dernière partie du match fictif."
+    }
   ],
-  lineupHome: [
-    "Gardien A",
-    "Défenseur A1, Défenseur A2, Défenseur A3, Défenseur A4",
-    "Milieu A1, Milieu A2, Milieu A3",
-    "Attaquant A1, Attaquant A2, Attaquant A3"
+  tacticalDuel:[
+    {
+      label:"Pressing",
+      home:"Pression haute et déclenchement collectif sur les défenseurs.",
+      away:"Recherche de solutions pour contourner la première ligne."
+    },
+    {
+      label:"Possession",
+      home:"Circulation rapide et recherche des côtés.",
+      away:"Construction plus patiente, avec un meneur entre les lignes."
+    },
+    {
+      label:"Transitions",
+      home:"Attaques rapides après récupération.",
+      away:"Recherche de profondeur dès qu'un espace apparaît."
+    },
+    {
+      label:"Ajustements",
+      home:"Milieu resserré pour mieux protéger l'axe.",
+      away:"Décrochages du meneur pour faciliter la relance."
+    }
   ],
-  lineupAway: [
-    "Gardien B",
-    "Défenseur B1, Défenseur B2, Défenseur B3, Défenseur B4",
-    "Milieu B1, Milieu B2",
-    "Ailier B1, Meneur B, Ailier B2",
-    "Avant-centre B"
-  ],
-  tacticalKeys: [
-    {title:"Le pressing",text:"La pression collective permet de perturber la première relance adverse."},
-    {title:"Le milieu",text:"Les déplacements entre les lignes influencent la maîtrise du jeu."},
-    {title:"Les transitions",text:"Les récupérations rapides créent des occasions d'attaquer les espaces."}
-  ],
-  ratings: [
-    {name:"Joueur A",team:"Équipe A",rating:8.5,comment:"Influence importante dans l'animation offensive."},
-    {name:"Joueur C",team:"Équipe A",rating:8,comment:"Décisif dans le scénario de démonstration."},
-    {name:"Joueur B",team:"Équipe B",rating:7.5,comment:"Actif et efficace dans les phases offensives."},
-    {name:"Milieu A2",team:"Équipe A",rating:7,comment:"Bon équilibre dans l'entrejeu."}
-  ],
-  motm:"Joueur A",
-  verdict:"Dans cette rencontre fictive, la capacité de l'Équipe A à ajuster son organisation et à exploiter les transitions explique le résultat."
+  verdict:{
+    title:"L'organisation collective a fait la différence",
+    text:"Dans cette simulation, l'Équipe A a su adapter son pressing et son organisation au milieu après la réaction adverse. Le principal enseignement n'est pas seulement le résultat, mais la capacité à modifier son approche tactique pendant la rencontre.",
+    lessons:[
+      "Le pressing doit être coordonné pour rester efficace.",
+      "L'occupation du milieu influence la maîtrise du match.",
+      "Les ajustements tactiques peuvent modifier le rapport de force."
+    ]
+  },
+  ratings:[
+    {name:"Joueur A",rating:"8,5",comment:"Influence offensive importante."},
+    {name:"Joueur C",rating:"8",comment:"Décisif dans le scénario fictif."},
+    {name:"Joueur B",rating:"7,5",comment:"Bonne activité offensive."}
+  ]
 };
 
 const articles = [
   {
     id:1,
-    title:"Équipe A – Équipe B : les clés d'une rencontre renversante",
+    title:"Équipe A – Équipe B : le duel tactique qui a changé la rencontre",
     category:"Compte rendu",
     league:"Ligue 1",
-    minutes:6,
+    minutes:7,
     image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1300&q=85",
-    excerpt:"Retour sur le scénario, les ajustements tactiques et les joueurs décisifs d'un match fictif.",
+    excerpt:"Pressing, maîtrise du milieu et ajustements : les enseignements d'une rencontre fictive.",
     match:demoMatch,
     paragraphs:[
-      "L'Équipe A prend l'initiative en début de rencontre, avant de voir son adversaire réagir.",
-      "La bataille du milieu influence progressivement le rythme et les occasions.",
-      "Dans cette simulation éditoriale, les changements tactiques permettent à l'Équipe A de reprendre l'avantage."
+      "Dans cette rencontre fictive, l'Équipe A commence avec une forte intensité et tente d'imposer son pressing. L'Équipe B répond en modifiant ses circuits de relance.",
+      "La bataille tactique se joue progressivement au milieu du terrain. Les deux équipes cherchent à contrôler les espaces et à provoquer des déséquilibres."
     ]
   },
   {
@@ -530,8 +573,7 @@ const articles = [
     paragraphs:[
       "Le pressing haut consiste à défendre en avançant pour limiter les possibilités de relance de l'adversaire.",
       "Son efficacité dépend du placement des joueurs, de la synchronisation des courses et de la couverture des espaces.",
-      "Lorsqu'une équipe presse de façon désorganisée, elle peut être exposée aux passes qui cassent les lignes.",
-      "Cette analyse présente un principe tactique général et non une observation d'un match précis."
+      "Lorsqu'une équipe presse de façon désorganisée, elle peut être exposée aux passes qui cassent les lignes."
     ]
   },
   {
@@ -571,7 +613,7 @@ const articles = [
     image:"https://images.unsplash.com/photo-1459865264687-5958f4b3b5c8?auto=format&fit=crop&w=1300&q=85",
     excerpt:"Le récit d'une rencontre doit distinguer les faits des interprétations.",
     paragraphs:[
-      "Un compte rendu journalistique commence par des informations vérifiées : score, buteurs et chronologie.",
+      "Un compte rendu journalistique commence par des informations vérifiées : score, buteurs et contexte.",
       "Il présente ensuite les moments importants et explique leur influence sur le match.",
       "Ce texte est un exemple de structure éditoriale et ne décrit aucune rencontre réelle."
     ]
@@ -633,43 +675,11 @@ function showPage(page) {
   if(page==="articles")renderArticles();
 }
 
-function matchHTML(m) {
-  const timeline=m.timeline.map(e=>`
-    <div class="timeline-event">
-      <strong>${escapeHTML(e.minute)}</strong>
-      <p>${escapeHTML(e.text)}</p>
-    </div>`).join("");
-
-  const lineups=(team,formation,players)=>`
-    <div class="lineup-card">
-      <h3>${escapeHTML(team)}</h3>
-      <div class="eyebrow">Système : ${escapeHTML(formation)}</div>
-      ${players.map(p=>`<p>${escapeHTML(p)}</p>`).join("")}
-    </div>`;
-
-  const keys=m.tacticalKeys.map(k=>`
-    <div class="tactical-point">
-      <strong>${escapeHTML(k.title)}</strong>
-      <p>${escapeHTML(k.text)}</p>
-    </div>`).join("");
-
-  const ratings=m.ratings.map(r=>`
-    <tr>
-      <td><strong>${escapeHTML(r.name)}</strong><br>
-      <small>${escapeHTML(r.team)}</small></td>
-      <td><span class="rating-number">${r.rating}/10</span></td>
-      <td>${escapeHTML(r.comment)}</td>
-    </tr>`).join("");
-
+function scoreHTML(m) {
   return `
-    <div class="demo">
-      DÉMONSTRATION : les équipes, le score, les buteurs,
-      les compositions et les notes ci-dessous sont fictifs.
-    </div>
-
     <div class="scoreboard">
       <div class="scoreboard-label">
-        ${escapeHTML(m.competition)} · SCORE FICTIF
+        ${escapeHTML(m.competition)} · MATCH FICTIF
       </div>
       <div class="scoreline">
         <div class="team-name">${escapeHTML(m.home)}</div>
@@ -677,47 +687,138 @@ function matchHTML(m) {
         <div class="team-name">${escapeHTML(m.away)}</div>
       </div>
       <div class="scorers">${m.scorers.map(escapeHTML).join(" · ")}</div>
-    </div>
+    </div>`;
+}
 
-    <h2>LE FIL DU MATCH</h2>
-    <div class="timeline">${timeline}</div>
+function analysisHTML(m) {
+  return `
+    <h2>L'ANALYSE DU MATCH</h2>
+    ${m.analysis.map(section=>`
+      <div class="analysis-section">
+        <h3>${escapeHTML(section.heading)}</h3>
+        <p>${escapeHTML(section.text)}</p>
+      </div>
+    `).join("")}
 
-    <h2>LES COMPOSITIONS</h2>
-    <div class="lineups">
-      ${lineups(m.home,m.formationHome,m.lineupHome)}
-      ${lineups(m.away,m.formationAway,m.lineupAway)}
-    </div>
+    <div class="analysis-highlight">
+      <strong>LE POINT CLÉ DE 90MINUTE</strong>
+      <p>
+        L'évolution des organisations collectives explique
+        davantage le scénario que la simple chronologie des buts.
+      </p>
+    </div>`;
+}
 
-    <h2>LES CLÉS TACTIQUES</h2>
-    <div class="tactical-points">${keys}</div>
+function duelHTML(m) {
+  return `
+    <h2>LE DUEL TACTIQUE</h2>
+    <p>
+      Deux approches, deux organisations et des réponses
+      différentes aux problèmes posés par l'adversaire.
+    </p>
 
-    <h2>LES NOTES DES JOUEURS</h2>
-    <table class="rating-table">
-      <thead>
-        <tr><th>Joueur</th><th>Note</th><th>Analyse</th></tr>
-      </thead>
-      <tbody>${ratings}</tbody>
-    </table>
+    <div class="duel">
+      <div class="duel-header">
+        <h3>${escapeHTML(m.home)} VS ${escapeHTML(m.away)}</h3>
+        <p>${escapeHTML(m.formationHome)} face au ${escapeHTML(m.formationAway)}</p>
+      </div>
 
-    <div class="verdict">
-      <div class="eyebrow">Homme du match — Exemple</div>
-      <h3>${escapeHTML(m.motm)}</h3>
-      <p>Une distinction fictive utilisée pour présenter
-      le futur format des articles.</p>
-    </div>
+      ${m.tacticalDuel.map(d=>`
+        <div class="duel-row">
+          <div class="duel-side">
+            <strong>${escapeHTML(m.home)}</strong>
+            ${escapeHTML(d.home)}
+          </div>
+          <div class="duel-label">${escapeHTML(d.label)}</div>
+          <div class="duel-side">
+            <strong>${escapeHTML(m.away)}</strong>
+            ${escapeHTML(d.away)}
+          </div>
+        </div>
+      `).join("")}
+    </div>`;
+}
 
+function verdictHTML(m) {
+  return `
     <h2>LE VERDICT 90MINUTE</h2>
     <div class="verdict">
-      <h3>NOTRE REGARD SUR LE MATCH</h3>
-      <p>${escapeHTML(m.verdict)}</p>
+      <div class="eyebrow">Notre conclusion</div>
+      <h3>${escapeHTML(m.verdict.title)}</h3>
+      <p>${escapeHTML(m.verdict.text)}</p>
+      <ul>
+        ${m.verdict.lessons.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}
+      </ul>
     </div>`;
+}
+
+function ratingsHTML(m) {
+  return `
+    <section class="ratings-secondary">
+      <h2>LES NOTES DES JOUEURS</h2>
+      <p>
+        Un complément à notre analyse.
+        Les notes ne constituent pas le sujet principal de l'article.
+      </p>
+      <table class="rating-table">
+        <thead>
+          <tr><th>Joueur</th><th>Note</th><th>Appréciation</th></tr>
+        </thead>
+        <tbody>
+          ${m.ratings.map(r=>`
+            <tr>
+              <td>${escapeHTML(r.name)}</td>
+              <td><span class="rating-number">${escapeHTML(r.rating)}/10</span></td>
+              <td>${escapeHTML(r.comment)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </section>`;
+}
+
+function previousMatchesHTML(current) {
+  /*
+    Affiche uniquement les analyses de matchs déjà publiées
+    dans le tableau articles, pas des suggestions inventées.
+  */
+  const previous=articles
+    .filter(a=>a.id!==current.id && a.match)
+    .slice(0,3);
+
+  if(!previous.length) {
+    return `
+      <section class="previous-matches">
+        <h2>LES MATCHS DÉJÀ ANALYSÉS</h2>
+        <p>
+          Les précédentes analyses de rencontres apparaîtront
+          ici dès leur publication sur 90MINUTE.
+        </p>
+      </section>`;
+  }
+
+  return `
+    <section class="previous-matches">
+      <h2>LES MATCHS DÉJÀ ANALYSÉS</h2>
+      <p>Retrouve les rencontres décryptées par la rédaction 90MINUTE.</p>
+      <div class="previous-grid">
+        ${previous.map(a=>`
+          <button class="previous-card" onclick="openArticle(${a.id})">
+            <img src="${a.image}" alt="Football" loading="lazy">
+            <div class="previous-card-content">
+              <div class="eyebrow">${escapeHTML(a.league)}</div>
+              <strong>${escapeHTML(a.title)}</strong>
+              <small>${a.minutes} min de lecture →</small>
+            </div>
+          </button>
+        `).join("")}
+      </div>
+    </section>`;
 }
 
 function openArticle(id) {
   const a=articles.find(x=>x.id===id);
   if(!a)return;
-
-  const related=articles.filter(x=>x.id!==id).slice(0,2);
 
   document.getElementById("reader").innerHTML=`
     <button class="back-button" onclick="showPage('articles')">
@@ -726,6 +827,7 @@ function openArticle(id) {
 
     <div class="eyebrow">${a.category} · ${a.league}</div>
     <h1>${escapeHTML(a.title)}</h1>
+
     <div class="meta">
       Par la rédaction 90MINUTE · ${a.minutes} min de lecture
     </div>
@@ -733,25 +835,32 @@ function openArticle(id) {
     <img class="reader-cover" src="${a.image}" alt="Football">
     <p class="lead">${escapeHTML(a.excerpt)}</p>
 
-    <h2>LE DÉCRYPTAGE</h2>
+    ${a.match?scoreHTML(a.match):""}
+
+    <div class="demo">
+      Article de démonstration.
+      Les données de match éventuellement présentées sont fictives.
+    </div>
+
     ${a.paragraphs.map(p=>`<p>${escapeHTML(p)}</p>`).join("")}
 
-    ${a.match?matchHTML(a.match):`
+    ${a.match?`
+      ${analysisHTML(a.match)}
+      ${duelHTML(a.match)}
+      ${verdictHTML(a.match)}
+      ${ratingsHTML(a.match)}
+    `:`
       <h2>LES ENSEIGNEMENTS</h2>
-      <div class="verdict">
-        <h3>LE REGARD 90MINUTE</h3>
-        <p>Une analyse pédagogique du football,
-        à compléter avec des observations vérifiées.</p>
-      </div>`}
+      <div class="analysis-highlight">
+        <strong>LE REGARD 90MINUTE</strong>
+        <p>
+          Une analyse pédagogique des mécanismes du football,
+          à approfondir avec des observations de rencontres réelles.
+        </p>
+      </div>
+    `}
 
-    <h2>À LIRE AUSSI</h2>
-    <div class="related">
-      ${related.map(r=>`
-        <button onclick="openArticle(${r.id})">
-          <span class="eyebrow">${r.category}</span><br>
-          ${escapeHTML(r.title)} →
-        </button>`).join("")}
-    </div>
+    ${previousMatchesHTML(a)}
   `;
 
   showPage("lecture");
