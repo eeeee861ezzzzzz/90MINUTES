@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PITCH'AURA | Duel tactique</title>
+<title>PITCH'AURA | Match Lab</title>
 
 <style>
 :root{
@@ -14,7 +14,6 @@
   --border:#2b5039;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
   margin:0;
   background:var(--bg);
@@ -79,7 +78,7 @@ label{
   font-size:13px;
   margin:12px 0 7px;
 }
-select,button{
+select,button,input{
   background:#1b3b29;
   color:white;
   border:1px solid #427d54;
@@ -87,7 +86,7 @@ select,button{
   padding:12px;
   font-size:14px;
 }
-select{width:100%}
+select,input{width:100%}
 button{cursor:pointer}
 button:hover{background:#28563b}
 button:disabled{opacity:.5;cursor:not-allowed}
@@ -118,9 +117,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   min-width:0;
 }
 .team-name:last-child{text-align:right}
-.team-name span:last-child{
-  overflow-wrap:anywhere;
-}
+.team-name span:last-child{overflow-wrap:anywhere}
 .vs{
   color:#94bba2;
   font-size:13px;
@@ -176,10 +173,11 @@ button:disabled{opacity:.5;cursor:not-allowed}
 }
 .goal-area.left{left:0;border-left:0}
 .goal-area.right{right:0;border-right:0}
+
 .player{
   position:absolute;
-  width:clamp(18px,3.5vw,34px);
-  height:clamp(18px,3.5vw,34px);
+  width:clamp(22px,3.5vw,36px);
+  height:clamp(22px,3.5vw,36px);
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -198,6 +196,28 @@ button:disabled{opacity:.5;cursor:not-allowed}
 }
 .player.moving{
   box-shadow:0 0 14px #ffe36a;
+}
+.player.selected{
+  outline:3px solid #ffe36a;
+  outline-offset:3px;
+}
+.player-label{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  margin-top:3px;
+  background:#061b12df;
+  color:white;
+  padding:3px 5px;
+  border-radius:5px;
+  font-size:10px;
+  font-weight:normal;
+  white-space:nowrap;
+  max-width:110px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  pointer-events:none;
 }
 .ball{
   position:absolute;
@@ -229,6 +249,21 @@ button:disabled{opacity:.5;cursor:not-allowed}
   color:#d7f9e2;
   line-height:1.6;
 }
+.editor{
+  margin-top:20px;
+  padding:18px;
+  background:#0b1c13;
+  border:1px solid #345640;
+  border-radius:13px;
+}
+.editor h2{font-size:19px;margin:0 0 8px}
+.editor-grid{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  align-items:end;
+}
+.editor-grid label{margin-top:0}
 .help{
   font-size:13px;
   color:#a3b8aa;
@@ -237,150 +272,168 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media(max-width:650px){
   header{justify-content:center}
   .panel{padding:12px}
-  .club-settings{grid-template-columns:1fr}
-  .options{grid-template-columns:1fr}
+  .club-settings,.options{grid-template-columns:1fr}
   .player{font-size:9px}
+  .player-label{font-size:8px;max-width:65px}
   .teams{font-size:13px}
   .buttons button{flex:1}
+  .editor-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
-
 <header>
-  <div class="logo">
-    PITCH'<span>AURA</span>
-  </div>
+  <div class="logo">PITCH'<span>AURA</span></div>
   <a href="/">← Retour à l'accueil</a>
 </header>
 
 <main>
-  <h1>⚽ Duel tactique</h1>
-  <p>
-    Choisis deux clubs, adapte leurs formations
-    et observe leurs mouvements sur le terrain.
+<h1>⚽ PITCH'AURA MATCH LAB</h1>
+<p>
+  Choisis deux clubs, construis leurs compositions
+  et analyse les mouvements tactiques sur le terrain.
+</p>
+
+<section class="panel">
+
+<div class="club-settings">
+  <div class="club-box">
+    <div class="club-title">
+      <span class="club-dot" id="dotA"></span>
+      <span>Équipe 1</span>
+    </div>
+    <label for="clubA">Club</label>
+    <select id="clubA"></select>
+    <label for="formationA">Formation</label>
+    <select id="formationA">
+      <option value="433">4-3-3</option>
+      <option value="4231">4-2-3-1</option>
+      <option value="352">3-5-2</option>
+      <option value="442">4-4-2</option>
+      <option value="343">3-4-3</option>
+    </select>
+  </div>
+
+  <div class="club-box">
+    <div class="club-title">
+      <span class="club-dot" id="dotB"></span>
+      <span>Équipe 2</span>
+    </div>
+    <label for="clubB">Club</label>
+    <select id="clubB"></select>
+    <label for="formationB">Formation</label>
+    <select id="formationB">
+      <option value="433">4-3-3</option>
+      <option value="4231">4-2-3-1</option>
+      <option value="352">3-5-2</option>
+      <option value="442">4-4-2</option>
+      <option value="343">3-4-3</option>
+    </select>
+  </div>
+</div>
+
+<div class="options">
+  <div>
+    <label for="movement">Action tactique</label>
+    <select id="movement">
+      <option value="pressing">Pressing</option>
+      <option value="counter">Contre-attaque</option>
+      <option value="overlap">Dédoublement</option>
+      <option value="compact">Bloc compact</option>
+      <option value="passing">Circuit de passes</option>
+    </select>
+  </div>
+  <div>
+    <label for="speed">Vitesse</label>
+    <select id="speed">
+      <option value="0.5">Lente</option>
+      <option value="1" selected>Normale</option>
+      <option value="1.5">Rapide</option>
+    </select>
+  </div>
+</div>
+
+<div class="teams">
+  <div class="team-name">
+    <span class="club-dot" id="dotNameA"></span>
+    <span id="nameA">Équipe 1</span>
+  </div>
+  <span class="vs">VS</span>
+  <div class="team-name">
+    <span id="nameB">Équipe 2</span>
+    <span class="club-dot" id="dotNameB"></span>
+  </div>
+</div>
+
+<div class="pitch" id="pitch">
+  <div class="midline"></div>
+  <div class="circle"></div>
+  <div class="area left"></div>
+  <div class="area right"></div>
+  <div class="goal-area left"></div>
+  <div class="goal-area right"></div>
+
+  <svg class="arrows" id="arrows"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none">
+    <defs>
+      <marker id="arrowhead"
+        markerWidth="4"
+        markerHeight="4"
+        refX="3" refY="2"
+        orient="auto">
+        <path d="M0 0 L4 2 L0 4 Z"
+          fill="#ffe36a"/>
+      </marker>
+    </defs>
+  </svg>
+</div>
+
+<div class="buttons">
+  <button class="primary" id="play">▶ Lecture</button>
+  <button id="pause" disabled>⏸ Pause</button>
+  <button id="restart">↺ Recommencer</button>
+  <button id="reset">Réinitialiser</button>
+</div>
+
+<div class="description" id="description">
+  Choisis une action puis lance l'animation.
+</div>
+
+<div class="editor">
+  <h2>👕 Éditeur de compositions</h2>
+  <p id="selectedInfo">
+    Clique sur un joueur du terrain pour modifier son nom.
   </p>
 
-  <section class="panel">
-
-    <div class="club-settings">
-      <div class="club-box">
-        <div class="club-title">
-          <span class="club-dot" id="dotA"></span>
-          <span>Équipe 1</span>
-        </div>
-
-        <label for="clubA">Club</label>
-        <select id="clubA"></select>
-
-        <label for="formationA">Formation</label>
-        <select id="formationA">
-          <option value="433">4-3-3</option>
-          <option value="4231">4-2-3-1</option>
-          <option value="352">3-5-2</option>
-          <option value="442">4-4-2</option>
-          <option value="343">3-4-3</option>
-        </select>
-      </div>
-
-      <div class="club-box">
-        <div class="club-title">
-          <span class="club-dot" id="dotB"></span>
-          <span>Équipe 2</span>
-        </div>
-
-        <label for="clubB">Club</label>
-        <select id="clubB"></select>
-
-        <label for="formationB">Formation</label>
-        <select id="formationB">
-          <option value="433">4-3-3</option>
-          <option value="4231">4-2-3-1</option>
-          <option value="352">3-5-2</option>
-          <option value="442">4-4-2</option>
-          <option value="343">3-4-3</option>
-        </select>
-      </div>
+  <div class="editor-grid">
+    <div>
+      <label for="playerName">Nom du joueur</label>
+      <input
+        id="playerName"
+        type="text"
+        maxlength="30"
+        placeholder="Exemple : Dembélé"
+        disabled>
     </div>
+    <button class="primary" id="saveName" disabled>
+      Enregistrer
+    </button>
+    <button id="clearName" disabled>
+      Effacer
+    </button>
+  </div>
+</div>
 
-    <div class="options">
-      <div>
-        <label for="movement">Action tactique</label>
-        <select id="movement">
-          <option value="pressing">Pressing</option>
-          <option value="counter">Contre-attaque</option>
-          <option value="overlap">Dédoublement</option>
-          <option value="compact">Bloc compact</option>
-          <option value="passing">Circuit de passes</option>
-        </select>
-      </div>
+<p class="help">
+  💡 Clique sur un joueur pour le sélectionner.
+  Fais-le glisser pour changer sa position.
+  Les noms sont enregistrés dans ce navigateur.
+  Les animations sont illustratives, pas des matchs réels.
+</p>
 
-      <div>
-        <label for="speed">Vitesse</label>
-        <select id="speed">
-          <option value="0.5">Lente</option>
-          <option value="1" selected>Normale</option>
-          <option value="1.5">Rapide</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="teams">
-      <div class="team-name">
-        <span class="club-dot" id="dotNameA"></span>
-        <span id="nameA">Équipe 1</span>
-      </div>
-      <span class="vs">VS</span>
-      <div class="team-name">
-        <span id="nameB">Équipe 2</span>
-        <span class="club-dot" id="dotNameB"></span>
-      </div>
-    </div>
-
-    <div class="pitch" id="pitch">
-      <div class="midline"></div>
-      <div class="circle"></div>
-      <div class="area left"></div>
-      <div class="area right"></div>
-      <div class="goal-area left"></div>
-      <div class="goal-area right"></div>
-
-      <svg class="arrows" id="arrows"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none">
-        <defs>
-          <marker id="arrowhead"
-            markerWidth="4"
-            markerHeight="4"
-            refX="3" refY="2"
-            orient="auto">
-            <path d="M0 0 L4 2 L0 4 Z"
-              fill="#ffe36a"/>
-          </marker>
-        </defs>
-      </svg>
-    </div>
-
-    <div class="buttons">
-      <button class="primary" id="play">▶ Lecture</button>
-      <button id="pause" disabled>⏸ Pause</button>
-      <button id="restart">↺ Recommencer</button>
-      <button id="reset">Réinitialiser</button>
-    </div>
-
-    <div class="description" id="description">
-      Choisis une action puis lance l'animation.
-    </div>
-
-    <p class="help">
-      💡 Tu peux déplacer les joueurs lorsque
-      l'animation est arrêtée.
-      Les mouvements sont illustratifs et ne
-      reproduisent pas un match réel.
-    </p>
-
-  </section>
+</section>
 </main>
 
 <script>
@@ -399,6 +452,11 @@ const pause=$("pause");
 const restart=$("restart");
 const reset=$("reset");
 const description=$("description");
+
+const playerName=$("playerName");
+const selectedInfo=$("selectedInfo");
+const saveName=$("saveName");
+const clearName=$("clearName");
 
 /* COULEURS DES CLUBS */
 
@@ -452,8 +510,7 @@ function colorDistance(a,b){
 
 function inkFor(bg){
   const [r,g,b]=hexRGB(bg);
-  const brightness=
-    (r*299+g*587+b*114)/1000;
+  const brightness=(r*299+g*587+b*114)/1000;
   return brightness>155?"#102219":"#ffffff";
 }
 
@@ -466,18 +523,14 @@ function currentColors(){
 
   if(colorDistance(shirtA,shirtB)<115){
     const alternatives=[
-      b[1],
-      "#ffffff",
-      "#111111",
-      "#f8e71c",
-      "#38e888"
+      b[1],"#ffffff","#111111",
+      "#f8e71c","#38e888"
     ];
 
-    shirtB=alternatives
-      .sort((x,y)=>
-        colorDistance(y,shirtA)-
-        colorDistance(x,shirtA)
-      )[0];
+    shirtB=alternatives.sort(
+      (x,y)=>colorDistance(y,shirtA)-
+             colorDistance(x,shirtA)
+    )[0];
   }
 
   return{
@@ -518,31 +571,31 @@ function updateColors(){
 /* FORMATIONS */
 
 const formations={
-"433":[
-[7,50],[25,14],[25,38],[25,62],[25,86],
-[43,25],[43,50],[43,75],
-[66,17],[71,50],[66,83]
-],
-"4231":[
-[7,50],[25,14],[25,38],[25,62],[25,86],
-[40,35],[40,65],
-[59,18],[59,50],[59,82],[72,50]
-],
-"352":[
-[7,50],[25,25],[25,50],[25,75],
-[40,12],[40,35],[40,65],[40,88],
-[56,50],[71,35],[71,65]
-],
-"442":[
-[7,50],[25,14],[25,38],[25,62],[25,86],
-[49,14],[49,38],[49,62],[49,86],
-[70,35],[70,65]
-],
-"343":[
-[7,50],[25,25],[25,50],[25,75],
-[47,14],[47,38],[47,62],[47,86],
-[69,20],[72,50],[69,80]
-]
+  "433":[
+    [7,50],[25,14],[25,38],[25,62],[25,86],
+    [43,25],[43,50],[43,75],
+    [66,17],[71,50],[66,83]
+  ],
+  "4231":[
+    [7,50],[25,14],[25,38],[25,62],[25,86],
+    [40,35],[40,65],
+    [59,18],[59,50],[59,82],[72,50]
+  ],
+  "352":[
+    [7,50],[25,25],[25,50],[25,75],
+    [40,12],[40,35],[40,65],[40,88],
+    [56,50],[71,35],[71,65]
+  ],
+  "442":[
+    [7,50],[25,14],[25,38],[25,62],[25,86],
+    [49,14],[49,38],[49,62],[49,86],
+    [70,35],[70,65]
+  ],
+  "343":[
+    [7,50],[25,25],[25,50],[25,75],
+    [47,14],[47,38],[47,62],[47,86],
+    [69,20],[72,50],[69,80]
+  ]
 };
 
 const explanations={
@@ -560,6 +613,7 @@ let progress=0;
 let running=false;
 let frame=null;
 let lastTime=null;
+let selectedPlayer=null;
 
 const duration=5000;
 
@@ -584,30 +638,162 @@ function setBall(x,y){
   ball.style.top=clamp(y,3,97)+"%";
 }
 
+/* COMPOSITIONS PERSONNALISÉES */
+
+function storageKey(player){
+  const club=player.team==="a"
+    ?clubA.value:clubB.value;
+
+  return "pitchaura_player_"+club+"_"+player.index;
+}
+
+function readPlayerName(player){
+  try{
+    return localStorage.getItem(storageKey(player))||"";
+  }catch(error){
+    return "";
+  }
+}
+
+function writePlayerName(player,name){
+  try{
+    if(name){
+      localStorage.setItem(storageKey(player),name);
+    }else{
+      localStorage.removeItem(storageKey(player));
+    }
+  }catch(error){
+    description.textContent=
+      "Le navigateur ne permet pas de sauvegarder ce nom.";
+  }
+}
+
+function updatePlayerLabel(player){
+  player.label.textContent=player.name;
+  player.label.style.display=player.name?"block":"none";
+}
+
+function selectPlayer(player){
+  if(running)return;
+
+  if(selectedPlayer){
+    selectedPlayer.el.classList.remove("selected");
+  }
+
+  selectedPlayer=player;
+  player.el.classList.add("selected");
+
+  const club=player.team==="a"
+    ?clubA.selectedOptions[0]?.textContent
+    :clubB.selectedOptions[0]?.textContent;
+
+  selectedInfo.textContent=
+    (club||"Équipe")+" — Joueur n°"+(player.index+1);
+
+  playerName.disabled=false;
+  saveName.disabled=false;
+  clearName.disabled=false;
+  playerName.value=player.name;
+}
+
+function clearSelection(){
+  if(selectedPlayer){
+    selectedPlayer.el.classList.remove("selected");
+  }
+
+  selectedPlayer=null;
+  selectedInfo.textContent=
+    "Clique sur un joueur du terrain pour modifier son nom.";
+
+  playerName.value="";
+  playerName.disabled=true;
+  saveName.disabled=true;
+  clearName.disabled=true;
+}
+
+saveName.addEventListener("click",()=>{
+  if(!selectedPlayer)return;
+
+  const name=playerName.value.trim();
+  selectedPlayer.name=name;
+
+  writePlayerName(selectedPlayer,name);
+  updatePlayerLabel(selectedPlayer);
+
+  description.textContent=name
+    ?"✅ Nom enregistré : "+name
+    :"Nom du joueur effacé.";
+});
+
+clearName.addEventListener("click",()=>{
+  if(!selectedPlayer)return;
+
+  selectedPlayer.name="";
+  playerName.value="";
+
+  writePlayerName(selectedPlayer,"");
+  updatePlayerLabel(selectedPlayer);
+});
+
+playerName.addEventListener("keydown",event=>{
+  if(event.key==="Enter"){
+    saveName.click();
+  }
+});
+
+/* JOUEURS */
+
 function makePlayer(team,index,position){
   const el=document.createElement("div");
   el.className="player";
   el.textContent=index+1;
 
+  const label=document.createElement("span");
+  label.className="player-label";
+  el.appendChild(label);
+
   const player={
-    team,index,el,
+    team,index,el,label,
     x:position[0],
-    y:position[1]
+    y:position[1],
+    name:""
   };
 
+  player.name=readPlayerName(player);
+  updatePlayerLabel(player);
   setPosition(player,player.x,player.y);
+
+  let startX=0;
+  let startY=0;
+  let dragged=false;
 
   el.addEventListener("pointerdown",e=>{
     if(running)return;
+
     e.preventDefault();
     el.setPointerCapture(e.pointerId);
     el.style.zIndex="10";
+
+    startX=e.clientX;
+    startY=e.clientY;
+    dragged=false;
   });
 
   el.addEventListener("pointermove",e=>{
     if(running||!el.hasPointerCapture(e.pointerId)){
       return;
     }
+
+    if(
+      Math.hypot(
+        e.clientX-startX,
+        e.clientY-startY
+      )>5
+    ){
+      dragged=true;
+    }
+
+    if(!dragged)return;
 
     const rect=pitch.getBoundingClientRect();
 
@@ -618,12 +804,17 @@ function makePlayer(team,index,position){
     );
   });
 
-  function endDrag(){
+  el.addEventListener("pointerup",()=>{
     el.style.zIndex="3";
-  }
 
-  el.addEventListener("pointerup",endDrag);
-  el.addEventListener("pointercancel",endDrag);
+    if(!dragged){
+      selectPlayer(player);
+    }
+  });
+
+  el.addEventListener("pointercancel",()=>{
+    el.style.zIndex="3";
+  });
 
   pitch.appendChild(el);
   return player;
@@ -637,6 +828,8 @@ function basePositions(form,team){
     return[100-x*0.76,y];
   });
 }
+
+/* CONTRÔLES */
 
 function stop(){
   running=false;
@@ -685,6 +878,7 @@ function setup(){
   progress=0;
   scene=null;
   clearArrows();
+  clearSelection();
 
   pitch.querySelectorAll(".player,.ball")
     .forEach(el=>el.remove());
@@ -711,6 +905,8 @@ function setup(){
 
   description.textContent=explanations[movement.value];
 }
+
+/* ANIMATIONS TACTIQUES */
 
 function createScene(){
   const start=players.map(p=>[p.x,p.y]);
@@ -915,8 +1111,7 @@ function pauseAnimation(){
   if(!running)return;
   stop();
 
-  description.textContent=
-    "⏸ Animation en pause.";
+  description.textContent="⏸ Animation en pause.";
 }
 
 function restartAnimation(){
@@ -934,11 +1129,10 @@ function restartAnimation(){
   clearArrows();
   setBall(48,50);
 
-  description.textContent=
-    explanations[movement.value];
+  description.textContent=explanations[movement.value];
 }
 
-/* CONNEXION AVEC LE COMPARATEUR */
+/* CONNEXION AVEC L'ACCUEIL */
 
 const params=new URLSearchParams(
   window.location.search
