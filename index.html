@@ -4,15 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="90MINUTE — Analyses tactiques et décryptages du football européen.">
-<title>90MINUTE. | Le football décrypté</title>
-
+<meta name="description" content="90MINUTE, le football décrypté. Analyses et comptes rendus.">
+<title>90MINUTE | Le football décrypté</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
 :root {
   --navy:#101923;
-  --navy2:#1b2c43;
   --gold:#d8b46a;
   --goldtext:#a17b35;
   --bg:#f7f7f4;
@@ -32,10 +29,8 @@ html[data-theme="dark"] {
 * {box-sizing:border-box}
 html {scroll-behavior:smooth}
 body {
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font:15px/1.65 Inter,Arial,sans-serif;
+  margin:0;background:var(--bg);color:var(--text);
+  font:15px/1.7 Inter,Arial,sans-serif;
 }
 button,input,select {font:inherit}
 button {cursor:pointer}
@@ -49,15 +44,15 @@ img {display:block;width:100%;object-fit:cover}
 .topbar-inner {display:flex;justify-content:space-between;gap:12px}
 header {background:var(--surface);border-bottom:1px solid var(--border)}
 .header-inner {
-  min-height:105px;display:flex;justify-content:space-between;
-  align-items:center;gap:15px;
+  min-height:105px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
 }
 .brand {display:flex;align-items:center;gap:13px}
 .brand-icon {
   width:62px;height:62px;background:var(--navy);
-  color:white;border-radius:13px;display:grid;place-items:center;
+  color:white;border-radius:13px;display:grid;
+  place-items:center;position:relative;overflow:hidden;
   font:italic 900 43px "Barlow Condensed",sans-serif;
-  position:relative;overflow:hidden;
 }
 .brand-icon:after {
   content:"";position:absolute;width:50px;height:17px;
@@ -73,8 +68,8 @@ header {background:var(--surface);border-bottom:1px solid var(--border)}
 .header-actions {display:flex;gap:10px}
 .icon-button {
   width:43px;height:43px;border-radius:50%;
-  border:1px solid var(--border);
-  background:var(--surface);color:var(--text);font-size:20px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);font-size:20px;
 }
 nav {background:var(--surface);border-bottom:1px solid var(--border)}
 .nav-inner {display:flex;gap:27px;overflow-x:auto}
@@ -83,20 +78,22 @@ nav {background:var(--surface);border-bottom:1px solid var(--border)}
   background:none;color:var(--text);padding:17px 0;
   font-size:12px;font-weight:800;white-space:nowrap;
 }
-.nav-link.active {color:var(--goldtext);border-bottom-color:var(--gold)}
+.nav-link.active {
+  color:var(--goldtext);border-bottom-color:var(--gold);
+}
 .page {display:none}
 .page.active {display:block}
 h1,h2,h3 {
   font-family:"Barlow Condensed",Arial,sans-serif;
-  line-height:1.09;margin:0;
+  line-height:1.12;margin:0;
 }
 h1 {font-size:clamp(43px,6vw,76px);font-weight:900}
-h2 {font-size:38px;font-weight:800}
-h3 {font-size:27px;font-weight:800}
+h2 {font-size:36px;font-weight:800}
+h3 {font-size:26px;font-weight:800}
 .intro {padding:42px 0 26px}
 .intro p {max-width:680px;color:var(--muted)}
 .eyebrow {
-  color:var(--goldtext);font-size:12px;font-weight:800;
+  color:var(--goldtext);font-size:11px;font-weight:800;
   letter-spacing:1.3px;text-transform:uppercase;
 }
 .news-layout {
@@ -106,11 +103,9 @@ h3 {font-size:27px;font-weight:800}
   position:relative;overflow:hidden;border-radius:7px;
   background:var(--navy);color:white;cursor:pointer;
 }
-.main-story {min-height:470px}
-.main-story img {height:470px}
+.main-story,.main-story img {height:470px}
 .side-stories {display:grid;grid-template-rows:1fr 1fr;gap:20px}
-.side-story {min-height:225px}
-.side-story img {height:225px}
+.side-story,.side-story img {height:225px}
 .main-story:after,.side-story:after {
   content:"";position:absolute;inset:0;
   background:linear-gradient(transparent 20%,rgba(0,0,0,.9));
@@ -125,9 +120,9 @@ h3 {font-size:27px;font-weight:800}
 .side-story h3 {font-size:25px;margin:9px 0}
 .main-story p {color:#e2e7ee}
 .category {
-  display:inline-block;background:var(--gold);
-  color:var(--navy);padding:5px 9px;border-radius:3px;
-  font-size:10px;font-weight:800;text-transform:uppercase;
+  display:inline-block;background:var(--gold);color:var(--navy);
+  padding:5px 9px;border-radius:3px;font-size:10px;
+  font-weight:800;text-transform:uppercase;
 }
 .meta {font-size:12px;color:var(--muted)}
 .main-story .meta,.side-story .meta {color:#e2e7ee}
@@ -142,7 +137,8 @@ h3 {font-size:27px;font-weight:800}
   font-weight:800;font-size:12px;
 }
 .articles-grid {
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:22px;
 }
 .article-card {
   background:var(--surface);border:1px solid var(--border);
@@ -153,15 +149,24 @@ h3 {font-size:27px;font-weight:800}
 .card-body {padding:19px}
 .card-body h3 {margin:11px 0}
 .card-body p {font-size:13px;color:var(--muted)}
-.leagues {display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+
+/* Logos des championnats */
+.leagues {
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+}
 .league-box {
   border:1px solid var(--border);background:var(--surface);
-  color:var(--text);border-radius:6px;padding:22px 8px;text-align:center;
+  color:var(--text);border-radius:6px;padding:20px 10px;
+  text-align:center;min-height:130px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;
 }
 .league-box:hover {border-color:var(--gold)}
-.league-box strong {font-size:13px}
-.league-box small {display:block;color:var(--muted);font-size:11px}
-.league-box .symbol {font-size:26px;margin-bottom:8px}
+.league-logo {
+  width:90px;height:55px;object-fit:contain;
+}
+.league-box strong {font-size:12px}
+.league-box small {color:var(--muted);font-size:10px}
 .filters {display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
 .filters input,.filters select {
   padding:13px;border:1px solid var(--border);
@@ -169,19 +174,21 @@ h3 {font-size:27px;font-weight:800}
 }
 .filters input {flex:1;min-width:180px}
 .empty {padding:35px;text-align:center;color:var(--muted)}
+
+/* Page de lecture */
 .reader {max-width:850px;margin:45px auto 75px}
 .reader h1 {font-size:clamp(43px,6vw,68px);margin:12px 0}
 .reader-cover {max-height:460px;border-radius:6px;margin:25px 0}
 .reader .lead {font-size:20px;font-weight:600}
-.reader p {font-size:16px;line-height:1.85}
-.reader h2 {margin:36px 0 15px}
+.reader p {font-size:16px;line-height:1.9}
+.reader h2 {margin:35px 0 15px}
 .back-button {
   border:0;background:none;color:var(--goldtext);
   font-weight:800;padding:0;margin-bottom:20px;
 }
 .scoreboard {
   background:var(--navy);color:white;
-  padding:27px;border-radius:8px;margin:27px 0;
+  padding:26px;border-radius:7px;margin:27px 0;
 }
 .scoreboard-label {
   text-align:center;color:var(--gold);
@@ -189,92 +196,83 @@ h3 {font-size:27px;font-weight:800}
 }
 .scoreline {
   display:grid;grid-template-columns:1fr auto 1fr;
-  align-items:center;gap:15px;margin:17px 0;text-align:center;
+  align-items:center;gap:15px;margin:15px 0;text-align:center;
 }
 .team-name {font-weight:800;font-size:16px}
-.score {font:900 clamp(40px,7vw,68px) "Barlow Condensed",sans-serif}
+.score {
+  font:900 clamp(40px,7vw,68px) "Barlow Condensed",sans-serif;
+}
 .scorers {text-align:center;color:#d6dfeb;font-size:12px}
 .demo {
-  background:var(--surface);border-left:4px solid var(--gold);
-  padding:15px 19px;margin:22px 0;
-  font-size:13px;color:var(--muted);
+  background:var(--surface);border-left:3px solid var(--gold);
+  padding:13px 17px;margin:22px 0;
+  font-size:12px;color:var(--muted);
 }
-.analysis-section {
-  margin:28px 0;
-}
-.analysis-section h3 {
-  font-size:29px;margin-bottom:12px;
-}
-.analysis-section p {
-  margin:0 0 16px;
-}
+.analysis-section {margin:30px 0}
+.analysis-section h3 {font-size:29px;margin-bottom:12px}
+.analysis-section p {margin:0 0 15px}
 .analysis-highlight {
-  border-left:4px solid var(--gold);
-  background:var(--surface);
-  padding:20px 23px;margin:24px 0;
+  border-left:3px solid var(--gold);
+  background:var(--surface);padding:18px 22px;margin:25px 0;
 }
 .analysis-highlight strong {
-  color:var(--goldtext);
-  font-size:12px;letter-spacing:1px;
+  color:var(--goldtext);font-size:11px;letter-spacing:1px;
 }
-.lineups {
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;
-}
-.lineup-card {
-  border:1px solid var(--border);background:var(--surface);
-  border-radius:6px;padding:20px;
-}
-.lineup-card h3 {font-size:24px;margin-bottom:12px}
-.lineup-card p {font-size:13px;margin:7px 0}
-.duel {
-  background:var(--surface);
+
+/* Duel tactique secondaire et discret */
+.tactical-mini {
   border:1px solid var(--border);
-  border-radius:8px;
-  overflow:hidden;
-  margin:24px 0;
+  background:var(--surface);
+  border-radius:6px;
+  padding:20px;margin:27px 0;
 }
-.duel-header {
-  background:var(--navy);color:white;
-  padding:23px;text-align:center;
+.tactical-mini h3 {font-size:23px}
+.tactical-mini>p {
+  font-size:12px;color:var(--muted);
+  margin:6px 0 15px;
 }
-.duel-header h3 {font-size:32px}
-.duel-header p {color:#cbd5e1;font-size:13px;margin:7px 0 0}
-.duel-row {
-  display:grid;grid-template-columns:1fr 130px 1fr;
+.tactical-head {
+  display:flex;justify-content:space-between;
   align-items:center;gap:12px;
-  padding:20px;border-bottom:1px solid var(--border);
+  padding:11px 0;border-bottom:1px solid var(--border);
+  font-size:12px;font-weight:800;
 }
-.duel-row:last-child {border-bottom:0}
-.duel-side {font-size:13px;line-height:1.65}
-.duel-side strong {display:block;color:var(--goldtext);margin-bottom:5px}
-.duel-label {
-  text-align:center;font-size:11px;font-weight:800;
-  text-transform:uppercase;letter-spacing:.7px;
+.tactical-head span:nth-child(2) {
+  color:var(--goldtext);font-size:11px;
 }
-.duel-label span {
-  display:block;color:var(--muted);font-weight:500;
-  text-transform:none;letter-spacing:0;margin-top:5px;
+.tactical-line {
+  display:grid;grid-template-columns:1fr 100px 1fr;
+  gap:12px;align-items:start;
+  padding:14px 0;border-bottom:1px solid var(--border);
 }
+.tactical-line:last-child {border-bottom:0}
+.tactical-line div {font-size:12px;line-height:1.6}
+.tactical-line strong {
+  font-size:10px;text-align:center;
+  color:var(--goldtext);text-transform:uppercase;
+  padding-top:3px;
+}
+
+/* Verdict compact */
 .verdict {
-  background:var(--navy);
-  color:white;border-radius:8px;
-  padding:29px;margin:28px 0;
-  border-top:5px solid var(--gold);
+  border:1px solid var(--border);
+  border-left:4px solid var(--gold);
+  background:var(--surface);
+  padding:19px 22px;
+  border-radius:5px;margin:25px 0;
 }
-.verdict h3 {
-  color:var(--gold);font-size:34px;margin:10px 0;
-}
-.verdict p {color:#e3e9f0}
-.verdict ul {padding-left:20px}
-.verdict li {margin:10px 0}
+.verdict h3 {font-size:24px;margin:7px 0}
+.verdict p {font-size:14px;margin:8px 0 0}
+.verdict .eyebrow {font-size:10px}
+
+/* Notes volontairement secondaires */
 .ratings-secondary {
-  margin:35px 0;
-  border-top:1px solid var(--border);
-  padding-top:22px;
+  margin:36px 0;border-top:1px solid var(--border);
+  padding-top:20px;
 }
-.ratings-secondary h2 {font-size:28px}
+.ratings-secondary h2 {font-size:25px}
 .ratings-secondary>p {
-  color:var(--muted);font-size:13px;
+  color:var(--muted);font-size:12px;
 }
 .rating-table {
   width:100%;border-collapse:collapse;
@@ -284,39 +282,28 @@ h3 {font-size:27px;font-weight:800}
 }
 .rating-table th,.rating-table td {
   padding:12px;text-align:left;
-  border-bottom:1px solid var(--border);
-  font-size:12px;
+  border-bottom:1px solid var(--border);font-size:12px;
 }
-.rating-table th {font-weight:800}
-.rating-number {
-  background:var(--navy);color:var(--gold);
-  padding:5px 9px;border-radius:4px;
-  font-weight:800;white-space:nowrap;
-}
+.rating-number {font-weight:800;color:var(--goldtext)}
+
+/* Archives des analyses de matchs */
 .previous-matches {
-  margin-top:45px;
-  border-top:2px solid var(--text);
+  margin-top:45px;border-top:2px solid var(--text);
   padding-top:22px;
 }
-.previous-matches>p {
-  color:var(--muted);font-size:13px;
-}
+.previous-matches>p {color:var(--muted);font-size:13px}
 .previous-grid {
   display:grid;grid-template-columns:1fr 1fr;
   gap:17px;margin-top:22px;
 }
 .previous-card {
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--text);
-  border-radius:6px;overflow:hidden;
-  text-align:left;padding:0;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);border-radius:6px;
+  overflow:hidden;text-align:left;padding:0;
 }
 .previous-card img {height:130px}
 .previous-card-content {padding:15px}
-.previous-card strong {
-  display:block;font-size:15px;margin:8px 0;
-}
+.previous-card strong {display:block;font-size:15px;margin:8px 0}
 .previous-card small {color:var(--muted)}
 footer {
   background:var(--navy);color:white;
@@ -340,22 +327,21 @@ footer p {color:#bdc8d5;font-size:12px}
   .brand-subtitle {font-size:8px}
   .nav-inner {gap:22px}
   .intro {padding-top:29px}
-  .main-story,.main-story img {height:390px;min-height:390px}
+  .main-story,.main-story img {height:390px}
   .main-story-content {padding:21px}
   .side-stories {grid-template-columns:1fr}
-  .side-story,.side-story img {height:205px;min-height:205px}
+  .side-story,.side-story img {height:205px}
   .articles-grid {grid-template-columns:1fr}
   .article-card img {height:215px}
   .leagues {grid-template-columns:repeat(2,1fr)}
-  .lineups {grid-template-columns:1fr}
+  .league-logo {width:78px;height:47px}
   .section-heading h2 {font-size:30px}
   .scoreboard {padding:18px}
   .team-name {font-size:13px}
-  .duel-row {grid-template-columns:1fr;gap:8px}
-  .duel-label {grid-row:1;text-align:left}
-  .duel-side {padding:8px 0}
+  .tactical-line {grid-template-columns:1fr 72px 1fr;gap:7px}
+  .tactical-line div {font-size:11px}
+  .tactical-mini {padding:14px}
   .previous-grid {grid-template-columns:1fr}
-  .verdict {padding:22px}
 }
 </style>
 </head>
@@ -410,39 +396,31 @@ footer p {color:#bdc8d5;font-size:12px}
   </div>
   <div id="latestArticles" class="articles-grid"></div>
 
-  <div class="section-heading"><h2>LES CHAMPIONNATS</h2></div>
-  <div class="leagues">
-    <button class="league-box" onclick="openLeague('Premier League')">
-      <div class="symbol">🏴</div><strong>PREMIER LEAGUE</strong><small>Angleterre</small>
-    </button>
-    <button class="league-box" onclick="openLeague('LaLiga')">
-      <div class="symbol">🇪🇸</div><strong>LALIGA</strong><small>Espagne</small>
-    </button>
-    <button class="league-box" onclick="openLeague('Serie A')">
-      <div class="symbol">🇮🇹</div><strong>SERIE A</strong><small>Italie</small>
-    </button>
-    <button class="league-box" onclick="openLeague('Bundesliga')">
-      <div class="symbol">🇩🇪</div><strong>BUNDESLIGA</strong><small>Allemagne</small>
-    </button>
-    <button class="league-box" onclick="openLeague('Ligue 1')">
-      <div class="symbol">🇫🇷</div><strong>LIGUE 1</strong><small>France</small>
-    </button>
+  <div class="section-heading">
+    <h2>LES CHAMPIONNATS</h2>
   </div>
+
+  <div class="leagues" id="leaguesGrid"></div>
 </section>
 
 <section id="articles" class="page">
   <div class="intro">
     <div class="eyebrow">La rédaction 90MINUTE</div>
     <h1>TOUS LES ARTICLES.</h1>
-    <p>Retrouve les analyses et comptes rendus de nos cinq championnats.</p>
+    <p>Analyses et comptes rendus des cinq grands championnats.</p>
   </div>
+
   <div class="filters">
-    <input id="search" type="search" placeholder="Rechercher un article..." oninput="renderArticles()">
+    <input id="search" type="search"
+      placeholder="Rechercher un article..."
+      oninput="renderArticles()">
+
     <select id="category" onchange="renderArticles()">
       <option value="">Tous les formats</option>
       <option>Analyse</option>
       <option>Compte rendu</option>
     </select>
+
     <select id="league" onchange="renderArticles()">
       <option value="">Tous les championnats</option>
       <option>Premier League</option>
@@ -452,6 +430,7 @@ footer p {color:#bdc8d5;font-size:12px}
       <option>Ligue 1</option>
     </select>
   </div>
+
   <div id="articlesGrid" class="articles-grid"></div>
   <p id="noResults" class="empty" hidden>Aucun article trouvé.</p>
 </section>
@@ -477,10 +456,51 @@ footer p {color:#bdc8d5;font-size:12px}
 
 <script>
 /*
-  DONNÉES DE DÉMONSTRATION
-  Les équipes et les scores sont fictifs.
-  Aucun événement n'est présenté comme un vrai résultat.
+  Logos hébergés par Wikimedia Commons.
+  Les marques restent la propriété de leurs titulaires.
 */
+const leagues = [
+  {
+    name:"Premier League",
+    country:"Angleterre",
+    file:"Pl-logo-light.svg"
+  },
+  {
+    name:"LaLiga",
+    country:"Espagne",
+    file:"LaLiga logo 2023.svg"
+  },
+  {
+    name:"Serie A",
+    country:"Italie",
+    file:"Serie A logo 2022.svg"
+  },
+  {
+    name:"Bundesliga",
+    country:"Allemagne",
+    file:"Bundesliga logo (2017).svg"
+  },
+  {
+    name:"Ligue 1",
+    country:"France",
+    file:"Ligue 1 McDonald's logo.svg"
+  }
+];
+
+function logoURL(file) {
+  return "https://commons.wikimedia.org/wiki/Special:FilePath/" +
+    encodeURIComponent(file);
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
 
 const demoMatch = {
   competition:"Ligue 1",
@@ -497,60 +517,50 @@ const demoMatch = {
   ],
   analysis:[
     {
-      heading:"Une première période dominée par le pressing",
-      text:"Dans cet exemple fictif, l'Équipe A choisit de presser haut pour empêcher son adversaire de construire tranquillement. Les trois attaquants orientent la relance vers les côtés, tandis que les milieux ferment les passes intérieures. Cette organisation permet à l'Équipe A de récupérer plusieurs ballons dans des zones avancées."
+      heading:"Une première période marquée par le pressing",
+      text:"Dans cette rencontre fictive, l'Équipe A impose une pression collective dès les premières relances. Ses attaquants orientent le jeu vers les côtés tandis que les milieux cherchent à fermer les espaces intérieurs. Cette organisation lui permet de récupérer le ballon dans des zones avancées et de maintenir son adversaire sous pression."
     },
     {
-      heading:"La réponse tactique de l'Équipe B",
-      text:"L'Équipe B tente de contourner la première ligne de pression grâce à des déplacements entre les lignes. Son meneur de jeu décroche davantage pour proposer une solution. Ce changement de positionnement permet progressivement de déséquilibrer le bloc adverse."
+      heading:"La réponse tactique de l'adversaire",
+      text:"L'Équipe B modifie progressivement sa manière de construire. Son meneur de jeu décroche davantage et les joueurs offensifs cherchent à se placer entre les lignes. Ces mouvements obligent l'Équipe A à adapter ses distances défensives. La rencontre devient alors plus équilibrée."
     },
     {
-      heading:"Le tournant : un ajustement au milieu",
-      text:"Après une période plus compliquée, l'Équipe A resserre son organisation au milieu. Ses joueurs se rapprochent pour mieux protéger l'axe et retrouver des possibilités de transition. Ce changement explique la reprise du contrôle dans la dernière partie du match fictif."
+      heading:"L'ajustement qui change l'équilibre",
+      text:"L'Équipe A resserre son milieu pour protéger les espaces centraux et améliorer ses transitions. Elle laisse moins de possibilités à son adversaire de progresser dans l'axe. Ce changement permet de reprendre l'initiative et explique le dernier tournant du scénario fictif."
     }
   ],
-  tacticalDuel:[
+  duel:[
     {
       label:"Pressing",
-      home:"Pression haute et déclenchement collectif sur les défenseurs.",
-      away:"Recherche de solutions pour contourner la première ligne."
+      home:"Pression haute",
+      away:"Relance courte"
     },
     {
-      label:"Possession",
-      home:"Circulation rapide et recherche des côtés.",
-      away:"Construction plus patiente, avec un meneur entre les lignes."
+      label:"Milieu",
+      home:"Bloc compact",
+      away:"Jeu entre les lignes"
     },
     {
       label:"Transitions",
-      home:"Attaques rapides après récupération.",
-      away:"Recherche de profondeur dès qu'un espace apparaît."
-    },
-    {
-      label:"Ajustements",
-      home:"Milieu resserré pour mieux protéger l'axe.",
-      away:"Décrochages du meneur pour faciliter la relance."
+      home:"Attaques rapides",
+      away:"Recherche de profondeur"
     }
   ],
   verdict:{
-    title:"L'organisation collective a fait la différence",
-    text:"Dans cette simulation, l'Équipe A a su adapter son pressing et son organisation au milieu après la réaction adverse. Le principal enseignement n'est pas seulement le résultat, mais la capacité à modifier son approche tactique pendant la rencontre.",
-    lessons:[
-      "Le pressing doit être coordonné pour rester efficace.",
-      "L'occupation du milieu influence la maîtrise du match.",
-      "Les ajustements tactiques peuvent modifier le rapport de force."
-    ]
+    title:"L'adaptation tactique a fait la différence",
+    text:"Dans cet exemple, l'Équipe A a mieux réagi aux changements adverses. Sa capacité à réorganiser le milieu et à retrouver un pressing cohérent explique l'évolution du rapport de force."
   },
   ratings:[
-    {name:"Joueur A",rating:"8,5",comment:"Influence offensive importante."},
-    {name:"Joueur C",rating:"8",comment:"Décisif dans le scénario fictif."},
-    {name:"Joueur B",rating:"7,5",comment:"Bonne activité offensive."}
+    {name:"Joueur A",rating:"8,5",comment:"Influence offensive."},
+    {name:"Joueur C",rating:"8",comment:"Décisif."},
+    {name:"Joueur B",rating:"7,5",comment:"Bonne activité."}
   ]
 };
 
 const articles = [
   {
     id:1,
-    title:"Équipe A – Équipe B : le duel tactique qui a changé la rencontre",
+    title:"Équipe A – Équipe B : le match décrypté",
     category:"Compte rendu",
     league:"Ligue 1",
     minutes:7,
@@ -569,7 +579,7 @@ const articles = [
     league:"Premier League",
     minutes:5,
     image:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1300&q=85",
-    excerpt:"Les principes du pressing, ses avantages et les espaces qu'il peut laisser.",
+    excerpt:"Les principes du pressing, ses avantages et ses risques.",
     paragraphs:[
       "Le pressing haut consiste à défendre en avançant pour limiter les possibilités de relance de l'adversaire.",
       "Son efficacité dépend du placement des joueurs, de la synchronisation des courses et de la couverture des espaces.",
@@ -583,7 +593,7 @@ const articles = [
     league:"Serie A",
     minutes:6,
     image:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1300&q=85",
-    excerpt:"Positionnement, circuits de passes et création de supériorités numériques.",
+    excerpt:"Positionnement, circuits de passes et supériorités numériques.",
     paragraphs:[
       "Contrôler le milieu de terrain demande de créer des solutions de passe et de gérer les espaces.",
       "Les déplacements entre les lignes permettent d'attirer un adversaire puis de libérer une zone.",
@@ -611,7 +621,7 @@ const articles = [
     league:"LaLiga",
     minutes:4,
     image:"https://images.unsplash.com/photo-1459865264687-5958f4b3b5c8?auto=format&fit=crop&w=1300&q=85",
-    excerpt:"Le récit d'une rencontre doit distinguer les faits des interprétations.",
+    excerpt:"Distinguer les faits des interprétations.",
     paragraphs:[
       "Un compte rendu journalistique commence par des informations vérifiées : score, buteurs et contexte.",
       "Il présente ensuite les moments importants et explique leur influence sur le match.",
@@ -620,28 +630,25 @@ const articles = [
   }
 ];
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",
-    '"':"&quot;","'":"&#39;"
-  }[c]));
-}
-
 function card(a) {
   return `
   <article class="article-card">
-    <a href="#article-${a.id}" onclick="openArticle(${a.id});return false">
+    <a href="#article-${a.id}"
+      onclick="openArticle(${a.id});return false">
       <img src="${a.image}" alt="Illustration football" loading="lazy">
     </a>
     <div class="card-body">
       <div class="eyebrow">${a.category} · ${a.league}</div>
       <h3>
-        <a href="#article-${a.id}" onclick="openArticle(${a.id});return false">
+        <a href="#article-${a.id}"
+          onclick="openArticle(${a.id});return false">
           ${escapeHTML(a.title)}
         </a>
       </h3>
       <p>${escapeHTML(a.excerpt)}</p>
-      <div class="meta">La rédaction · ${a.minutes} min de lecture</div>
+      <div class="meta">
+        La rédaction · ${a.minutes} min de lecture
+      </div>
     </div>
   </article>`;
 }
@@ -650,6 +657,7 @@ function feature(a,main=false) {
   const type=main?"main-story":"side-story";
   const content=main?"main-story-content":"side-story-content";
   const tag=main?"h2":"h3";
+
   return `
   <article class="${type}" role="button" tabindex="0"
     onclick="openArticle(${a.id})"
@@ -677,143 +685,138 @@ function showPage(page) {
 
 function scoreHTML(m) {
   return `
-    <div class="scoreboard">
-      <div class="scoreboard-label">
-        ${escapeHTML(m.competition)} · MATCH FICTIF
-      </div>
-      <div class="scoreline">
-        <div class="team-name">${escapeHTML(m.home)}</div>
-        <div class="score">${m.homeScore} – ${m.awayScore}</div>
-        <div class="team-name">${escapeHTML(m.away)}</div>
-      </div>
-      <div class="scorers">${m.scorers.map(escapeHTML).join(" · ")}</div>
-    </div>`;
+  <div class="scoreboard">
+    <div class="scoreboard-label">
+      ${escapeHTML(m.competition)} · MATCH FICTIF
+    </div>
+    <div class="scoreline">
+      <div class="team-name">${escapeHTML(m.home)}</div>
+      <div class="score">${m.homeScore} – ${m.awayScore}</div>
+      <div class="team-name">${escapeHTML(m.away)}</div>
+    </div>
+    <div class="scorers">
+      ${m.scorers.map(escapeHTML).join(" · ")}
+    </div>
+  </div>`;
 }
 
 function analysisHTML(m) {
   return `
-    <h2>L'ANALYSE DU MATCH</h2>
-    ${m.analysis.map(section=>`
-      <div class="analysis-section">
-        <h3>${escapeHTML(section.heading)}</h3>
-        <p>${escapeHTML(section.text)}</p>
-      </div>
-    `).join("")}
+  <h2>L'ANALYSE DU MATCH</h2>
 
-    <div class="analysis-highlight">
-      <strong>LE POINT CLÉ DE 90MINUTE</strong>
-      <p>
-        L'évolution des organisations collectives explique
-        davantage le scénario que la simple chronologie des buts.
-      </p>
-    </div>`;
+  ${m.analysis.map(section=>`
+    <div class="analysis-section">
+      <h3>${escapeHTML(section.heading)}</h3>
+      <p>${escapeHTML(section.text)}</p>
+    </div>
+  `).join("")}
+
+  <div class="analysis-highlight">
+    <strong>LE POINT CLÉ</strong>
+    <p>
+      Les ajustements collectifs permettent de comprendre
+      le scénario au-delà du simple score.
+    </p>
+  </div>`;
 }
 
 function duelHTML(m) {
   return `
-    <h2>LE DUEL TACTIQUE</h2>
-    <p>
-      Deux approches, deux organisations et des réponses
-      différentes aux problèmes posés par l'adversaire.
-    </p>
+  <div class="tactical-mini">
+    <h3>DUEL TACTIQUE</h3>
+    <p>Les différences principales entre les deux organisations.</p>
 
-    <div class="duel">
-      <div class="duel-header">
-        <h3>${escapeHTML(m.home)} VS ${escapeHTML(m.away)}</h3>
-        <p>${escapeHTML(m.formationHome)} face au ${escapeHTML(m.formationAway)}</p>
+    <div class="tactical-head">
+      <span>${escapeHTML(m.home)}</span>
+      <span>${escapeHTML(m.formationHome)} / ${escapeHTML(m.formationAway)}</span>
+      <span>${escapeHTML(m.away)}</span>
+    </div>
+
+    ${m.duel.map(d=>`
+      <div class="tactical-line">
+        <div>${escapeHTML(d.home)}</div>
+        <strong>${escapeHTML(d.label)}</strong>
+        <div>${escapeHTML(d.away)}</div>
       </div>
-
-      ${m.tacticalDuel.map(d=>`
-        <div class="duel-row">
-          <div class="duel-side">
-            <strong>${escapeHTML(m.home)}</strong>
-            ${escapeHTML(d.home)}
-          </div>
-          <div class="duel-label">${escapeHTML(d.label)}</div>
-          <div class="duel-side">
-            <strong>${escapeHTML(m.away)}</strong>
-            ${escapeHTML(d.away)}
-          </div>
-        </div>
-      `).join("")}
-    </div>`;
+    `).join("")}
+  </div>`;
 }
 
 function verdictHTML(m) {
   return `
-    <h2>LE VERDICT 90MINUTE</h2>
-    <div class="verdict">
-      <div class="eyebrow">Notre conclusion</div>
-      <h3>${escapeHTML(m.verdict.title)}</h3>
-      <p>${escapeHTML(m.verdict.text)}</p>
-      <ul>
-        ${m.verdict.lessons.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}
-      </ul>
-    </div>`;
+  <div class="verdict">
+    <div class="eyebrow">LE VERDICT 90MINUTE</div>
+    <h3>${escapeHTML(m.verdict.title)}</h3>
+    <p>${escapeHTML(m.verdict.text)}</p>
+  </div>`;
 }
 
 function ratingsHTML(m) {
   return `
-    <section class="ratings-secondary">
-      <h2>LES NOTES DES JOUEURS</h2>
-      <p>
-        Un complément à notre analyse.
-        Les notes ne constituent pas le sujet principal de l'article.
-      </p>
-      <table class="rating-table">
-        <thead>
-          <tr><th>Joueur</th><th>Note</th><th>Appréciation</th></tr>
-        </thead>
-        <tbody>
-          ${m.ratings.map(r=>`
-            <tr>
-              <td>${escapeHTML(r.name)}</td>
-              <td><span class="rating-number">${escapeHTML(r.rating)}/10</span></td>
-              <td>${escapeHTML(r.comment)}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    </section>`;
+  <section class="ratings-secondary">
+    <h2>LES NOTES DES JOUEURS</h2>
+    <p>Évaluations complémentaires à l'analyse du match.</p>
+
+    <table class="rating-table">
+      <thead>
+        <tr>
+          <th>Joueur</th>
+          <th>Note</th>
+          <th>Appréciation</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${m.ratings.map(r=>`
+          <tr>
+            <td>${escapeHTML(r.name)}</td>
+            <td>
+              <span class="rating-number">
+                ${escapeHTML(r.rating)}/10
+              </span>
+            </td>
+            <td>${escapeHTML(r.comment)}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  </section>`;
 }
 
 function previousMatchesHTML(current) {
-  /*
-    Affiche uniquement les analyses de matchs déjà publiées
-    dans le tableau articles, pas des suggestions inventées.
-  */
   const previous=articles
     .filter(a=>a.id!==current.id && a.match)
     .slice(0,3);
 
   if(!previous.length) {
     return `
-      <section class="previous-matches">
-        <h2>LES MATCHS DÉJÀ ANALYSÉS</h2>
-        <p>
-          Les précédentes analyses de rencontres apparaîtront
-          ici dès leur publication sur 90MINUTE.
-        </p>
-      </section>`;
+    <section class="previous-matches">
+      <h2>LES MATCHS DÉJÀ ANALYSÉS</h2>
+      <p>
+        Retrouve bientôt ici les précédentes rencontres
+        décryptées par 90MINUTE.
+      </p>
+    </section>`;
   }
 
   return `
-    <section class="previous-matches">
-      <h2>LES MATCHS DÉJÀ ANALYSÉS</h2>
-      <p>Retrouve les rencontres décryptées par la rédaction 90MINUTE.</p>
-      <div class="previous-grid">
-        ${previous.map(a=>`
-          <button class="previous-card" onclick="openArticle(${a.id})">
-            <img src="${a.image}" alt="Football" loading="lazy">
-            <div class="previous-card-content">
-              <div class="eyebrow">${escapeHTML(a.league)}</div>
-              <strong>${escapeHTML(a.title)}</strong>
-              <small>${a.minutes} min de lecture →</small>
-            </div>
-          </button>
-        `).join("")}
-      </div>
-    </section>`;
+  <section class="previous-matches">
+    <h2>LES MATCHS DÉJÀ ANALYSÉS</h2>
+    <p>Nos précédentes analyses de rencontres.</p>
+
+    <div class="previous-grid">
+      ${previous.map(a=>`
+        <button class="previous-card"
+          onclick="openArticle(${a.id})">
+          <img src="${a.image}" alt="Football" loading="lazy">
+          <div class="previous-card-content">
+            <div class="eyebrow">${escapeHTML(a.league)}</div>
+            <strong>${escapeHTML(a.title)}</strong>
+            <small>Lire l'analyse →</small>
+          </div>
+        </button>
+      `).join("")}
+    </div>
+  </section>`;
 }
 
 function openArticle(id) {
@@ -833,13 +836,14 @@ function openArticle(id) {
     </div>
 
     <img class="reader-cover" src="${a.image}" alt="Football">
+
     <p class="lead">${escapeHTML(a.excerpt)}</p>
 
     ${a.match?scoreHTML(a.match):""}
 
     <div class="demo">
       Article de démonstration.
-      Les données de match éventuellement présentées sont fictives.
+      Les éventuels scores et événements présentés sont fictifs.
     </div>
 
     ${a.paragraphs.map(p=>`<p>${escapeHTML(p)}</p>`).join("")}
@@ -854,8 +858,7 @@ function openArticle(id) {
       <div class="analysis-highlight">
         <strong>LE REGARD 90MINUTE</strong>
         <p>
-          Une analyse pédagogique des mécanismes du football,
-          à approfondir avec des observations de rencontres réelles.
+          Une analyse des mécanismes tactiques du football.
         </p>
       </div>
     `}
@@ -867,19 +870,25 @@ function openArticle(id) {
 }
 
 function renderArticles() {
-  const q=document.getElementById("search").value.toLowerCase().trim();
+  const q=document.getElementById("search").value
+    .toLowerCase().trim();
   const c=document.getElementById("category").value;
   const l=document.getElementById("league").value;
 
   const filtered=articles.filter(a=>{
     const text=[a.title,a.excerpt,a.category,a.league]
       .join(" ").toLowerCase();
-    return (!c||a.category===c)&&(!l||a.league===l)&&text.includes(q);
+
+    return (!c||a.category===c) &&
+      (!l||a.league===l) &&
+      text.includes(q);
   });
 
   document.getElementById("articlesGrid").innerHTML=
     filtered.map(card).join("");
-  document.getElementById("noResults").hidden=filtered.length>0;
+
+  document.getElementById("noResults").hidden=
+    filtered.length>0;
 }
 
 function openSearch() {
@@ -904,8 +913,12 @@ function openCategory(name) {
 function toggleTheme() {
   const next=document.documentElement.dataset.theme==="dark"
     ?"light":"dark";
+
   document.documentElement.dataset.theme=next;
-  try {localStorage.setItem("90minute-theme",next)} catch(e){}
+
+  try {
+    localStorage.setItem("90minute-theme",next);
+  } catch(e) {}
 }
 
 try {
@@ -914,6 +927,34 @@ try {
 } catch(e) {
   document.documentElement.dataset.theme="light";
 }
+
+/* Affichage des championnats avec logos */
+const leaguesGrid=document.getElementById("leaguesGrid");
+
+leagues.forEach(l=>{
+  const button=document.createElement("button");
+  button.className="league-box";
+  button.onclick=()=>openLeague(l.name);
+
+  const img=document.createElement("img");
+  img.className="league-logo";
+  img.src=logoURL(l.file);
+  img.alt="Logo "+l.name;
+  img.loading="lazy";
+
+  img.onerror=()=>{
+    img.style.display="none";
+  };
+
+  const name=document.createElement("strong");
+  name.textContent=l.name.toUpperCase();
+
+  const country=document.createElement("small");
+  country.textContent=l.country;
+
+  button.append(img,name,country);
+  leaguesGrid.appendChild(button);
+});
 
 document.getElementById("featuredNews").innerHTML=
   feature(articles[0],true)+
