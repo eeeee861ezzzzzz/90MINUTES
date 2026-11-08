@@ -1,48 +1,59 @@
 
+const express = require("express");
+const path = require("path");
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const app = express();
 
-app.post("/api/analyze", async (req, res) => {
-  try {
-    const { question } = req.body;
+app.use(express.json());
+app.use(express.static(__dirname));
 
-    if (!question || typeof question !== "string") {
-      return res.status(400).json({
-        erreur: "Veuillez écrire une question."
-      });
-    }
+app.post("/api/analyze", (req, res) => {
+  const question = req.body.question;
 
-    const response = await client.responses.create({
-      model: "gpt-5",
-      instructions: `
-Tu es PITCH'AURA, un analyste de football.
-Tu analyses les matchs, les tactiques,
-les joueurs et les équipes.
-
-Présente des analyses structurées et claires.
-Explique les systèmes de jeu, les points forts,
-les points faibles et les choix tactiques.
-
-N'invente jamais de statistiques ni de
-faits sur des matchs que tu ne connais pas.
-Signale lorsque les données sont insuffisantes.
-Réponds en français.
-      `,
-      input: question
-    });
-
-    res.json({
-      analysis: response.output_text
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      erreur: "Erreur pendant l'analyse."
+  if (!question || typeof question !== "string" ||
+      !question.trim()) {
+    return res.status(400).json({
+      erreur: "Écris une demande d'analyse."
     });
   }
+
+  const sujet = question.trim().slice(0, 300);
+
+  const analyse = `
+PITCH'AURA — ANALYSE TACTIQUE
+
+Sujet : ${sujet}
+
+1. SYSTÈMES DE JEU
+Observer les formations des deux équipes,
+leur organisation avec et sans ballon.
+
+2. PHASE OFFENSIVE
+Étudier la construction, les déplacements,
+la largeur et l'utilisation des espaces.
+
+3. PHASE DÉFENSIVE
+Observer le pressing, le bloc défensif
+et la protection des espaces.
+
+4. TRANSITIONS
+Examiner les réactions à la récupération
+et à la perte du ballon.
+
+5. POINTS CLÉS
+Identifier les duels, les zones importantes
+et les éventuels déséquilibres.
+
+6. SCÉNARIOS
+Étudier comment les changements tactiques
+pourraient influencer le match.
+
+Cette première version fournit une grille
+d'analyse générale. Elle ne dispose pas
+encore de données réelles sur les matchs.
+`;
+
+  res.json({ analysis: analyse });
 });
 
 app.get("/", (req, res) => {
@@ -50,5 +61,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("PITCH'AURA est démarré !");
+  console.log("PITCH'AURA est en ligne !");
 });
