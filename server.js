@@ -9,78 +9,100 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
 const alias = {
-  psg: [
-    "psg",
-    "paris saint-germain",
-    "paris sg"
-  ],
-  "real-madrid": [
-    "real madrid",
-    "réal madrid"
-  ],
-  barcelone: [
-    "barcelone",
-    "barcelona",
-    "barça",
-    "barca"
-  ],
-  "manchester-city": [
-    "manchester city",
-    "man city"
-  ]
+  psg: ["psg", "paris saint germain", "paris sg"],
+  "real-madrid": ["real madrid", "real"],
+  barcelone: ["barcelone", "barcelona", "barca", "fc barcelone"],
+  "manchester-city": ["manchester city", "man city", "city"],
+  arsenal: ["arsenal"],
+  liverpool: ["liverpool"],
+  chelsea: ["chelsea"],
+  "manchester-united": ["manchester united", "man united", "man utd"],
+  tottenham: ["tottenham", "spurs"],
+  bayern: ["bayern", "bayern munich"],
+  dortmund: ["dortmund", "borussia dortmund", "bvb"],
+  inter: ["inter", "inter milan", "internazionale"],
+  "ac-milan": ["ac milan", "milan ac"],
+  juventus: ["juventus", "juve"],
+  naples: ["naples", "napoli"],
+  marseille: ["marseille", "om", "olympique de marseille"],
+  monaco: ["monaco", "as monaco"],
+  lyon: ["lyon", "ol", "olympique lyonnais"],
+  atletico: ["atletico", "atletico madrid", "atletico de madrid"],
+  leverkusen: ["leverkusen", "bayer leverkusen"]
 };
 
 function normaliser(texte) {
   return texte
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, " ")
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function trouverEquipes(question) {
-  const texte = normaliser(question);
+  const texte = " " + normaliser(question) + " ";
+  const resultats = [];
 
-  return Object.keys(alias).filter(id =>
-    alias[id].some(nom => {
+  for (const id of Object.keys(equipes)) {
+    const noms = [
+      equipes[id].nom,
+      id,
+      ...(alias[id] || [])
+    ];
+
+    let position = Infinity;
+
+    for (const nom of noms) {
       const recherche = normaliser(nom);
-      const debut = texte.indexOf(recherche);
+      const regex = new RegExp(
+        "(^|[^a-z0-9])" +
+        recherche.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+        "(?=$|[^a-z0-9])",
+        "g"
+      );
 
-      if (debut === -1) return false;
+      const match = regex.exec(texte);
+      if (match && match.index < position) {
+        position = match.index;
+      }
+    }
 
-      const avant = texte[debut - 1] || " ";
-      const apres = texte[debut + recherche.length] || " ";
+    if (position !== Infinity) {
+      resultats.push({ id, position });
+    }
+  }
 
-      return !/[a-z0-9]/.test(avant) &&
-             !/[a-z0-9]/.test(apres);
-    })
-  );
+  return resultats
+    .sort((a, b) => a.position - b.position)
+    .map(resultat => resultat.id);
 }
 
 function liste(elements) {
-  return elements
-    .map(element => "• " + element)
-    .join("\n");
+  return elements.map(item => "• " + item).join("\n");
 }
 
 function ficheEquipe(id) {
-  const equipe = equipes[id];
+  const e = equipes[id];
 
   return `
 ━━━━━━━━━━━━━━━━━━━━
 
-⚽ ${equipe.nom.toUpperCase()}
+⚽ ${e.nom.toUpperCase()}
 
-🏆 Championnat : ${equipe.championnat}
-📋 Système de référence : ${equipe.systeme}
+🏆 Championnat : ${e.championnat}
+📋 Système de référence : ${e.systeme}
 
 STYLE DE JEU
-${equipe.style}
+${e.style}
 
 ✅ POINTS FORTS
-${liste(equipe.pointsForts)}
+${liste(e.pointsForts)}
 
 ⚠️ POINTS FAIBLES
-${liste(equipe.pointsFaibles)}
+${liste(e.pointsFaibles)}
 `;
 }
 
@@ -125,36 +147,31 @@ ${liste(a.pointsFaibles)}
 
 🧠 CLÉS DU MATCH
 
-1. Observer quelle équipe contrôle
-   le milieu de terrain.
+1. Observer la bataille du milieu de terrain.
 
-2. Étudier l'efficacité du pressing
-   et la sortie de balle adverse.
+2. Étudier le pressing et les sorties de balle.
 
-3. Identifier les espaces disponibles
-   lors des transitions.
+3. Identifier les espaces en transition.
 
-4. Analyser les déplacements des
-   joueurs entre les lignes.
+4. Observer les déplacements entre les lignes.
 
-5. Observer les ajustements tactiques
-   pendant la rencontre.
+5. Analyser les ajustements tactiques.
 
 ━━━━━━━━━━━━━━━━━━━━
 
 🔮 SCÉNARIOS POSSIBLES
 
-• Une équipe pourrait imposer
-  son rythme grâce à la possession.
+• La possession pourrait permettre à une équipe
+  d'imposer son rythme.
 
-• Les contre-attaques pourraient
-  créer des occasions importantes.
+• Les transitions rapides pourraient créer
+  des occasions dangereuses.
 
-• Les changements de système
-  pourraient modifier l'équilibre.
+• Le pressing pourrait provoquer des pertes
+  de balle dans des zones importantes.
 
-• Le pressing pourrait provoquer
-  des récupérations dangereuses.
+• Les changements tactiques pourraient
+  modifier l'équilibre de la rencontre.
 `;
 }
 
@@ -162,10 +179,7 @@ app.post("/api/analyze", (req, res) => {
   try {
     const question = req.body?.question;
 
-    if (
-      typeof question !== "string" ||
-      !question.trim()
-    ) {
+    if (typeof question !== "string" || !question.trim()) {
       return res.status(400).json({
         erreur: "Écris une demande d'analyse."
       });
@@ -184,27 +198,21 @@ app.post("/api/analyze", (req, res) => {
         analysis: `
 PITCH'AURA
 
-Cette équipe n'est pas encore
-disponible dans notre base.
+Aucune équipe reconnue dans ta demande.
 
-Équipes actuellement disponibles :
+${Object.values(equipes).map(e => "• " + e.nom).join("\n")}
 
-• Paris Saint-Germain
-• Real Madrid
-• FC Barcelone
-• Manchester City
-
-De nouveaux clubs seront ajoutés.
+Essaie avec le nom d'un club de cette liste.
 `
       });
     }
 
     let analyse = `
-PITCH'AURA V2.1
+PITCH'AURA V6.1
 ANALYSE TACTIQUE
 `;
 
-    ids.forEach(id => {
+    ids.slice(0, 2).forEach(id => {
       analyse += ficheEquipe(id);
     });
 
@@ -218,21 +226,20 @@ ANALYSE TACTIQUE
 
 ℹ️ INFORMATIONS
 
-Cette analyse est construite à partir
-de profils tactiques simplifiés.
+Cette analyse utilise des profils tactiques
+simplifiés enregistrés dans PITCH'AURA.
 
-Les formations et les styles peuvent
-évoluer selon les matchs.
+Les systèmes et les styles peuvent évoluer
+selon les matchs et les entraîneurs.
 
-Il ne s'agit pas d'une analyse en
-temps réel ni d'une prédiction fiable.
+Ce résultat n'est pas une analyse en temps réel
+ni une prédiction fiable.
 `;
 
     res.json({ analysis: analyse });
 
-  } catch (error) {
-    console.error("Erreur PITCH'AURA :", error);
-
+  } catch (erreur) {
+    console.error("Erreur PITCH'AURA :", erreur);
     res.status(500).json({
       erreur: "Impossible de générer l'analyse."
     });
@@ -240,11 +247,9 @@ temps réel ni d'une prédiction fiable.
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "index.html")
-  );
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("PITCH'AURA V2.1 démarré !");
+  console.log("PITCH'AURA V6.1 démarré !");
 });
