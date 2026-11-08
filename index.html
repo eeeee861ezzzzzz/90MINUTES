@@ -5,14 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07130e">
-<meta name="description" content="PITCH'AURA : explore les profils tactiques et compare les équipes de football.">
 <title>PITCH'AURA | Le football autrement</title>
 
 <style>
 :root {
   --bg: #07130e;
   --panel: #10231a;
-  --panel2: #152c21;
   --green: #38e888;
   --text: #f5fff8;
   --muted: #a3b8aa;
@@ -42,16 +40,23 @@ header {
 .logo {
   font-size: 25px;
   font-weight: 900;
-  letter-spacing: 1px;
 }
 .green { color: var(--green); }
-nav { display: flex; gap: 20px; }
+nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 nav a {
   color: #d2e5d8;
   text-decoration: none;
   font-size: 14px;
 }
 nav a:hover { color: var(--green); }
+nav .terrain-link {
+  color: var(--green);
+  font-weight: bold;
+}
 main {
   max-width: 1150px;
   margin: auto;
@@ -156,6 +161,28 @@ button {
   padding: 10px 14px;
 }
 .example:hover { background: #245539; }
+.terrain-banner {
+  background: linear-gradient(120deg,#153f28,#0d2117);
+  border: 1px solid #39764d;
+  border-radius: 20px;
+  padding: 30px;
+  margin-top: 25px;
+}
+.terrain-banner h2 { margin-top: 0; }
+.terrain-banner p {
+  color: #c3e6cd;
+  line-height: 1.7;
+}
+.terrain-button {
+  display: inline-block;
+  background: var(--green);
+  color: #062011;
+  padding: 15px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 8px;
+}
 #resultats { margin-top: 30px; }
 .result-header {
   margin-bottom: 25px;
@@ -196,20 +223,6 @@ button {
 .weak { border-top: 3px solid #f3a84b; }
 .compare { border-top: 3px solid #63b7ff; }
 .tactics { border-top: 3px solid #b28cff; }
-.team-title {
-  color: var(--green);
-  font-size: 22px;
-  margin: 0 0 20px;
-}
-.team-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-.team-section {
-  grid-column: 1 / -1;
-  margin-top: 10px;
-}
 .notice {
   background: #14251c;
   border: 1px solid var(--border);
@@ -218,6 +231,7 @@ button {
   color: var(--muted);
   line-height: 1.7;
   margin-top: 20px;
+  white-space: pre-wrap;
 }
 .features {
   display: grid;
@@ -245,13 +259,11 @@ footer {
 .hidden { display: none; }
 @media(max-width:700px) {
   header { justify-content: center; }
-  nav { gap: 12px; }
+  nav { justify-content: center; gap: 12px; }
   .hero { padding: 55px 0 35px; }
-  .cards,.team-grid,.features {
-    grid-template-columns: 1fr;
-  }
+  .cards,.features { grid-template-columns: 1fr; }
   .panel { padding: 18px; }
-  .card.full,.team-section { grid-column: auto; }
+  .card.full { grid-column: auto; }
 }
 </style>
 </head>
@@ -262,6 +274,7 @@ footer {
   <nav>
     <a href="#accueil">Accueil</a>
     <a href="#analyse">Analyseur</a>
+    <a href="/terrain.html" class="terrain-link">⚽ Terrain tactique</a>
     <a href="#decouvrir">Découvrir</a>
   </nav>
 </header>
@@ -276,9 +289,15 @@ footer {
       confrontations tactiques.
     </p>
     <div class="hero-stats">
-      <div class="stat"><strong>4</strong><span>CLUBS DISPONIBLES</span></div>
-      <div class="stat"><strong>6</strong><span>AXES TACTIQUES</span></div>
-      <div class="stat"><strong>100%</strong><span>ACCÈS GRATUIT</span></div>
+      <div class="stat">
+        <strong>4</strong><span>CLUBS DISPONIBLES</span>
+      </div>
+      <div class="stat">
+        <strong>5</strong><span>FORMATIONS TACTIQUES</span>
+      </div>
+      <div class="stat">
+        <strong>100%</strong><span>ACCÈS GRATUIT</span>
+      </div>
     </div>
   </section>
 
@@ -318,6 +337,19 @@ footer {
     <div id="resultats" class="hidden" aria-live="polite"></div>
   </section>
 
+  <section class="terrain-banner">
+    <h2>⚽ Construis ta propre tactique</h2>
+    <p>
+      Passe de l'analyse à la pratique.
+      Choisis une formation 4-3-3, 4-2-3-1, 3-5-2,
+      4-4-2 ou 3-4-3, puis déplace les 11 joueurs
+      sur notre tableau tactique interactif.
+    </p>
+    <a class="terrain-button" href="/terrain.html">
+      Ouvrir le terrain tactique →
+    </a>
+  </section>
+
   <section id="decouvrir">
     <h2 class="section-title">Explore une autre vision du football</h2>
     <div class="features">
@@ -332,9 +364,9 @@ footer {
         <p>Confronte les forces et faiblesses de deux équipes.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">📊</div>
-        <h3>Profils football</h3>
-        <p>Explore les caractéristiques des clubs disponibles.</p>
+        <div class="feature-icon">📋</div>
+        <h3>Tableau tactique</h3>
+        <p>Construis tes formations et déplace les joueurs.</p>
       </div>
     </div>
   </section>
@@ -369,7 +401,8 @@ function creerCarte(titre, contenu, classe = "") {
   const carte = element("article", "card " + classe);
   carte.appendChild(element("h3", "", titre));
 
-  const lignes = contenu.split("\n").map(x => x.trim()).filter(Boolean);
+  const lignes = contenu.split("\n")
+    .map(x => x.trim()).filter(Boolean);
   let liste = null;
 
   for (const ligne of lignes) {
@@ -378,7 +411,9 @@ function creerCarte(titre, contenu, classe = "") {
         liste = element("ul");
         carte.appendChild(liste);
       }
-      liste.appendChild(element("li", "", ligne.slice(1).trim()));
+      liste.appendChild(
+        element("li", "", ligne.slice(1).trim())
+      );
     } else {
       liste = null;
       carte.appendChild(element("p", "", ligne));
@@ -392,23 +427,32 @@ function afficherAnalyse(texte) {
   resultats.classList.remove("hidden");
 
   const entete = element("div", "result-header");
-  entete.appendChild(element("h2", "", "PITCH'AURA — Rapport tactique"));
-  entete.appendChild(element("p", "",
-    "Analyse basée sur les profils enregistrés dans notre base."));
+  entete.appendChild(
+    element("h2", "", "PITCH'AURA — Rapport tactique")
+  );
+  entete.appendChild(
+    element("p", "",
+      "Analyse basée sur les profils enregistrés dans notre base.")
+  );
   resultats.appendChild(entete);
 
-  const sections = texte.split(/━{5,}/).map(s => s.trim()).filter(Boolean);
+  const sections = texte.split(/━{5,}/)
+    .map(s => s.trim()).filter(Boolean);
   const grille = element("div", "cards");
 
   for (const section of sections) {
-    const lignes = section.split("\n").map(s => s.trim()).filter(Boolean);
+    const lignes = section.split("\n")
+      .map(s => s.trim()).filter(Boolean);
     if (!lignes.length) continue;
 
     const contenu = lignes.join("\n");
 
     if (contenu.includes("POINTS FORTS") &&
         contenu.includes("POINTS FAIBLES")) {
-      const equipe = noms.find(n => contenu.includes(n.toUpperCase()));
+
+      const equipe = noms.find(n =>
+        contenu.includes(n.toUpperCase())
+      );
       const titre = equipe || "Profil d'équipe";
 
       const debut = contenu.split("POINTS FORTS")[0];
@@ -417,11 +461,16 @@ function afficherAnalyse(texte) {
       const faibles = contenu.split("POINTS FAIBLES")[1];
 
       grille.appendChild(creerCarte(
-        "⚽ " + titre, debut.replace(titre.toUpperCase(), ""),
+        "⚽ " + titre,
+        debut.replace(titre.toUpperCase(), ""),
         "full"
       ));
-      grille.appendChild(creerCarte("✅ Points forts", forts, "good"));
-      grille.appendChild(creerCarte("⚠️ Points faibles", faibles, "weak"));
+      grille.appendChild(
+        creerCarte("✅ Points forts", forts, "good")
+      );
+      grille.appendChild(
+        creerCarte("⚠️ Points faibles", faibles, "weak")
+      );
 
     } else if (contenu.includes("COMPARAISON TACTIQUE")) {
       grille.appendChild(creerCarte(
@@ -452,15 +501,25 @@ function afficherAnalyse(texte) {
       ));
 
     } else if (contenu.includes("INFORMATIONS")) {
-      resultats.appendChild(element("div", "notice", contenu));
+      resultats.appendChild(
+        element("div", "notice", contenu)
+      );
 
     } else if (!contenu.includes("PITCH'AURA V2.1")) {
-      grille.appendChild(creerCarte("Analyse", contenu, "full"));
+      grille.appendChild(
+        creerCarte("Analyse", contenu, "full")
+      );
     }
   }
 
-  resultats.insertBefore(grille, resultats.querySelector(".notice"));
-  resultats.scrollIntoView({ behavior: "smooth", block: "start" });
+  resultats.insertBefore(
+    grille,
+    resultats.querySelector(".notice")
+  );
+  resultats.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
 
 formulaire.addEventListener("submit", async event => {
@@ -483,10 +542,14 @@ formulaire.addEventListener("submit", async event => {
     const donnees = await reponse.json();
 
     if (!reponse.ok) {
-      throw new Error(donnees.erreur || "Erreur du serveur");
+      throw new Error(
+        donnees.erreur || "Erreur du serveur"
+      );
     }
 
-    afficherAnalyse(donnees.analysis || "Aucune analyse disponible.");
+    afficherAnalyse(
+      donnees.analysis || "Aucune analyse disponible."
+    );
 
   } catch (erreur) {
     resultats.replaceChildren(
