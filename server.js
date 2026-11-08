@@ -1,15 +1,198 @@
 
 const express = require("express");
 const path = require("path");
+const crypto = require("crypto");
 const equipes = require("./equipes.json");
 
 const app = express();
+
+const SITE_URL = "https://nine0minutes-spca.onrender.com";
+
+const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
 /* =========================================
-   PITCH'AURA - ENTRAÎNEURS DES 20 CLUBS
+   90MINUTES - CONNEXION GITHUB
+========================================= */
+
+function lireCookies(req) {
+  const cookies = {};
+
+  for (const partie of (req.headers.cookie || "").split(";")) {
+    const position = partie.indexOf("=");
+
+    if (position === -1) continue;
+
+    const nom = partie.slice(0, position).trim();
+    const valeur = partie.slice(position + 1).trim();
+
+    cookies[nom] = valeur;
+  }
+
+  return cookies;
+}
+
+function pageMessage(message) {
+  return `
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <meta charset="UTF-8">
+      <title>90MINUTES</title>
+    </head>
+    <body>
+      <h2>${message}</h2>
+    </body>
+    </html>
+  `;
+}
+
+app.get("/auth", (req, res) => {
+  if (!CLIENT_ID || !CLIENT_SECRET) {
+    return res.status(503).send(
+      pageMessage("Connexion GitHub non configurée.")
+    );
+  }
+
+  const state = crypto.randomBytes(32).toString("hex");
+
+  res.cookie("cms_oauth_state", state, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    maxAge: 10 * 60 * 1000,
+    path: "/"
+  });
+
+  const params = new URLSearchParams({
+    client_id: CLIENT_ID,
+    redirect_uri: `${SITE_URL}/callback`,
+    scope: "public_repo",
+    state
+  });
+
+  res.redirect(
+    `https://github.com/login/oauth/authorize?${params}`
+  );
+});
+
+app.get("/callback", async (req, res) => {
+  const cookies = lireCookies(req);
+
+  const stateRecu =
+    typeof req.query.state === "string"
+      ? req.query.state
+      : "";
+
+  const stateAttendu = cookies.cms_oauth_state || "";
+
+  res.clearCookie("cms_oauth_state", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    path: "/"
+  });
+
+  if (
+    !stateRecu ||
+    !stateAttendu ||
+    stateRecu.length !== stateAttendu.length ||
+    !crypto.timingSafeEqual(
+      Buffer.from(stateRecu),
+      Buffer.from(stateAttendu)
+    )
+  ) {
+    return res.status(403).send(
+      pageMessage("Session expirée. Réessaie de te connecter.")
+    );
+  }
+
+  if (
+    typeof req.query.code !== "string" ||
+    !req.query.code
+  ) {
+    return res.status(400).send(
+      pageMessage("Autorisation GitHub annulée.")
+    );
+  }
+
+  try {
+    const reponse = await fetch(
+      "https://github.com/login/oauth/access_token",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET,
+          code: req.query.code,
+          redirect_uri: `${SITE_URL}/callback`
+        }),
+        signal: AbortSignal.timeout(15000)
+      }
+    );
+
+    if (!reponse.ok) {
+      throw new Error("Échange OAuth impossible");
+    }
+
+    const donnees = await reponse.json();
+
+    if (!donnees.access_token) {
+      throw new Error("GitHub n'a pas fourni de jeton");
+    }
+
+    const message =
+      "authorization:github:success:" +
+      JSON.stringify({
+        token: donnees.access_token
+      });
+
+    res.type("html").send(`
+      <!DOCTYPE html>
+      <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <title>Connexion 90MINUTES</title>
+      </head>
+      <body>
+        <p>Connexion réussie. Retour à l'administration...</p>
+        <script>
+          (function () {
+            const message = ${JSON.stringify(message)};
+            const origine = ${JSON.stringify(SITE_URL)};
+
+            if (window.opener) {
+              window.opener.postMessage(message, origine);
+              window.close();
+            } else {
+              document.body.textContent =
+                "Retourne à l'administration 90MINUTES.";
+            }
+          })();
+        </script>
+      </body>
+      </html>
+    `);
+  } catch (erreur) {
+    console.error("Erreur de connexion GitHub");
+
+    res.status(500).send(
+      pageMessage(
+        "Connexion impossible. Réessaie depuis l'administration."
+      )
+    );
+  }
+});
+
+/* =========================================
+   90MINUTES - ENTRAÎNEURS
 ========================================= */
 
 const entraineurs = {
@@ -231,7 +414,7 @@ SCÉNARIOS POSSIBLES
 ========================================= */
 
 function genererAnalyse(ids) {
-  let texte = "PITCH'AURA — ANALYSE TACTIQUE\n";
+  let texte = "90MINUTES — ANALYSE TACTIQUE\n";
 
   ids.slice(0, 2).forEach(id => {
     texte += fiche(id);
@@ -243,7 +426,7 @@ function genererAnalyse(ids) {
 
   texte += `
 ━━━━━━━━━━━━━━━━━━━━
-NOTE PITCH'AURA
+NOTE 90MINUTES
 
 Cette analyse est indicative et repose
 sur des profils tactiques simplifiés.
@@ -265,7 +448,7 @@ automatique de données de match en direct.
 app.get("/api/teams", (req, res) => {
   const clubs = Object.entries(equipes)
     .map(([id, e]) => ({
-      id: id,
+      id,
       nom: e.nom,
       championnat: e.championnat,
       systeme: e.systeme,
@@ -321,7 +504,7 @@ app.post("/api/analyze", (req, res) => {
       return res.json({
         analysis:
           "Aucune équipe reconnue.\n" +
-          "Choisis un club disponible dans PITCH'AURA."
+          "Choisis un club disponible dans 90MINUTES."
       });
     }
 
@@ -330,7 +513,7 @@ app.post("/api/analyze", (req, res) => {
     });
 
   } catch (erreur) {
-    console.error(erreur);
+    console.error("Erreur d'analyse");
 
     return res.status(500).json({
       erreur: "Erreur lors de l'analyse."
@@ -349,13 +532,13 @@ app.get("/", (req, res) => {
 });
 
 /* =========================================
-   DÉMARRAGE DE PITCH'AURA
+   DÉMARRAGE DE 90MINUTES
 ========================================= */
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(
-    `PITCH'AURA est en ligne sur le port ${PORT}`
+    `90MINUTES est en ligne sur le port ${PORT}`
   );
 });
