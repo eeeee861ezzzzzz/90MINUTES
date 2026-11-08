@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PITCH'AURA | Tactical Intelligence</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#08130e;color:#fff;font-family:Arial,sans-serif}
+header{padding:22px 6%;background:#102219;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:900}
+.logo span{color:#38e888}
+a{color:#38e888;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:30px 16px 70px}
+h1{font-size:clamp(27px,5vw,40px)}
+p{color:#b8cdbf;line-height:1.6}
+.panel{background:#10231a;border:1px solid #2b5039;border-radius:15px;padding:20px;margin:20px 0}
+label{display:block;margin:14px 0 7px;color:#b8cdbf}
+select,button{padding:13px;border-radius:9px;background:#1b3b29;color:white;border:1px solid #427d54;font-size:14px}
+select{width:100%}
+button{cursor:pointer}
+button:disabled{opacity:.5}
+.primary{background:#38e888;color:#062011;font-weight:bold;margin-top:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.pitch{position:relative;width:100%;aspect-ratio:1.5;background:repeating-linear-gradient(90deg,#16643d 0%,#16643d 12.5%,#1b7046 12.5%,#1b7046 25%);border:2px solid white;border-radius:8px;overflow:hidden}
+.pitch svg{width:100%;height:100%}
+.zone{fill:#38e888}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{padding:17px;background:#0b1c13;border:1px solid #345640;border-radius:10px;text-align:center}
+.stat strong{display:block;font-size:25px;color:#38e888}
+.stat small{color:#b8cdbf}
+.report{background:#163a26;border-radius:12px;padding:20px;line-height:1.8}
+#status{color:#38e888}
+@media(max-width:600px){.grid,.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">PITCH'<span>AURA</span></div>
+<a href="/">← Accueil</a>
+</header>
+
+<main>
+<h1>🧠 Tactical Intelligence</h1>
+<p>Découvre les zones utilisées par chaque équipe à partir des événements réellement enregistrés.</p>
+
+<section class="panel">
+<h2>Choisir un match</h2>
+<label>Match de l'Euro 2024</label>
+<select id="match"><option>Chargement...</option></select>
+
+<label>Équipe à analyser</label>
+<select id="team"><option>Choisir un match</option></select>
+
+<button class="primary" id="load" disabled>Analyser le match</button>
+<p id="status">Connexion aux données...</p>
+</section>
+
+<section class="panel">
+<h2>🗺️ Carte des zones de passes</h2>
+<p>Plus une zone est claire, plus elle contient de passes enregistrées. La carte utilise les positions de départ des passes.</p>
+
+<div class="pitch">
+<svg viewBox="0 0 120 80" preserveAspectRatio="none">
+<rect x="0" y="0" width="120" height="80" fill="none" stroke="#fff" stroke-width=".5"/>
+<line x1="60" y1="0" x2="60" y2="80" stroke="#fff" stroke-width=".5"/>
+<circle cx="60" cy="40" r="10" fill="none" stroke="#fff" stroke-width=".5"/>
+<rect x="0" y="18" width="18" height="44" fill="none" stroke="#fff" stroke-width=".5"/>
+<rect x="102" y="18" width="18" height="44" fill="none" stroke="#fff" stroke-width=".5"/>
+<g id="zones"></g>
+</svg>
+</div>
+
+<p id="orientation">Les coordonnées sont affichées dans le repère des événements StatsBomb.</p>
+</section>
+
+<section class="panel">
+<h2>📊 Statistiques tactiques</h2>
+<div class="stats">
+<div class="stat"><strong id="total">0</strong><small>Passes enregistrées</small></div>
+<div class="stat"><strong id="third">0%</strong><small>Passes dans le dernier tiers</small></div>
+<div class="stat"><strong id="side">—</strong><small>Zone latérale dominante</small></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>🧠 Rapport tactique automatique</h2>
+<div class="report" id="report">Choisis un match pour générer un rapport basé sur les données.</div>
+</section>
+
+<p>Source : StatsBomb Open Data. Cette analyse décrit la répartition des passes, sans prétendre mesurer à elle seule la possession, le pressing ou les intentions tactiques.</p>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const BASE="https://raw.githubusercontent.com/hudl/open-data/master/data";
+let matches=[];
+let events=[];
+let loadedId=null;
+
+async function getJSON(url){
+ const response=await fetch(url);
+ if(!response.ok)throw new Error("HTTP "+response.status);
+ return response.json();
+}
+
+function valid(p){
+ return Array.isArray(p)&&p.length>=2&&
+ Number.isFinite(p[0])&&Number.isFinite(p[1]);
+}
+
+function name(m){
+ return m.home_team.home_team_name+" "+
+ m.home_score+" - "+m.away_score+" "+
+ m.away_team.away_team_name;
+}
+
+async function loadMatches(){
+ try{
+  matches=await getJSON(BASE+"/matches/55/282.json");
+  matches.sort((a,b)=>String(b.match_date).localeCompare(String(a.match_date)));
+
+  $("match").replaceChildren();
+
+  matches.forEach(m=>{
+   const o=new Option(m.match_date+" | "+name(m),m.match_id);
+   $("match").appendChild(o);
+  });
+
+  $("load").disabled=false;
+  updateTeams();
+  $("status").textContent=matches.length+" matchs disponibles.";
+ }catch(e){
+  $("status").textContent="Erreur : "+e.message;
+ }
+}
+
+function updateTeams(){
+ const m=matches.find(x=>x.match_id===Number($("match").value));
+ $("team").replaceChildren();
+ if(!m)return;
+
+ $("team").appendChild(new Option(m.home_team.home_team_name,m.home_team.home_team_name));
+ $("team").appendChild(new Option(m.away_team.away_team_name,m.away_team.away_team_name));
+}
+
+function createSVG(tag,attrs){
+ const el=document.createElementNS("http://www.w3.org/2000/svg",tag);
+ Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+ return el;
+}
+
+function analyze(){
+ const team=$("team").value;
+
+ const passes=events.filter(e=>
+  e.type?.name==="Pass"&&
+  e.team?.name===team&&
+  valid(e.location)
+ );
+
+ const cells=Array.from({length:12},()=>0);
+
+ let attacking=0;
+ let left=0;
+ let center=0;
+ let right=0;
+
+ passes.forEach(e=>{
+  const x=e.location[0];
+  const y=e.location[1];
+
+  // 3 colonnes longitudinales, 4 bandes latérales
+  const col=Math.min(2,Math.max(0,Math.floor(x/40)));
+  const row=Math.min(3,Math.max(0,Math.floor(y/20)));
+  cells[col*4+row]++;
+
+  if(x>=80)attacking++;
+
+  if(y<80/3)left++;
+  else if(y<160/3)center++;
+  else right++;
+ });
+
+ const max=Math.max(1,...cells);
+ const group=$("zones");
+ group.replaceChildren();
+
+ for(let col=0;col<3;col++){
+  for(let row=0;row<4;row++){
+   const count=cells[col*4+row];
+   const opacity=count===0?0:(.12+.75*count/max);
+
+   const rect=createSVG("rect",{
+    x:col*40,y:row*20,
+    width:40,height:20,
+    fill:"#38e888",
+    opacity:opacity
+   });
+
+   const title=createSVG("title",{});
+   title.textContent=count+" passes";
+   rect.appendChild(title);
+   group.appendChild(rect);
+
+   const label=createSVG("text",{
+    x:col*40+20,y:row*20+11,
+    "text-anchor":"middle",
+    "font-size":4,
+    "font-weight":"bold",
+    fill:"white",
+    stroke:"#07120c",
+    "stroke-width":.5,
+    "paint-order":"stroke"
+   });
+
+   label.textContent=count;
+   group.appendChild(label);
+  }
+ }
+
+ const total=passes.length;
+ const pct=total?Math.round(attacking/total*100):0;
+
+ const sides=[
+  {name:"Haut de la carte",count:left},
+  {name:"Axe central",count:center},
+  {name:"Bas de la carte",count:right}
+ ];
+
+ sides.sort((a,b)=>b.count-a.count);
+ const dominant=sides[0];
+
+ $("total").textContent=total;
+ $("third").textContent=pct+"%";
+ $("side").textContent=dominant.name;
+
+ const report=[
+  "Équipe analysée : "+team+".",
+  total+" passes enregistrées avec une position de départ exploitable.",
+  pct+" % de ces passes commencent dans le dernier tiers du repère StatsBomb.",
+  "La bande la plus utilisée est : "+dominant.name+
+  " ("+dominant.count+" passes).",
+  "Ces résultats décrivent les zones d'activité observées, sans établir à eux seuls la stratégie de l'entraîneur."
+ ];
+
+ $("report").replaceChildren();
+
+ report.forEach(sentence=>{
+  const p=document.createElement("p");
+  p.textContent=sentence;
+  $("report").appendChild(p);
+ });
+}
+
+async function loadMatch(){
+ const id=Number($("match").value);
+ if(!id)return;
+
+ $("load").disabled=true;
+ $("status").textContent="Analyse en cours...";
+
+ try{
+  if(loadedId!==id){
+   events=await getJSON(BASE+"/events/"+id+".json");
+   loadedId=id;
+  }
+
+  analyze();
+  $("status").textContent="Analyse terminée : données réelles.";
+ }catch(e){
+  $("status").textContent="Erreur : "+e.message;
+ }finally{
+  $("load").disabled=false;
+ }
+}
+
+$("match").addEventListener("change",()=>{
+ updateTeams();
+ $("status").textContent="Match sélectionné. Lance l'analyse.";
+});
+
+$("team").addEventListener("change",()=>{
+ if(loadedId===Number($("match").value))analyze();
+});
+
+$("load").addEventListener("click",loadMatch);
+
+loadMatches();
+</script>
+</body>
+</html>
