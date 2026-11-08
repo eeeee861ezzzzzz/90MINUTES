@@ -9,30 +9,30 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(__dirname));
 
 const alias = {
-  psg: ["psg", "paris saint germain", "paris sg"],
+  psg: ["psg", "paris", "paris saint germain"],
   "real-madrid": ["real madrid", "real"],
-  barcelone: ["barcelone", "barcelona", "barca", "fc barcelone"],
-  "manchester-city": ["manchester city", "man city", "city"],
+  barcelone: ["barca", "barça", "barcelone", "barcelona"],
+  "manchester-city": ["man city", "manchester city"],
   arsenal: ["arsenal"],
   liverpool: ["liverpool"],
   chelsea: ["chelsea"],
-  "manchester-united": ["manchester united", "man united", "man utd"],
+  "manchester-united": ["man utd", "man united", "manchester united"],
   tottenham: ["tottenham", "spurs"],
   bayern: ["bayern", "bayern munich"],
-  dortmund: ["dortmund", "borussia dortmund", "bvb"],
-  inter: ["inter", "inter milan", "internazionale"],
+  dortmund: ["dortmund", "bvb"],
+  inter: ["inter", "inter milan"],
   "ac-milan": ["ac milan", "milan ac"],
   juventus: ["juventus", "juve"],
   naples: ["naples", "napoli"],
-  marseille: ["marseille", "om", "olympique de marseille"],
-  monaco: ["monaco", "as monaco"],
-  lyon: ["lyon", "ol", "olympique lyonnais"],
-  atletico: ["atletico", "atletico madrid", "atletico de madrid"],
+  marseille: ["om", "marseille"],
+  monaco: ["monaco"],
+  lyon: ["ol", "lyon"],
+  atletico: ["atletico", "atletico madrid"],
   leverkusen: ["leverkusen", "bayer leverkusen"]
 };
 
 function normaliser(texte) {
-  return texte
+  return String(texte)
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -44,204 +44,202 @@ function normaliser(texte) {
 
 function trouverEquipes(question) {
   const texte = " " + normaliser(question) + " ";
-  const resultats = [];
+  const trouves = [];
 
-  for (const id of Object.keys(equipes)) {
+  for (const [id, equipe] of Object.entries(equipes)) {
     const noms = [
-      equipes[id].nom,
+      equipe.nom,
       id,
       ...(alias[id] || [])
     ];
 
-    let position = Infinity;
+    let premierePosition = Infinity;
 
     for (const nom of noms) {
-      const recherche = normaliser(nom);
+      const valeur = normaliser(nom);
+      if (!valeur) continue;
+
       const regex = new RegExp(
         "(^|[^a-z0-9])" +
-        recherche.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
-        "(?=$|[^a-z0-9])",
-        "g"
+        valeur.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+        "(?=$|[^a-z0-9])"
       );
 
       const match = regex.exec(texte);
-      if (match && match.index < position) {
-        position = match.index;
+
+      if (match) {
+        premierePosition = Math.min(
+          premierePosition,
+          match.index
+        );
       }
     }
 
-    if (position !== Infinity) {
-      resultats.push({ id, position });
+    if (premierePosition !== Infinity) {
+      trouves.push({ id, position: premierePosition });
     }
   }
 
-  return resultats
+  return trouves
     .sort((a, b) => a.position - b.position)
-    .map(resultat => resultat.id);
+    .map(item => item.id);
 }
 
 function liste(elements) {
-  return elements.map(item => "• " + item).join("\n");
+  return (elements || [])
+    .map(item => "• " + item)
+    .join("\n");
 }
 
-function ficheEquipe(id) {
+function fiche(id) {
   const e = equipes[id];
 
   return `
 ━━━━━━━━━━━━━━━━━━━━
-
 ⚽ ${e.nom.toUpperCase()}
 
 🏆 Championnat : ${e.championnat}
-📋 Système de référence : ${e.systeme}
+📋 Formation : ${e.systeme}
 
 STYLE DE JEU
 ${e.style}
 
-✅ POINTS FORTS
+POINTS FORTS
 ${liste(e.pointsForts)}
 
-⚠️ POINTS FAIBLES
+POINTS FAIBLES
 ${liste(e.pointsFaibles)}
 `;
 }
 
-function comparerEquipes(idA, idB) {
+function comparaison(idA, idB) {
   const a = equipes[idA];
   const b = equipes[idB];
 
   return `
 ━━━━━━━━━━━━━━━━━━━━
+COMPARAISON TACTIQUE
 
-⚔️ COMPARAISON TACTIQUE
+${a.nom} : ${a.systeme}
+${a.style}
 
-${a.nom}
-Système : ${a.systeme}
-Style : ${a.style}
-
-${b.nom}
-Système : ${b.systeme}
-Style : ${b.style}
+${b.nom} : ${b.systeme}
+${b.style}
 
 ━━━━━━━━━━━━━━━━━━━━
+DUELS TACTIQUES
 
-🎯 DUELS TACTIQUES
-
-ATTAQUE DE ${a.nom.toUpperCase()}
-
-Points forts :
-${liste(a.pointsForts)}
-
-Faiblesses adverses à étudier :
+${a.nom} peut chercher à exploiter :
 ${liste(b.pointsFaibles)}
 
-ATTAQUE DE ${b.nom.toUpperCase()}
-
-Points forts :
-${liste(b.pointsForts)}
-
-Faiblesses adverses à étudier :
+${b.nom} peut chercher à exploiter :
 ${liste(a.pointsFaibles)}
 
 ━━━━━━━━━━━━━━━━━━━━
+CLÉS DU MATCH
 
-🧠 CLÉS DU MATCH
-
-1. Observer la bataille du milieu de terrain.
-
-2. Étudier le pressing et les sorties de balle.
-
-3. Identifier les espaces en transition.
-
-4. Observer les déplacements entre les lignes.
-
-5. Analyser les ajustements tactiques.
+• Observer la bataille du milieu de terrain.
+• Étudier les sorties de balle sous pression.
+• Identifier les espaces derrière les défenses.
+• Comparer les transitions offensives.
+• Observer les ajustements des entraîneurs.
 
 ━━━━━━━━━━━━━━━━━━━━
+SCÉNARIOS POSSIBLES
 
-🔮 SCÉNARIOS POSSIBLES
-
-• La possession pourrait permettre à une équipe
-  d'imposer son rythme.
-
-• Les transitions rapides pourraient créer
-  des occasions dangereuses.
-
-• Le pressing pourrait provoquer des pertes
-  de balle dans des zones importantes.
-
-• Les changements tactiques pourraient
-  modifier l'équilibre de la rencontre.
+• Une équipe pourrait contrôler la possession.
+• Le pressing pourrait provoquer des récupérations hautes.
+• Les contre-attaques pourraient créer des occasions.
+• Les changements tactiques pourraient modifier le match.
 `;
 }
 
+function genererAnalyse(ids) {
+  let texte = "PITCH'AURA — ANALYSE TACTIQUE\n";
+
+  ids.slice(0, 2).forEach(id => {
+    texte += fiche(id);
+  });
+
+  if (ids.length >= 2) {
+    texte += comparaison(ids[0], ids[1]);
+  }
+
+  texte += `
+━━━━━━━━━━━━━━━━━━━━
+INFORMATIONS
+
+Analyse indicative basée sur des profils
+tactiques simplifiés.
+
+Les systèmes peuvent évoluer selon les matchs.
+Il ne s'agit pas de données en direct.
+`;
+
+  return texte;
+}
+
+// Liste automatique des équipes pour le site
+app.get("/api/teams", (req, res) => {
+  const clubs = Object.entries(equipes).map(([id, e]) => ({
+    id,
+    nom: e.nom,
+    championnat: e.championnat,
+    systeme: e.systeme
+  }));
+
+  res.json({
+    total: clubs.length,
+    equipes: clubs
+  });
+});
+
+// Analyse par texte ou par sélection
 app.post("/api/analyze", (req, res) => {
   try {
-    const question = req.body?.question;
+    let ids = [];
 
-    if (typeof question !== "string" || !question.trim()) {
+    if (Array.isArray(req.body?.teams)) {
+      ids = req.body.teams.filter(
+        id => typeof id === "string" &&
+        Object.prototype.hasOwnProperty.call(equipes, id)
+      );
+
+      ids = [...new Set(ids)].slice(0, 2);
+
+    } else if (typeof req.body?.question === "string") {
+      const question = req.body.question.trim();
+
+      if (!question || question.length > 1000) {
+        return res.status(400).json({
+          erreur: "Écris une demande valide."
+        });
+      }
+
+      ids = trouverEquipes(question).slice(0, 2);
+
+    } else {
       return res.status(400).json({
-        erreur: "Écris une demande d'analyse."
+        erreur: "Demande invalide."
       });
     }
-
-    if (question.length > 1000) {
-      return res.status(400).json({
-        erreur: "Ta demande est trop longue."
-      });
-    }
-
-    const ids = trouverEquipes(question);
 
     if (ids.length === 0) {
       return res.json({
-        analysis: `
-PITCH'AURA
-
-Aucune équipe reconnue dans ta demande.
-
-${Object.values(equipes).map(e => "• " + e.nom).join("\n")}
-
-Essaie avec le nom d'un club de cette liste.
-`
+        analysis:
+          "Aucune équipe reconnue.\n" +
+          "Choisis un club disponible dans PITCH'AURA."
       });
     }
 
-    let analyse = `
-PITCH'AURA V6.1
-ANALYSE TACTIQUE
-`;
-
-    ids.slice(0, 2).forEach(id => {
-      analyse += ficheEquipe(id);
+    res.json({
+      analysis: genererAnalyse(ids)
     });
 
-    if (ids.length >= 2) {
-      analyse += comparerEquipes(ids[0], ids[1]);
-    }
-
-    analyse += `
-
-━━━━━━━━━━━━━━━━━━━━
-
-ℹ️ INFORMATIONS
-
-Cette analyse utilise des profils tactiques
-simplifiés enregistrés dans PITCH'AURA.
-
-Les systèmes et les styles peuvent évoluer
-selon les matchs et les entraîneurs.
-
-Ce résultat n'est pas une analyse en temps réel
-ni une prédiction fiable.
-`;
-
-    res.json({ analysis: analyse });
-
   } catch (erreur) {
-    console.error("Erreur PITCH'AURA :", erreur);
+    console.error(erreur);
     res.status(500).json({
-      erreur: "Impossible de générer l'analyse."
+      erreur: "Erreur lors de l'analyse."
     });
   }
 });
@@ -251,5 +249,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("PITCH'AURA V6.1 démarré !");
+  console.log("PITCH'AURA V6.2 est en ligne !");
 });
