@@ -4,36 +4,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PITCH'AURA | Match Lab 2.0</title>
+<title>PITCH'AURA | Match Lab 3.0</title>
 <style>
+:root{
+ --bg:#08130e;--panel:#10231a;
+ --green:#38e888;--border:#2b5039
+}
 *{box-sizing:border-box}
-body{margin:0;background:#08130e;color:#fff;font-family:Arial,sans-serif}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
 header{padding:20px 6%;background:#102219;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .logo{font-size:24px;font-weight:900}
-.logo span{color:#38e888}
-a{color:#38e888;text-decoration:none}
-main{max-width:1100px;margin:auto;padding:30px 16px 65px}
-h1{font-size:clamp(25px,5vw,38px)}
+.logo span{color:var(--green)}
+a{color:var(--green);text-decoration:none}
+main{max-width:1150px;margin:auto;padding:30px 16px 70px}
+h1{font-size:clamp(26px,5vw,40px)}
 p{color:#b5cbbd;line-height:1.6}
-.panel{background:#10231a;border:1px solid #2b5039;padding:20px;border-radius:15px;margin:20px 0}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;margin:20px 0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-label{display:block;margin:12px 0 7px;color:#b5cbbd;font-size:13px}
-select,button{padding:12px;background:#1b3b29;color:white;border:1px solid #427d54;border-radius:8px;font-size:14px}
+label{display:block;color:#b5cbbd;font-size:13px;margin:12px 0 7px}
+select,button,input{background:#1b3b29;color:white;border:1px solid #427d54;border-radius:9px;padding:12px;font-size:14px}
 select{width:100%}
 button{cursor:pointer}
 button:disabled{opacity:.45;cursor:not-allowed}
-.primary{background:#38e888;color:#062011;font-weight:bold}
+.primary{background:var(--green);color:#062011;font-weight:bold}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .pitch{width:100%;aspect-ratio:1.5;background:repeating-linear-gradient(90deg,#16643d 0%,#16643d 12.5%,#1b7046 12.5%,#1b7046 25%);border:3px solid #d5f2dc;border-radius:8px;overflow:hidden}
 .pitch svg{width:100%;height:100%;display:block}
 .info{padding:16px;background:#163a26;border-radius:10px;margin-top:15px;line-height:1.8}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
 .stat{background:#0b1c13;border:1px solid #345640;padding:15px;border-radius:10px;text-align:center}
-.stat strong{display:block;font-size:24px;color:#38e888}
+.stat strong{display:block;font-size:24px;color:var(--green)}
 .stat small{color:#b5cbbd}
-#status{color:#38e888}
-.tag{display:inline-block;background:#1d5235;color:#a8f7c4;border-radius:20px;padding:6px 12px;font-size:12px}
-@media(max-width:600px){.grid,.stats{grid-template-columns:1fr}.controls button{flex:1}}
+.timeline{margin-top:20px;padding:18px;background:#0b1c13;border:1px solid #345640;border-radius:12px}
+.timeline input{width:100%;accent-color:var(--green);padding:0}
+.timeline-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.minute{font-size:25px;font-weight:bold;color:var(--green)}
+.mode{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.mode button.active{background:var(--green);color:#062011;font-weight:bold}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0;color:#b5cbbd;font-size:13px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:5px}
+#status{color:var(--green)}
+@media(max-width:600px){
+ .grid,.stats{grid-template-columns:1fr}
+ .controls button{flex:1}
+}
 </style>
 </head>
 <body>
@@ -43,12 +57,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </header>
 
 <main>
-<span class="tag">MATCH LAB 2.0 · DONNÉES RÉELLES</span>
-<h1>⚽ Analyse des matchs réels</h1>
-<p>Explore les passes, les tirs et les buts réellement enregistrés pendant un match.</p>
+<h1>⚽ MATCH LAB 3.0</h1>
+<p>Explore les événements réels d'un match, minute par minute.</p>
 
 <section class="panel">
-<h2>Choisir un match</h2>
+<h2>Sélection du match</h2>
 <label for="match">Match de l'Euro 2024</label>
 <select id="match"><option>Chargement...</option></select>
 
@@ -58,24 +71,30 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <select id="team"><option value="all">Les deux équipes</option></select>
 </div>
 <div>
-<label for="type">Actions à afficher</label>
+<label for="type">Actions</label>
 <select id="type">
-<option value="all">Toutes les actions</option>
+<option value="all">Passes et tirs</option>
 <option value="Pass">Passes</option>
-<option value="Shot">Tirs et buts</option>
-<option value="Goal">Buts uniquement</option>
+<option value="Shot">Tirs</option>
+<option value="Goal">Buts</option>
 </select>
 </div>
 </div>
 
 <div class="controls">
-<button class="primary" id="load" disabled>Charger les actions réelles</button>
+<button class="primary" id="load" disabled>Charger le match réel</button>
 </div>
-<p id="status">Connexion à StatsBomb...</p>
+<p id="status">Connexion aux données...</p>
 </section>
 
 <section class="panel">
-<h2 id="matchTitle">Terrain d'analyse</h2>
+<h2 id="matchTitle">Analyse du match</h2>
+
+<div class="mode">
+<button id="modeAction" class="active">▶ Actions individuelles</button>
+<button id="modeShots">🎯 Carte des tirs</button>
+</div>
+
 <div class="pitch">
 <svg id="field" viewBox="0 0 120 80" preserveAspectRatio="none">
 <rect x="0" y="0" width="120" height="80" fill="none" stroke="#ffffffaa" stroke-width=".5"/>
@@ -89,6 +108,22 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </svg>
 </div>
 
+<div class="legend">
+<span><span class="dot" style="background:#38e888"></span>Équipe domicile</span>
+<span><span class="dot" style="background:#5ca9ff"></span>Équipe extérieure</span>
+<span><span class="dot" style="background:#ffe36a"></span>But</span>
+</div>
+
+<div class="timeline">
+<div class="timeline-head">
+<strong>⏱ Chronologie</strong>
+<span class="minute" id="minuteLabel">0'</span>
+</div>
+<label for="minuteSlider">Aller à une minute du match</label>
+<input type="range" id="minuteSlider" min="0" max="120" value="0" disabled>
+<p id="timelineInfo">Charge un match pour utiliser la chronologie.</p>
+</div>
+
 <div class="controls">
 <button id="previous" disabled>← Précédente</button>
 <button class="primary" id="next" disabled>Suivante →</button>
@@ -97,14 +132,15 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <div class="info" id="info">Charge un match pour commencer.</div>
 
 <div class="stats">
-<div class="stat"><strong id="passes">0</strong><small>Passes</small></div>
-<div class="stat"><strong id="shots">0</strong><small>Tirs</small></div>
-<div class="stat"><strong id="goals">0</strong><small>Buts</small></div>
+<div class="stat"><strong id="passes">0</strong><small>Passes enregistrées</small></div>
+<div class="stat"><strong id="shots">0</strong><small>Tirs enregistrés</small></div>
+<div class="stat"><strong id="goals">0</strong><small>Buts enregistrés</small></div>
 </div>
 
 <p id="counter">Action 0 / 0</p>
 </section>
-<p>Source : StatsBomb Open Data. Les actions sont des événements enregistrés, pas une vidéo ou un suivi continu des joueurs.</p>
+
+<p>Source : StatsBomb Open Data. Les coordonnées des actions sont des événements enregistrés, pas une vidéo des déplacements des joueurs. Les buts affichés correspondent aux tirs marqués dans les événements.</p>
 </main>
 
 <script>
@@ -117,7 +153,8 @@ let matches=[];
 let events=[];
 let filtered=[];
 let current=0;
-let loadedId=null;
+let loadedMatch=null;
+let viewMode="action";
 
 function status(text){$("status").textContent=text}
 
@@ -163,38 +200,93 @@ function point(p){
  Number.isFinite(p[0])&&Number.isFinite(p[1]);
 }
 
-function draw(event){
+function teamColor(e){
+ if(!loadedMatch)return "#38e888";
+ return e.team?.name===loadedMatch.home_team.home_team_name
+  ?"#38e888":"#5ca9ff";
+}
+
+function isGoal(e){
+ return e.type?.name==="Shot"&&e.shot?.outcome?.name==="Goal";
+}
+
+function drawAction(e){
  const group=$("action");
  group.replaceChildren();
 
- const start=event.location;
- const end=event.type.name==="Pass"
-  ?event.pass?.end_location
-  :event.shot?.end_location;
+ if(!point(e.location))return;
 
- if(!point(start))return;
-
- const isShot=event.type.name==="Shot";
- const color=isShot?"#ffb347":"#ffe36a";
+ const end=e.type.name==="Pass"
+  ?e.pass?.end_location:e.shot?.end_location;
 
  if(point(end)){
   group.appendChild(svg("line",{
-   x1:start[0],y1:start[1],x2:end[0],y2:end[1],
-   stroke:color,"stroke-width":1.2
+   x1:e.location[0],y1:e.location[1],
+   x2:end[0],y2:end[1],
+   stroke:isGoal(e)?"#ffe36a":teamColor(e),
+   "stroke-width":1.2
   }));
   group.appendChild(svg("circle",{
-   cx:end[0],cy:end[1],r:2,fill:color
+   cx:end[0],cy:end[1],r:2,
+   fill:isGoal(e)?"#ffe36a":teamColor(e)
   }));
  }
 
  group.appendChild(svg("circle",{
-  cx:start[0],cy:start[1],r:2.4,
-  fill:isShot?"#ff6b4a":"#38e888",
+  cx:e.location[0],cy:e.location[1],r:2.5,
+  fill:isGoal(e)?"#ffe36a":teamColor(e),
   stroke:"#08130e","stroke-width":.5
  }));
 }
 
+function drawShotMap(){
+ const group=$("action");
+ group.replaceChildren();
+
+ const team=$("team").value;
+ const maxMinute=Number($("minuteSlider").value);
+
+ const shots=events.filter(e=>
+  e.type?.name==="Shot"&&point(e.location)&&
+  e.minute<=maxMinute&&
+  (team==="all"||e.team?.name===team)
+ );
+
+ shots.forEach(e=>{
+  const goal=isGoal(e);
+  const circle=svg("circle",{
+   cx:e.location[0],cy:e.location[1],
+   r:goal?3:1.8,
+   fill:goal?"#ffe36a":teamColor(e),
+   stroke:"#08130e",
+   "stroke-width":.5,
+   opacity:.9
+  });
+
+  const title=svg("title",{});
+  title.textContent=
+   e.minute+"' "+(e.player?.name||"Joueur")+
+   " — "+(goal?"BUT":"Tir");
+
+  circle.appendChild(title);
+  group.appendChild(circle);
+ });
+
+ $("info").textContent=
+  shots.length+" tirs enregistrés jusqu'à la minute "+
+  maxMinute+". Les points jaunes représentent les buts.";
+
+ $("counter").textContent="Carte des tirs : "+shots.length+" actions";
+ $("previous").disabled=true;
+ $("next").disabled=true;
+}
+
 function show(){
+ if(viewMode==="shots"){
+  drawShotMap();
+  return;
+ }
+
  if(!filtered.length){
   $("action").replaceChildren();
   $("info").textContent="Aucune action trouvée pour ce filtre.";
@@ -205,19 +297,16 @@ function show(){
  }
 
  const e=filtered[current];
- draw(e);
-
- const isShot=e.type.name==="Shot";
- const goal=isShot&&e.shot?.outcome?.name==="Goal";
+ drawAction(e);
 
  const details=[
   "⏱ Minute : "+e.minute+":"+String(e.second).padStart(2,"0"),
   "🏟 Équipe : "+(e.team?.name||"Inconnue"),
   "👤 Joueur : "+(e.player?.name||"Inconnu"),
-  "⚽ Action : "+(goal?"BUT !":isShot?"Tir":"Passe")
+  "⚽ Action : "+(isGoal(e)?"BUT !":e.type.name==="Shot"?"Tir":"Passe")
  ];
 
- if(isShot){
+ if(e.type.name==="Shot"){
   details.push("Résultat : "+(e.shot?.outcome?.name||"Non indiqué"));
  }else{
   details.push("Destinataire : "+(e.pass?.recipient?.name||"Non indiqué"));
@@ -234,6 +323,7 @@ function show(){
  $("counter").textContent="Action "+(current+1)+" / "+filtered.length;
  $("previous").disabled=current===0;
  $("next").disabled=current===filtered.length-1;
+ $("minuteLabel").textContent=e.minute+"'";
 }
 
 function applyFilters(){
@@ -245,7 +335,7 @@ function applyFilters(){
   if(action!=="Pass"&&action!=="Shot")return false;
   if(!point(e.location))return false;
   if(team!=="all"&&e.team?.name!==team)return false;
-  if(type==="Goal")return action==="Shot"&&e.shot?.outcome?.name==="Goal";
+  if(type==="Goal")return isGoal(e);
   if(type!=="all"&&action!==type)return false;
   return true;
  });
@@ -269,9 +359,19 @@ function updateStats(){
 
  $("passes").textContent=selected.filter(e=>e.type?.name==="Pass").length;
  $("shots").textContent=selected.filter(e=>e.type?.name==="Shot").length;
- $("goals").textContent=selected.filter(e=>
-  e.type?.name==="Shot"&&e.shot?.outcome?.name==="Goal"
- ).length;
+ $("goals").textContent=selected.filter(isGoal).length;
+}
+
+function setMode(mode){
+ viewMode=mode;
+ $("modeAction").classList.toggle("active",mode==="action");
+ $("modeShots").classList.toggle("active",mode==="shots");
+
+ if(mode==="shots"){
+  $("minuteSlider").value=$("minuteSlider").max;
+  $("minuteLabel").textContent=$("minuteSlider").value+"'";
+ }
+ show();
 }
 
 async function loadMatch(){
@@ -283,13 +383,14 @@ async function loadMatch(){
  status("Chargement des vraies actions...");
 
  try{
-  events=await getJSON(BASE+"/events/"+id+".json");
-  loadedId=id;
+  const data=await getJSON(BASE+"/events/"+id+".json");
+  events=data;
+  loadedMatch=match;
+
   $("matchTitle").textContent=matchName(match);
 
   $("team").replaceChildren();
-  const all=new Option("Les deux équipes","all");
-  $("team").appendChild(all);
+  $("team").appendChild(new Option("Les deux équipes","all"));
 
   [
    match.home_team.home_team_name,
@@ -297,6 +398,14 @@ async function loadMatch(){
   ].forEach(name=>{
    $("team").appendChild(new Option(name,name));
   });
+
+  const maxMinute=Math.max(90,...events.map(e=>e.minute||0));
+  $("minuteSlider").max=maxMinute;
+  $("minuteSlider").value=0;
+  $("minuteSlider").disabled=false;
+  $("minuteLabel").textContent="0'";
+  $("timelineInfo").textContent=
+   "Déplace le curseur pour explorer le match.";
 
   updateStats();
   applyFilters();
@@ -325,17 +434,38 @@ $("next").addEventListener("click",()=>{
  if(current<filtered.length-1){current++;show()}
 });
 
+$("modeAction").addEventListener("click",()=>setMode("action"));
+$("modeShots").addEventListener("click",()=>setMode("shots"));
+
+$("minuteSlider").addEventListener("input",()=>{
+ const minute=Number($("minuteSlider").value);
+ $("minuteLabel").textContent=minute+"'";
+
+ if(viewMode==="shots"){
+  drawShotMap();
+ }else{
+  const found=filtered.findIndex(e=>e.minute>=minute);
+  if(found!==-1){
+   current=found;
+   show();
+  }
+ }
+});
+
 $("match").addEventListener("change",()=>{
  events=[];
  filtered=[];
- loadedId=null;
+ loadedMatch=null;
  $("action").replaceChildren();
- $("matchTitle").textContent="Terrain d'analyse";
- $("info").textContent="Clique sur Charger les actions réelles.";
+ $("matchTitle").textContent="Analyse du match";
+ $("info").textContent="Clique sur Charger le match réel.";
  $("counter").textContent="Action 0 / 0";
  $("passes").textContent="0";
  $("shots").textContent="0";
  $("goals").textContent="0";
+ $("minuteSlider").disabled=true;
+ $("minuteSlider").value=0;
+ $("minuteLabel").textContent="0'";
  $("previous").disabled=true;
  $("next").disabled=true;
  $("team").replaceChildren(new Option("Les deux équipes","all"));
