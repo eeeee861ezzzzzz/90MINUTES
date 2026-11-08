@@ -1,1 +1,65 @@
 
+{
+  "psg": {
+    "nom": "Paris Saint-Germain",
+    "championnat": "Ligue 1",
+    "entraineur": "Luis Enrique",
+    "systeme": "4-3-3",
+    "style": "Possession et pressing haut",
+    "pointsForts": [
+      "Circulation rapide du ballon",
+      "Pressing collectif",
+      "Mobilité des attaquants",
+      "Création d'espaces entre les lignes"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles derrière la défense haute",
+      "Vulnérabilité potentielle aux contre-attaques"
+    ]
+  },
+  "real-madrid": {
+    "nom": "Real Madrid",
+    "championnat": "LaLiga",
+    "systeme": "4-3-3",
+    "style": "Transitions rapides et attaques verticales",
+    "pointsForts": [
+      "Vitesse dans les transitions",
+      "Qualité technique",
+      "Capacité à exploiter les espaces"
+    ],
+    "pointsFaibles": [
+      "Espaces possibles entre les lignes",
+      "Difficultés potentielles face au pressing"
+    ]
+  },
+  "barcelone": {
+    "nom": "FC Barcelone",
+    "championnat": "LaLiga",
+    "systeme": "4-3-3",
+    "style": "Possession et pressing agressif",
+    "pointsForts": [
+      "Jeu de position",
+      "Pressing après perte",
+      "Combinaisons dans les petits espaces"
+    ],
+    "pointsFaibles": [
+      "Espaces derrière la ligne défensive",
+      "Risques face aux attaques en profondeur"
+    ]
+  },
+  "manchester-city": {
+    "nom": "Manchester City",
+    "championnat": "Premier League",
+    "systeme": "4-3-3",
+    "style": "Possession et construction patiente",
+    "pointsForts": [
+      "Maîtrise du ballon",
+      "Occupation des espaces",
+      "Construction depuis la défense"
+    ],
+    "pointsFaibles": [
+      "Risques lors des pertes de balle",
+      "Espaces possibles face aux transitions rapides"
+    ]
+  }
+}
