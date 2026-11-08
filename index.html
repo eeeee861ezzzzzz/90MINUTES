@@ -3,1286 +3,686 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07130e">
-<title>PITCH'AURA | Le football autrement</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>90MINUTE. — Le football décrypté</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#07130e;
-  --panel:#10231a;
-  --green:#38e888;
-  --muted:#a3b8aa;
-  --border:#294a36;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--bg);
-  color:white;
-  font-family:Arial,sans-serif;
-}
-a{text-decoration:none;color:inherit}
-button{cursor:pointer;font-family:inherit}
-button:disabled{opacity:.5;cursor:not-allowed}
-.hidden{display:none!important}
-.green{color:var(--green)}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:#0b1b13f5;
-  border-bottom:1px solid var(--border);
-  padding:18px 6%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
-}
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-nav{
-  display:flex;
-  align-items:center;
-  gap:23px;
-  flex-wrap:wrap;
-}
-nav a{
-  color:#c5d9cd;
-  font-size:14px;
-}
-nav a:hover{color:var(--green)}
-.nav-cta{
-  background:var(--green);
-  color:#062011;
-  padding:12px 17px;
-  border-radius:10px;
-  font-weight:bold;
-}
-nav .nav-cta{color:#062011}
-
-main{
-  max-width:1180px;
-  margin:auto;
-  padding:0 22px 80px;
+:root {
+  --navy: #101923;
+  --gold: #d8b46a;
+  --bg: #f7f7f4;
+  --card: #ffffff;
+  --ink: #101923;
+  --muted: #637081;
+  --line: #dfe1df;
 }
 
-/* ACCUEIL */
-
-.hero{
-  min-height:600px;
-  display:grid;
-  grid-template-columns:1.05fr 1fr;
-  align-items:center;
-  gap:50px;
-  padding:90px 0;
-}
-.eyebrow{
-  display:inline-block;
-  color:var(--green);
-  background:#123823;
-  border:1px solid #276642;
-  padding:10px 15px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:bold;
-  letter-spacing:1px;
-}
-.hero h1{
-  font-size:clamp(42px,5vw,70px);
-  line-height:1.07;
-  letter-spacing:-2px;
-  margin:25px 0;
-}
-.hero-description{
-  font-size:17px;
-  color:var(--muted);
-  line-height:1.8;
-  max-width:520px;
-}
-.hero-actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:30px;
-}
-.btn{
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  padding:16px 22px;
-  border-radius:11px;
-  font-size:14px;
-  font-weight:bold;
-  border:1px solid transparent;
-}
-.btn-green{
-  background:var(--green);
-  color:#062011;
-}
-.btn-green:hover{background:#75f4ab}
-.btn-outline{
-  background:#11271b;
-  border-color:#37674a;
-  color:white;
-}
-.btn-outline:hover{border-color:var(--green)}
-
-.stats{
-  display:flex;
-  flex-wrap:wrap;
-  gap:35px;
-  margin-top:45px;
-}
-.stat strong{
-  display:block;
-  color:var(--green);
-  font-size:28px;
-}
-.stat span{
-  color:var(--muted);
-  font-size:11px;
-  letter-spacing:.5px;
+:root[data-theme="dark"] {
+  --bg: #101923;
+  --card: #1b2c43;
+  --ink: #f7f7f4;
+  --muted: #bdc8d5;
+  --line: #344357;
 }
 
-/* APERÇU TACTIQUE */
+* { box-sizing: border-box; }
 
-.preview{
-  background:linear-gradient(145deg,#153b29,#0a1911);
-  border:1px solid #326747;
-  border-radius:24px;
-  padding:20px;
-  box-shadow:0 25px 65px #0006;
-}
-.preview-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:20px;
-}
-.preview-header strong{font-size:15px}
-.preview-tag{
-  color:var(--green);
-  background:#19452b;
-  padding:8px 11px;
-  border-radius:20px;
-  font-size:11px;
-}
-.preview-pitch{
-  position:relative;
-  width:100%;
-  aspect-ratio:1.45;
-  border:2px solid #d5f2dcb3;
-  border-radius:8px;
-  overflow:hidden;
-  background:repeating-linear-gradient(
-    90deg,
-    #155d3b 0%,
-    #155d3b 12.5%,
-    #1b6c45 12.5%,
-    #1b6c45 25%
-  );
-}
-.pitch-mid{
-  position:absolute;
-  left:50%;
-  height:100%;
-  border-left:2px solid #ffffff80;
-}
-.pitch-circle{
-  position:absolute;
-  width:25%;
-  aspect-ratio:1;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  border:2px solid #ffffff80;
-  border-radius:50%;
-}
-.pitch-box{
-  position:absolute;
-  top:25%;
-  height:50%;
-  width:17%;
-  border:2px solid #ffffff80;
-}
-.pitch-box.left{left:0;border-left:0}
-.pitch-box.right{right:0;border-right:0}
-.preview-player{
-  position:absolute;
-  width:clamp(13px,1.8vw,22px);
-  height:clamp(13px,1.8vw,22px);
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:9px;
-  font-weight:bold;
-  box-shadow:0 2px 5px #0007;
-}
-.preview-player.a{
-  background:var(--green);
-  color:#07311b;
-}
-.preview-player.b{
-  background:#f3f6ff;
-  color:#142a40;
-}
-.preview-ball{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:16px;
-}
-.preview-footer{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-top:16px;
-  color:#c8e5d1;
-  font-size:12px;
-}
-.preview-footer span:first-child{color:var(--green)}
-
-/* SECTIONS */
-
-.section{
-  margin-top:75px;
-  scroll-margin-top:100px;
-}
-.section-heading{
-  margin-bottom:24px;
-}
-.section-heading h2{
-  font-size:clamp(26px,4vw,36px);
-  margin:0 0 10px;
-}
-.section-heading p{
-  color:var(--muted);
-  line-height:1.7;
-}
-.panel,.result-card,.feature{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:25px;
-}
-.panel p,.feature p{
-  color:var(--muted);
-  line-height:1.7;
-}
-.mode-tabs{
-  display:flex;
-  gap:12px;
-  margin:25px 0;
-}
-.mode-tab{
-  flex:1;
-  padding:15px;
-  background:#14291d;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:10px;
-  font-weight:bold;
-}
-.mode-tab.active{
-  background:var(--green);
-  color:#062011;
-}
-textarea,input{
-  width:100%;
-  background:#091911;
-  color:white;
-  border:1px solid #345640;
-  border-radius:10px;
-  padding:15px;
-  font:16px Arial,sans-serif;
-}
-textarea{
-  min-height:125px;
-  resize:vertical;
-}
-textarea:focus,input:focus{
-  outline:1px solid var(--green);
-}
-label{
-  display:block;
-  margin:0 0 10px;
-  color:#d8efdf;
-}
-.primary{
-  width:100%;
-  background:var(--green);
-  color:#062011;
-  border:0;
-  border-radius:10px;
-  padding:17px;
-  margin-top:18px;
-  font-weight:bold;
-}
-.primary:hover:not(:disabled){background:#75f4ab}
-.examples{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:15px;
-}
-.example{
-  background:#193526;
-  color:#d3f4de;
-  border:1px solid #356549;
-  border-radius:20px;
-  padding:10px 13px;
-}
-.team-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-.team-list{
-  background:#091911;
-  border:1px solid #345640;
-  border-radius:12px;
-  max-height:230px;
-  overflow-y:auto;
-  margin-top:8px;
-}
-.team-item{
-  display:block;
-  width:100%;
-  padding:13px;
-  background:transparent;
-  border:0;
-  border-bottom:1px solid #223e2c;
-  color:white;
-  text-align:left;
-}
-.team-item:hover{background:#1b3b28}
-.team-item.selected{
-  background:#215c37;
-  color:#baffd0;
-}
-.team-item small{
-  display:block;
-  color:#a3b8aa;
-  margin-top:5px;
-}
-.selected-team{
-  margin-top:12px;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #39764d;
-  background:#153b25;
-  color:var(--green);
-  min-height:45px;
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.65 Inter, Arial, sans-serif;
 }
 
-/* RÉSULTATS */
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img { width: 100%; object-fit: cover; display: block; }
 
-#resultats{
-  margin-top:30px;
-  scroll-margin-top:100px;
-}
-.result-title{
-  background:#17462a;
-  padding:20px;
-  border-radius:15px;
-  margin-bottom:20px;
-}
-.result-title h2{
-  color:var(--green);
-  margin:0;
-}
-.result-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:15px;
-  align-items:start;
-}
-.result-card{
-  min-width:0;
-  border-top:3px solid var(--green);
-}
-.result-card h3{
-  color:var(--green);
-  font-size:18px;
-  margin:0 0 15px;
-  overflow-wrap:anywhere;
-}
-.result-card pre{
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-  font:14px/1.8 Arial,sans-serif;
-  color:#d8e9dd;
-  margin:0;
-}
-.full{grid-column:1/-1}
-.duel-action{
-  background:linear-gradient(120deg,#17462a,#0d2117);
-  border:1px solid #39764d;
-  border-radius:16px;
-  padding:25px;
-  margin-top:20px;
-  text-align:center;
-}
-.duel-action h3{color:var(--green)}
-.duel-action p{color:#c3e6cd}
-.terrain-button{
-  display:inline-block;
-  padding:15px 22px;
-  background:var(--green);
-  color:#062011;
-  border-radius:10px;
-  font-weight:bold;
-}
-.terrain-button:hover{background:#75f4ab}
-
-/* DÉCOUVRIR */
-
-.terrain-banner{
-  background:linear-gradient(120deg,#153f28,#0d2117);
-  border:1px solid #39764d;
-  border-radius:18px;
-  padding:30px;
-  margin-top:35px;
-}
-.terrain-banner p{
-  color:#c3e6cd;
-  line-height:1.7;
-}
-.features{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-.feature h3{margin-top:0}
-.feature{transition:transform .2s}
-.feature:hover{transform:translateY(-3px)}
-
-footer{
-  text-align:center;
-  border-top:1px solid var(--border);
-  padding:35px 20px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-}
-footer button{
-  color:var(--green);
-  background:none;
-  border:0;
-  text-decoration:underline;
-}
-.cookie-banner{
-  position:fixed;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(94%,650px);
-  background:#193526;
-  border:1px solid #4a9163;
-  border-radius:18px;
-  padding:22px;
-  z-index:100;
-  box-shadow:0 8px 35px #0009;
-}
-.cookie-banner p{
-  color:#d0e2d5;
-  font-size:14px;
-  line-height:1.6;
-}
-.cookie-actions{
-  display:flex;
-  gap:10px;
-}
-.cookie-actions button{
-  flex:1;
-  padding:13px;
-  border-radius:9px;
-}
-.accept{
-  background:var(--green);
-  color:#062011;
-  border:0;
-}
-.reject{
-  background:#10231a;
-  color:white;
-  border:1px solid #4a9163;
+.container {
+  max-width: 1180px;
+  margin: auto;
+  padding: 0 22px;
 }
 
-@media(max-width:850px){
-  .hero{
-    grid-template-columns:1fr;
-    gap:35px;
-    padding:60px 0;
-    min-height:auto;
-  }
-  .hero-content{text-align:center}
-  .hero-description{margin:auto}
-  .hero-actions,.stats{justify-content:center}
-  .preview{max-width:650px;width:100%;margin:auto}
-  header{justify-content:center}
+.topline {
+  background: var(--navy);
+  color: #e7eaf0;
+  font-size: 12px;
+  padding: 8px 0;
+  letter-spacing: .08em;
 }
-@media(max-width:650px){
-  nav{justify-content:center;gap:12px}
-  nav a{font-size:12px}
-  .hero h1{letter-spacing:-1px}
-  .team-grid,.result-grid,.features{
-    grid-template-columns:1fr;
-  }
-  .full{grid-column:auto}
-  .panel,.result-card{padding:18px}
-  .hero-actions .btn{width:100%}
-  .stats{gap:20px}
-  .mode-tabs{gap:7px}
-  .preview-player{width:17px;height:17px}
+
+.topline .container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.masthead {
+  padding: 23px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.masthead .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.mark {
+  width: 56px;
+  height: 56px;
+  background: var(--navy);
+  color: white;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font: italic 800 38px "Barlow Condensed";
+  position: relative;
+  overflow: hidden;
+}
+
+.mark::after {
+  content: "";
+  position: absolute;
+  width: 48px;
+  height: 15px;
+  border-bottom: 4px solid var(--gold);
+  border-radius: 50%;
+  bottom: 5px;
+  left: 5px;
+  transform: rotate(-12deg);
+}
+
+.brandname {
+  font: 800 39px/.9 "Barlow Condensed", Arial;
+}
+
+.brandname span { color: var(--gold); }
+
+.tagline {
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.theme {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  padding: 9px 14px;
+  color: var(--ink);
+}
+
+nav { border-bottom: 1px solid var(--line); }
+
+nav .container {
+  display: flex;
+  gap: 30px;
+}
+
+nav button {
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--ink);
+  padding: 15px 0;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+nav button.active { border-bottom-color: var(--gold); }
+
+h1, h2, h3 {
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  line-height: 1.1;
+  margin: 0;
+}
+
+h1 { font-size: clamp(40px, 6vw, 72px); }
+h2 { font-size: 36px; }
+h3 { font-size: 26px; }
+
+.kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  color: #a77c30;
+  text-transform: uppercase;
+}
+
+.intro { padding: 44px 0 30px; }
+
+.intro p {
+  color: var(--muted);
+  max-width: 640px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hero img {
+  height: 100%;
+  min-height: 370px;
+}
+
+.hero-content {
+  padding: 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 17px;
+}
+
+.hero-content h2 { font-size: clamp(30px, 4vw, 50px); }
+
+.hero-content p, .summary { color: var(--muted); }
+
+.meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.btn {
+  border: 0;
+  background: var(--gold);
+  color: #101923;
+  font-weight: 800;
+  padding: 12px 18px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.sectionhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 46px 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.sectionhead button {
+  border: 0;
+  background: none;
+  color: #b18a44;
+  font-weight: 800;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.article-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.article-card img { height: 180px; }
+.article-card .content { padding: 18px; }
+.article-card h3 { margin: 8px 0 12px; }
+
+.article-card p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+
+.filters input, .filters select {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--card);
+  color: var(--ink);
+}
+
+.filters input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.article-body {
+  max-width: 780px;
+  margin: 40px auto 80px;
+}
+
+.article-body h1 { margin: 12px 0; }
+
+.article-body .cover {
+  height: auto;
+  max-height: 440px;
+  margin: 26px 0;
+  border-radius: 6px;
+}
+
+.article-body h2 {
+  font-size: 33px;
+  margin: 34px 0 12px;
+}
+
+.article-body p {
+  font-size: 17px;
+  line-height: 1.85;
+}
+
+.article-body .lead {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.back {
+  background: none;
+  border: 0;
+  color: #b18a44;
+  padding: 0;
+  font-weight: 700;
+}
+
+.note {
+  background: var(--card);
+  border-left: 4px solid var(--gold);
+  padding: 16px 20px;
+  color: var(--muted);
+}
+
+footer {
+  margin-top: 80px;
+  background: var(--navy);
+  color: white;
+  padding: 35px 0;
+}
+
+footer p {
+  color: #bac5d3;
+  font-size: 13px;
+}
+
+footer .brandname { font-size: 30px; }
+
+.empty {
+  padding: 40px;
+  color: var(--muted);
+}
+
+@media(max-width: 800px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero img { height: 270px; min-height: 0; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-content { padding: 24px; }
+}
+
+@media(max-width: 560px) {
+  .container { padding: 0 15px; }
+  .brandname { font-size: 30px; }
+  .mark { width: 46px; height: 46px; font-size: 32px; }
+  .tagline { font-size: 8px; }
+  .grid { grid-template-columns: 1fr; }
+  .article-card img { height: 220px; }
+  nav .container { gap: 20px; }
+  .intro { padding-top: 28px; }
+  .topline .container span:last-child { display: none; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    PITCH'<span class="green">AURA</span>
+<div class="topline">
+  <div class="container">
+    <span>LE FOOTBALL DÉCRYPTÉ</span>
+    <span>PREMIER LEAGUE · LALIGA · SERIE A · BUNDESLIGA · LIGUE 1</span>
   </div>
+</div>
 
-  <nav>
-    <a href="#accueil">Accueil</a>
-    <a href="#analyse">Analyseur</a>
-    <a href="/terrain.html">Terrain tactique</a>
-    <a href="#decouvrir">Découvrir</a>
-    <a href="#analyse" class="nav-cta">Commencer →</a>
-  </nav>
+<header class="masthead">
+  <div class="container">
+    <a href="#accueil" class="brand" onclick="showPage('accueil')">
+      <div class="mark">90</div>
+      <div>
+        <div class="brandname">90MINUTE<span>.</span></div>
+        <div class="tagline">LE FOOTBALL DÉCRYPTÉ</div>
+      </div>
+    </a>
+
+    <button class="theme" onclick="toggleTheme()">◐ Thème</button>
+  </div>
 </header>
 
-<main>
+<nav>
+  <div class="container">
+    <button data-page="accueil" class="active"
+      onclick="showPage('accueil')">ACCUEIL</button>
 
-<section class="hero" id="accueil">
+    <button data-page="articles"
+      onclick="showPage('articles')">ARTICLES</button>
 
-  <div class="hero-content">
-    <span class="eyebrow">
-      ⚽ LA NOUVELLE EXPÉRIENCE TACTIQUE
-    </span>
+    <button onclick="showPage('articles');document.getElementById('search').focus()">
+      RECHERCHE
+    </button>
+  </div>
+</nav>
 
-    <h1>
-      COMPRENDS<br>
-      LE FOOTBALL.<br>
-      <span class="green">AUTREMENT.</span>
-    </h1>
+<main class="container">
 
-    <p class="hero-description">
-      Analyse les équipes, compare leurs stratégies
-      et visualise les mouvements sur le terrain.
-      Une nouvelle façon de découvrir le football.
-    </p>
+<section id="accueil" class="page active">
 
-    <div class="hero-actions">
-      <a href="#analyse" class="btn btn-green">
-        ⚡ Commencer une analyse →
-      </a>
-
-      <a href="/terrain.html" class="btn btn-outline">
-        ⚽ Explorer le terrain
-      </a>
-    </div>
-
-    <div class="stats">
-      <div class="stat">
-        <strong id="total-clubs">20</strong>
-        <span>CLUBS DISPONIBLES</span>
-      </div>
-      <div class="stat">
-        <strong>5</strong>
-        <span>FORMATIONS TACTIQUES</span>
-      </div>
-      <div class="stat">
-        <strong>100%</strong>
-        <span>GRATUIT</span>
-      </div>
-    </div>
+  <div class="intro">
+    <div class="kicker">Bienvenue sur 90MINUTE</div>
+    <h1>AU-DELÀ DU SCORE.<br>LE FOOTBALL DÉCRYPTÉ.</h1>
+    <p>Comptes rendus, analyses tactiques et récits des rencontres. Un regard journalistique sur le jeu.</p>
   </div>
 
-  <div class="preview">
-    <div class="preview-header">
-      <strong>⚽ Aperçu tactique</strong>
-      <span class="preview-tag">22 JOUEURS</span>
-    </div>
+  <div id="featured"></div>
 
-    <div class="preview-pitch" id="preview-pitch">
-      <div class="pitch-mid"></div>
-      <div class="pitch-circle"></div>
-      <div class="pitch-box left"></div>
-      <div class="pitch-box right"></div>
-      <div class="preview-ball">⚽</div>
-    </div>
-
-    <div class="preview-footer">
-      <span>● Équipe A — 4-3-3</span>
-      <span>Équipe B — 4-3-3 ●</span>
-    </div>
+  <div class="sectionhead">
+    <h2>DERNIÈRES PUBLICATIONS</h2>
+    <button onclick="showPage('articles')">TOUS LES ARTICLES →</button>
   </div>
+
+  <div class="grid" id="homeGrid"></div>
 
 </section>
 
-<section class="section" id="analyse">
+<section id="articles" class="page">
 
-  <div class="section-heading">
-    <h2>🧠 Analyseur PITCH'AURA</h2>
-    <p>
-      Décrypte les systèmes de jeu et compare
-      les approches tactiques de tes clubs préférés.
-    </p>
+  <div class="intro">
+    <div class="kicker">La rédaction</div>
+    <h1>TOUS LES ARTICLES</h1>
+    <p>Retrouve nos comptes rendus et décryptages.</p>
   </div>
 
-  <div class="panel">
-    <h2>Choisis ta méthode</h2>
-    <p>
-      Écris librement ta demande ou sélectionne
-      deux clubs pour les comparer.
-    </p>
+  <div class="filters">
 
-    <div class="mode-tabs">
-      <button id="tab-texte" class="mode-tab active"
-        type="button">✍️ Écrire</button>
-      <button id="tab-selection" class="mode-tab"
-        type="button">⚔️ Sélectionner</button>
-    </div>
+    <input id="search" placeholder="Rechercher un club, un sujet..."
+      oninput="renderArticles()">
 
-    <div id="mode-texte">
-      <form id="form-texte">
-        <label for="question">Ta demande d'analyse</label>
-        <textarea id="question" maxlength="1000"
-          placeholder="Analyse PSG contre Arsenal"
-          required></textarea>
+    <select id="category" onchange="renderArticles()">
+      <option value="">Tous les formats</option>
+      <option>Analyse</option>
+      <option>Compte rendu</option>
+    </select>
 
-        <button class="primary" type="submit">
-          Générer mon analyse →
-        </button>
-      </form>
+    <select id="league" onchange="renderArticles()">
+      <option value="">Tous les championnats</option>
+      <option>Premier League</option>
+      <option>LaLiga</option>
+      <option>Serie A</option>
+      <option>Bundesliga</option>
+      <option>Ligue 1</option>
+    </select>
 
-      <div class="examples">
-        <button class="example" type="button"
-          data-question="Analyse PSG contre Real Madrid">
-          PSG vs Real
-        </button>
-        <button class="example" type="button"
-          data-question="Analyse Marseille contre Lyon">
-          OM vs OL
-        </button>
-        <button class="example" type="button"
-          data-question="Analyse Bayern contre Arsenal">
-          Bayern vs Arsenal
-        </button>
-      </div>
-    </div>
-
-    <div id="mode-selection" class="hidden">
-      <div class="team-grid">
-        <div>
-          <label for="recherche-a">Équipe 1</label>
-          <input id="recherche-a" type="search"
-            placeholder="Rechercher un club..."
-            autocomplete="off">
-          <div id="liste-a" class="team-list"></div>
-          <div id="choix-a" class="selected-team">
-            Aucune équipe sélectionnée
-          </div>
-        </div>
-
-        <div>
-          <label for="recherche-b">Équipe 2</label>
-          <input id="recherche-b" type="search"
-            placeholder="Rechercher un club..."
-            autocomplete="off">
-          <div id="liste-b" class="team-list"></div>
-          <div id="choix-b" class="selected-team">
-            Aucune équipe sélectionnée
-          </div>
-        </div>
-      </div>
-
-      <button id="comparer" class="primary"
-        type="button" disabled>
-        ⚔️ Comparer les équipes
-      </button>
-    </div>
   </div>
 
-  <div id="resultats" class="hidden"
-    aria-live="polite"></div>
+  <div class="grid" id="articleGrid"></div>
+  <p id="noResults" class="empty" hidden>Aucun article trouvé.</p>
 
 </section>
 
-<section class="section">
-  <div class="terrain-banner">
-    <h2>⚽ Laboratoire tactique interactif</h2>
-    <p>
-      Retrouve 22 joueurs sur le terrain.
-      Teste le pressing, les contre-attaques,
-      les dédoublements et les circuits de passes.
-    </p>
-    <a href="/terrain.html" class="terrain-button">
-      Explorer le terrain tactique →
-    </a>
-  </div>
-</section>
-
-<section class="section" id="decouvrir">
-  <div class="section-heading">
-    <h2>Découvre PITCH'AURA</h2>
-    <p>Une plateforme pensée pour comprendre le jeu.</p>
-  </div>
-
-  <div class="features">
-    <div class="feature">
-      <h3>🧠 Analyse tactique</h3>
-      <p>
-        Découvre les forces, les faiblesses
-        et les systèmes de jeu des équipes.
-      </p>
-    </div>
-
-    <div class="feature">
-      <h3>⚔️ Comparateur</h3>
-      <p>
-        Compare deux clubs et découvre
-        leurs différences tactiques.
-      </p>
-    </div>
-
-    <div class="feature">
-      <h3>📋 Terrain interactif</h3>
-      <p>
-        Visualise les formations et simule
-        des mouvements avec 22 joueurs.
-      </p>
-    </div>
-  </div>
+<section id="lecture" class="page">
+  <article id="reader" class="article-body"></article>
 </section>
 
 </main>
 
 <footer>
-  PITCH'AURA © 2026 — Le football autrement.
-
-  <p>
-    Analyses indicatives sans données en direct.
-    Statistiques facultatives via Google Analytics.
-  </p>
-
-  <p>
-    Google peut traiter des données de navigation
-    uniquement si les statistiques sont acceptées.
-  </p>
-
-  <button id="cookie-settings" type="button">
-    Gérer mes cookies
-  </button>
+  <div class="container">
+    <div class="brandname">90MINUTE<span>.</span></div>
+    <p>LE FOOTBALL DÉCRYPTÉ — Média football indépendant.</p>
+    <p>Version de démonstration : contenus fictifs.</p>
+  </div>
 </footer>
 
-<div id="cookie-banner" class="cookie-banner hidden"
-  role="dialog" aria-label="Cookies statistiques">
-  <h3>🍪 Respect de ta vie privée</h3>
-  <p>
-    PITCH'AURA utilise Google Analytics uniquement
-    avec ton accord pour mesurer les visites.
-    Tu peux refuser sans perdre de fonctionnalités
-    et modifier ton choix à tout moment.
-  </p>
-  <div class="cookie-actions">
-    <button id="refuser" class="reject" type="button">
-      Refuser
-    </button>
-    <button id="accepter" class="accept" type="button">
-      Accepter
-    </button>
-  </div>
-</div>
-
 <script>
-/* ===== APERÇU DU TERRAIN ===== */
-
-const preview=document.getElementById("preview-pitch");
-
-const positions=[
-  [8,50],
-  [24,15],[24,38],[24,62],[24,85],
-  [43,25],[43,50],[43,75],
-  [67,18],[70,50],[67,82]
+const articles = [
+  {
+    id: 1,
+    title: "Pourquoi le pressing haut transforme les grandes rencontres",
+    category: "Analyse",
+    league: "Premier League",
+    minutes: 5,
+    image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1300&q=85",
+    excerpt: "L'organisation collective, les espaces et les transitions expliqués simplement.",
+    body: [
+      "Le pressing haut cherche à récupérer le ballon rapidement dans le camp adverse. Son efficacité dépend de la coordination des joueurs.",
+      "Lorsque la pression se déclenche, les partenaires doivent fermer les lignes de passe.",
+      "Une équipe mal coordonnée peut laisser de grands espaces dans son dos."
+    ]
+  },
+  {
+    id: 2,
+    title: "Les moments qui peuvent faire basculer un grand match",
+    category: "Compte rendu",
+    league: "LaLiga",
+    minutes: 4,
+    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1300&q=85",
+    excerpt: "Du premier temps fort au dernier changement, raconter le fil d'une rencontre.",
+    body: [
+      "Un compte rendu de qualité doit restituer les faits dans leur ordre et expliquer leur importance.",
+      "Les occasions, les changements et les temps forts doivent être vérifiés avant publication.",
+      "Ce texte est un exemple de mise en page et ne décrit aucun match réel."
+    ]
+  },
+  {
+    id: 3,
+    title: "La bataille du milieu : comment une équipe prend le contrôle",
+    category: "Analyse",
+    league: "Serie A",
+    minutes: 6,
+    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1300&q=85",
+    excerpt: "Positionnement, circuits de passes et supériorités numériques.",
+    body: [
+      "Contrôler le milieu de terrain ne signifie pas seulement conserver le ballon.",
+      "Les déplacements entre les lignes permettent de créer des espaces.",
+      "L'analyse d'un match doit s'appuyer sur des observations précises."
+    ]
+  },
+  {
+    id: 4,
+    title: "Transitions rapides : une arme tactique à double tranchant",
+    category: "Analyse",
+    league: "Bundesliga",
+    minutes: 5,
+    image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1300&q=85",
+    excerpt: "Pourquoi certaines équipes attaquent dès la récupération du ballon.",
+    body: [
+      "La transition offensive commence dès la récupération du ballon.",
+      "Les premières secondes peuvent offrir des espaces importants.",
+      "Cette approche demande des appels coordonnés et une bonne protection défensive."
+    ]
+  },
+  {
+    id: 5,
+    title: "Comment raconter les tournants d'une rencontre",
+    category: "Compte rendu",
+    league: "Ligue 1",
+    minutes: 4,
+    image: "https://images.unsplash.com/photo-1459865264687-5958f4b3b5c8?auto=format&fit=crop&w=1300&q=85",
+    excerpt: "Une méthode journalistique pour distinguer les faits des impressions.",
+    body: [
+      "Le compte rendu commence par le résultat vérifié et les faits importants.",
+      "Il explique ensuite le scénario et les choix tactiques.",
+      "Les statistiques doivent toujours provenir de sources fiables."
+    ]
+  }
 ];
 
-function ajouterJoueur(cote,index,x,y){
-  const joueur=document.createElement("div");
-  joueur.className="preview-player "+cote;
-  joueur.textContent=index+1;
-  joueur.style.left=x+"%";
-  joueur.style.top=y+"%";
-  preview.appendChild(joueur);
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[c]));
 }
 
-positions.forEach((pos,i)=>{
-  ajouterJoueur("a",i,pos[0]*0.75,pos[1]);
-  ajouterJoueur("b",i,100-pos[0]*0.75,pos[1]);
-});
-
-/* ===== GOOGLE ANALYTICS ===== */
-
-const GA_ID="G-38M7HYNKJ9";
-const CONSENT_KEY="pitchaura_analytics_consent";
-const banner=document.getElementById("cookie-banner");
-
-let analyticsLoaded=false;
-
-function lireConsentement(){
-  try{
-    return localStorage.getItem(CONSENT_KEY);
-  }catch{
-    return null;
-  }
+function card(a) {
+  return `
+    <div class="article-card">
+      <a href="#article-${a.id}" onclick="openArticle(${a.id});return false">
+        <img src="${a.image}" alt="Football" loading="lazy">
+      </a>
+      <div class="content">
+        <div class="kicker">${a.category} · ${a.league}</div>
+        <h3>
+          <a href="#article-${a.id}" onclick="openArticle(${a.id});return false">
+            ${escapeHTML(a.title)}
+          </a>
+        </h3>
+        <p>${escapeHTML(a.excerpt)}</p>
+        <div class="meta">90MINUTE · ${a.minutes} min de lecture</div>
+      </div>
+    </div>
+  `;
 }
 
-function enregistrerConsentement(valeur){
-  try{
-    localStorage.setItem(CONSENT_KEY,valeur);
-  }catch{}
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.toggle("active", p.id === name);
+  });
+
+  document.querySelectorAll("nav button[data-page]").forEach(b => {
+    b.classList.toggle("active", b.dataset.page === name);
+  });
+
+  window.scrollTo(0, 0);
+
+  if (name === "articles") renderArticles();
 }
 
-function activerAnalytics(){
-  if(analyticsLoaded)return;
-  analyticsLoaded=true;
+function openArticle(id) {
+  const a = articles.find(x => x.id === id);
+  if (!a) return;
 
-  window.dataLayer=window.dataLayer||[];
-  window.gtag=function(){
-    window.dataLayer.push(arguments);
-  };
+  document.getElementById("reader").innerHTML = `
+    <button class="back" onclick="showPage('articles')">
+      ← Retour aux articles
+    </button>
 
-  window.gtag("js",new Date());
-  window.gtag("config",GA_ID);
+    <div class="kicker" style="margin-top:25px">
+      ${a.category} · ${a.league}
+    </div>
 
-  const script=document.createElement("script");
-  script.async=true;
-  script.src=
-    "https://www.googletagmanager.com/gtag/js?id="+
-    encodeURIComponent(GA_ID);
+    <h1>${escapeHTML(a.title)}</h1>
 
-  document.head.appendChild(script);
+    <div class="meta">
+      Par la rédaction 90MINUTE · ${a.minutes} min de lecture
+    </div>
+
+    <img class="cover" src="${a.image}" alt="Football">
+
+    <p class="lead">${escapeHTML(a.excerpt)}</p>
+
+    <h2>LE DÉCRYPTAGE</h2>
+
+    ${a.body.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
+
+    <h2>LE VERDICT 90MINUTE</h2>
+
+    <div class="note">
+      Contenu de démonstration. Les prochains articles
+      porteront sur des rencontres et informations vérifiées.
+    </div>
+  `;
+
+  showPage("lecture");
 }
 
-function choisirCookies(choix){
-  enregistrerConsentement(choix);
-  banner.classList.add("hidden");
+function renderArticles() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  const c = document.getElementById("category").value;
+  const l = document.getElementById("league").value;
 
-  if(choix==="oui"){
-    window["ga-disable-"+GA_ID]=false;
-    activerAnalytics();
-  }else{
-    window["ga-disable-"+GA_ID]=true;
-    if(analyticsLoaded)location.reload();
-  }
-}
-
-document.getElementById("accepter").onclick=
-  ()=>choisirCookies("oui");
-
-document.getElementById("refuser").onclick=
-  ()=>choisirCookies("non");
-
-document.getElementById("cookie-settings").onclick=
-  ()=>banner.classList.remove("hidden");
-
-const consentement=lireConsentement();
-
-if(consentement==="oui"){
-  activerAnalytics();
-}else if(consentement!=="non"){
-  banner.classList.remove("hidden");
-}
-
-/* ===== ANALYSEUR ===== */
-
-const $=id=>document.getElementById(id);
-
-let clubs=[];
-let equipeA=null;
-let equipeB=null;
-let chargement=false;
-
-function normaliser(texte){
-  return String(texte)
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .trim();
-}
-
-function changerMode(mode){
-  const texte=mode==="texte";
-
-  $("mode-texte").classList.toggle("hidden",!texte);
-  $("mode-selection").classList.toggle("hidden",texte);
-
-  $("tab-texte").classList.toggle("active",texte);
-  $("tab-selection").classList.toggle("active",!texte);
-}
-
-$("tab-texte").onclick=()=>changerMode("texte");
-$("tab-selection").onclick=()=>changerMode("selection");
-
-async function chargerClubs(){
-  try{
-    const reponse=await fetch("/api/teams");
-
-    if(!reponse.ok){
-      throw new Error("Liste indisponible");
-    }
-
-    const data=await reponse.json();
-
-    clubs=Array.isArray(data.equipes)
-      ?data.equipes:[];
-
-    $("total-clubs").textContent=clubs.length;
-
-    afficherListe("a");
-    afficherListe("b");
-
-  }catch(erreur){
-    $("liste-a").textContent=
-      "Impossible de charger les clubs.";
-
-    $("liste-b").textContent=
-      "Impossible de charger les clubs.";
-  }
-}
-
-function afficherListe(cote){
-  const recherche=$("recherche-"+cote);
-  const liste=$("liste-"+cote);
-  const terme=normaliser(recherche.value);
-
-  liste.replaceChildren();
-
-  const filtres=clubs.filter(club=>
-    normaliser(club.nom).includes(terme)||
-    normaliser(club.championnat).includes(terme)
+  const filtered = articles.filter(a =>
+    (!c || a.category === c) &&
+    (!l || a.league === l) &&
+    (!q || [a.title, a.excerpt, a.league, a.category]
+      .join(" ").toLowerCase().includes(q))
   );
 
-  if(!filtres.length){
-    liste.textContent="Aucun club trouvé.";
-    return;
-  }
+  document.getElementById("articleGrid").innerHTML =
+    filtered.map(card).join("");
 
-  filtres.forEach(club=>{
-    const bouton=document.createElement("button");
-    bouton.type="button";
-    bouton.className="team-item";
-
-    const nom=document.createElement("strong");
-    nom.textContent=club.nom;
-
-    const infos=document.createElement("small");
-    infos.textContent=
-      club.championnat+" • "+club.systeme;
-
-    bouton.append(nom,infos);
-
-    const selection=cote==="a"?equipeA:equipeB;
-
-    if(selection===club.id){
-      bouton.classList.add("selected");
-    }
-
-    bouton.onclick=()=>{
-      if(cote==="a"){
-        equipeA=club.id;
-      }else{
-        equipeB=club.id;
-      }
-
-      $("choix-"+cote).textContent="✓ "+club.nom;
-
-      afficherListe(cote);
-      actualiserBouton();
-    };
-
-    liste.appendChild(bouton);
-  });
+  document.getElementById("noResults").hidden =
+    filtered.length > 0;
 }
 
-function actualiserBouton(){
-  const valide=equipeA&&equipeB&&equipeA!==equipeB;
-  $("comparer").disabled=!valide||chargement;
+function toggleTheme() {
+  const next =
+    document.documentElement.dataset.theme === "dark"
+      ? "light"
+      : "dark";
+
+  document.documentElement.dataset.theme = next;
+
+  try {
+    localStorage.setItem("90minute-theme", next);
+  } catch(e) {}
 }
 
-$("recherche-a").oninput=()=>afficherListe("a");
-$("recherche-b").oninput=()=>afficherListe("b");
-
-/* ===== RECONNAISSANCE DES CLUBS ===== */
-
-const aliasClubs={
-  "psg":["psg","paris saint germain","paris"],
-  "real-madrid":["real madrid","real"],
-  "barcelone":["barcelone","barca","fc barcelona"],
-  "manchester-city":["manchester city","man city"],
-  "manchester-united":["manchester united","man united"],
-  "arsenal":["arsenal"],
-  "liverpool":["liverpool"],
-  "chelsea":["chelsea"],
-  "tottenham":["tottenham","spurs"],
-  "bayern":["bayern","bayern munich"],
-  "dortmund":["dortmund","borussia dortmund"],
-  "inter":["inter milan","inter"],
-  "ac-milan":["ac milan","milan"],
-  "juventus":["juventus","juve"],
-  "naples":["naples","napoli"],
-  "marseille":["marseille","om"],
-  "monaco":["monaco"],
-  "lyon":["lyon","ol"],
-  "atletico":["atletico madrid","atletico"],
-  "leverkusen":["leverkusen","bayer leverkusen"]
-};
-
-function reconnaitreEquipes(question){
-  const texte=" "+normaliser(question)+" ";
-  const trouves=[];
-
-  clubs.forEach(club=>{
-    const alias=[
-      club.nom,
-      club.id.replace(/-/g," "),
-      ...(aliasClubs[club.id]||[])
-    ];
-
-    let premierIndex=Infinity;
-
-    alias.forEach(nom=>{
-      const mot=normaliser(nom);
-      if(!mot)return;
-
-      const expression=new RegExp(
-        "(^|[^a-z0-9])"+
-        mot.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+
-        "(?=$|[^a-z0-9])"
-      );
-
-      const resultat=expression.exec(texte);
-
-      if(resultat){
-        premierIndex=Math.min(
-          premierIndex,resultat.index
-        );
-      }
-    });
-
-    if(premierIndex!==Infinity){
-      trouves.push({
-        id:club.id,
-        index:premierIndex
-      });
-    }
-  });
-
-  trouves.sort((a,b)=>a.index-b.index);
-
-  return [...new Set(trouves.map(t=>t.id))].slice(0,2);
+try {
+  document.documentElement.dataset.theme =
+    localStorage.getItem("90minute-theme") || "light";
+} catch(e) {
+  document.documentElement.dataset.theme = "light";
 }
 
-/* ===== AFFICHAGE DES ANALYSES ===== */
+const first = articles[0];
 
-function creerCarte(titre,contenu,pleineLargeur=false){
-  const carte=document.createElement("article");
-  carte.className="result-card";
+document.getElementById("featured").innerHTML = `
+  <div class="hero">
+    <img src="${first.image}" alt="Stade de football">
 
-  if(pleineLargeur)carte.classList.add("full");
+    <div class="hero-content">
+      <div class="kicker">À LA UNE · ${first.category}</div>
+      <h2>${escapeHTML(first.title)}</h2>
+      <p>${escapeHTML(first.excerpt)}</p>
 
-  const h3=document.createElement("h3");
-  h3.textContent=titre;
+      <div class="meta">
+        La rédaction · ${first.minutes} min de lecture
+      </div>
 
-  const pre=document.createElement("pre");
-  pre.textContent=contenu;
+      <button class="btn" onclick="openArticle(${first.id})">
+        LIRE L'ARTICLE →
+      </button>
+    </div>
+  </div>
+`;
 
-  carte.append(h3,pre);
-  return carte;
-}
+document.getElementById("homeGrid").innerHTML =
+  articles.slice(1, 4).map(card).join("");
 
-function afficherAnalyse(texte,equipes=[]){
-  const zone=$("resultats");
-  zone.replaceChildren();
-  zone.classList.remove("hidden");
-
-  const entete=document.createElement("div");
-  entete.className="result-title";
-
-  const titre=document.createElement("h2");
-  titre.textContent="📊 Rapport tactique PITCH'AURA";
-
-  entete.appendChild(titre);
-  zone.appendChild(entete);
-
-  const grille=document.createElement("div");
-  grille.className="result-grid";
-
-  const sections=String(texte)
-    .split(/━{5,}/)
-    .map(s=>s.trim())
-    .filter(Boolean);
-
-  let nombreCartes=0;
-
-  sections.forEach(section=>{
-    const lignes=section.split("\n");
-    const premiere=lignes[0].trim();
-    const contenu=lignes.slice(1).join("\n").trim();
-
-    const titreNormalise=normaliser(premiere);
-
-    if(
-      titreNormalise.includes("pitch'aura")&&
-      titreNormalise.includes("analyse tactique")
-    ){
-      return;
-    }
-
-    if(!contenu)return;
-
-    const pleineLargeur=[
-      "comparaison",
-      "duels",
-      "cles",
-      "scenarios",
-      "informations",
-      "conclusion"
-    ].some(mot=>titreNormalise.includes(mot));
-
-    grille.appendChild(
-      creerCarte(premiere,contenu,pleineLargeur)
-    );
-
-    nombreCartes++;
-  });
-
-  if(nombreCartes===0){
-    grille.appendChild(
-      creerCarte("Analyse",String(texte).trim(),true)
-    );
-  }
-
-  zone.appendChild(grille);
-
-  if(equipes.length===2&&equipes[0]!==equipes[1]){
-    const bloc=document.createElement("div");
-    bloc.className="duel-action";
-
-    const h3=document.createElement("h3");
-    h3.textContent="⚽ Passe de l'analyse au terrain !";
-
-    const p=document.createElement("p");
-    p.textContent=
-      "Visualise les formations et les mouvements "+
-      "tactiques des deux équipes.";
-
-    const lien=document.createElement("a");
-    lien.className="terrain-button";
-    lien.textContent="⚽ Voir le duel tactique →";
-
-    const params=new URLSearchParams({
-      a:equipes[0],
-      b:equipes[1]
-    });
-
-    lien.href="/terrain.html?"+params.toString();
-
-    bloc.append(h3,p,lien);
-    zone.appendChild(bloc);
-  }
-
-  zone.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-}
-
-async function lancerAnalyse(demande){
-  if(chargement)return;
-
-  chargement=true;
-  actualiserBouton();
-
-  const zone=$("resultats");
-  zone.classList.remove("hidden");
-  zone.textContent="⏳ Analyse en cours...";
-
-  try{
-    const reponse=await fetch("/api/analyze",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(demande)
-    });
-
-    const data=await reponse.json();
-
-    if(!reponse.ok){
-      throw new Error(data.erreur||"Erreur du serveur");
-    }
-
-    let equipes=[];
-
-    if(Array.isArray(demande.teams)){
-      equipes=demande.teams;
-    }else if(demande.question){
-      equipes=reconnaitreEquipes(demande.question);
-    }
-
-    afficherAnalyse(
-      data.analysis||"Aucun résultat.",
-      equipes
-    );
-
-  }catch(erreur){
-    zone.textContent="Erreur : "+erreur.message;
-  }finally{
-    chargement=false;
-    actualiserBouton();
-  }
-}
-
-$("form-texte").addEventListener("submit",event=>{
-  event.preventDefault();
-
-  const question=$("question").value.trim();
-
-  if(question){
-    lancerAnalyse({question});
-  }
-});
-
-$("comparer").onclick=()=>{
-  if(equipeA&&equipeB&&equipeA!==equipeB){
-    lancerAnalyse({
-      teams:[equipeA,equipeB]
-    });
-  }
-};
-
-document.querySelectorAll("[data-question]")
-  .forEach(bouton=>{
-    bouton.onclick=()=>{
-      $("question").value=bouton.dataset.question;
-      $("form-texte").requestSubmit();
-    };
-  });
-
-chargerClubs();
+renderArticles();
 </script>
 
 </body>
