@@ -4,176 +4,370 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PITCH'AURA | Tableau tactique</title>
+<title>PITCH'AURA | Laboratoire tactique</title>
+
 <style>
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
+
 body {
-  margin: 0;
-  background: #08130e;
-  color: white;
-  font-family: Arial, sans-serif;
+  margin:0;
+  background:#08130e;
+  color:white;
+  font-family:Arial,sans-serif;
 }
+
 header {
-  padding: 22px 6%;
-  background: #102219;
-  border-bottom: 1px solid #29523b;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
+  padding:22px 6%;
+  background:#102219;
+  border-bottom:1px solid #29523b;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
 }
+
 .logo {
-  font-size: 24px;
-  font-weight: 900;
+  font-size:24px;
+  font-weight:900;
 }
-.logo span { color: #38e888; }
-a { color: #38e888; text-decoration: none; }
+
+.logo span { color:#38e888; }
+
+a {
+  color:#38e888;
+  text-decoration:none;
+}
+
 main {
-  max-width: 1050px;
-  margin: auto;
-  padding: 35px 18px;
+  max-width:1100px;
+  margin:auto;
+  padding:35px 18px 70px;
 }
-h1 { font-size: clamp(28px,5vw,44px); }
-p { color: #b5cbbd; line-height: 1.6; }
+
+h1 { font-size:clamp(28px,5vw,44px); }
+
+p {
+  color:#b5cbbd;
+  line-height:1.7;
+}
+
 .panel {
-  background: #10231a;
-  padding: 22px;
-  border-radius: 16px;
-  border: 1px solid #2b5039;
+  background:#10231a;
+  padding:22px;
+  border-radius:16px;
+  border:1px solid #2b5039;
 }
+
 .controls {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 22px 0;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:20px 0;
 }
-select, button {
-  background: #1b3b29;
-  border: 1px solid #427d54;
-  color: white;
-  border-radius: 9px;
-  padding: 12px 15px;
-  font-size: 15px;
+
+select,button {
+  background:#1b3b29;
+  border:1px solid #427d54;
+  color:white;
+  border-radius:9px;
+  padding:12px 15px;
+  font-size:14px;
 }
-button { cursor: pointer; }
-button:hover { background: #28563b; }
+
+button { cursor:pointer; }
+button:hover { background:#28563b; }
+
+button:disabled {
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.primary {
+  background:#38e888;
+  color:#062011;
+  font-weight:bold;
+}
+
+.primary:hover { background:#62f4a2; }
+
+label {
+  color:#b5cbbd;
+  font-size:13px;
+  display:block;
+  margin-bottom:7px;
+}
+
+.control-group { min-width:150px; }
+
+.control-group select { width:100%; }
+
 .pitch {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.45;
-  background: repeating-linear-gradient(
+  position:relative;
+  width:100%;
+  aspect-ratio:1.45;
+  background:repeating-linear-gradient(
     90deg,
     #16643d 0%,
     #16643d 12.5%,
     #1b7046 12.5%,
     #1b7046 25%
   );
-  border: 3px solid #d5f2dc;
-  border-radius: 8px;
-  overflow: hidden;
-  touch-action: none;
+  border:3px solid #d5f2dc;
+  border-radius:8px;
+  overflow:hidden;
+  touch-action:none;
 }
+
 .midline {
-  position: absolute;
-  left: 50%;
-  height: 100%;
-  border-left: 2px solid #ffffff88;
+  position:absolute;
+  left:50%;
+  height:100%;
+  border-left:2px solid #ffffff88;
 }
+
 .circle {
-  position: absolute;
-  width: 23%;
-  aspect-ratio: 1;
-  border: 2px solid #ffffff88;
-  border-radius: 50%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
+  position:absolute;
+  width:23%;
+  aspect-ratio:1;
+  border:2px solid #ffffff88;
+  border-radius:50%;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
 }
+
 .area {
-  position: absolute;
-  top: 27%;
-  width: 15%;
-  height: 46%;
-  border: 2px solid #ffffff88;
+  position:absolute;
+  top:27%;
+  width:15%;
+  height:46%;
+  border:2px solid #ffffff88;
 }
-.area.left { left: 0; border-left: 0; }
-.area.right { right: 0; border-right: 0; }
+
+.area.left {
+  left:0;
+  border-left:0;
+}
+
+.area.right {
+  right:0;
+  border-right:0;
+}
+
 .player {
-  position: absolute;
-  width: clamp(24px,5vw,42px);
-  height: clamp(24px,5vw,42px);
-  border-radius: 50%;
-  background: #e9fff0;
-  color: #103a23;
-  border: 2px solid #123a23;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-  transform: translate(-50%,-50%);
-  box-shadow: 0 3px 10px #0006;
-  z-index: 2;
+  position:absolute;
+  width:clamp(23px,5vw,42px);
+  height:clamp(23px,5vw,42px);
+  border-radius:50%;
+  background:#e9fff0;
+  color:#103a23;
+  border:2px solid #123a23;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:13px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  transform:translate(-50%,-50%);
+  box-shadow:0 3px 10px #0006;
+  z-index:3;
 }
-.player:active { cursor: grabbing; }
+
+.player:active { cursor:grabbing; }
+
+.player.moving {
+  background:#38e888;
+  box-shadow:0 0 15px #38e88899;
+}
+
+.ball {
+  position:absolute;
+  width:clamp(13px,2.7vw,22px);
+  height:clamp(13px,2.7vw,22px);
+  border-radius:50%;
+  background:white;
+  border:2px solid #252525;
+  color:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  transform:translate(-50%,-50%);
+  z-index:5;
+  box-shadow:0 3px 8px #0008;
+}
+
+.arrow-layer {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:2;
+}
+
+.animation-controls {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+
+.description {
+  margin-top:18px;
+  padding:17px;
+  border-radius:12px;
+  background:#163a26;
+  border:1px solid #36794a;
+  color:#d7f9e2;
+  line-height:1.7;
+  min-height:70px;
+}
+
 .info {
-  margin-top: 20px;
-  color: #b9d4c2;
-  font-size: 14px;
+  margin-top:20px;
+  color:#b9d4c2;
+  font-size:14px;
 }
+
 @media(max-width:600px) {
-  header { justify-content: center; }
-  .panel { padding: 12px; }
-  .player { font-size: 11px; }
+  header { justify-content:center; }
+  .panel { padding:12px; }
+  .player { font-size:11px; }
+  .controls select { max-width:100%; }
 }
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">PITCH'<span>AURA</span></div>
+  <div class="logo">
+    PITCH'<span>AURA</span>
+  </div>
   <a href="/">← Retour à l'accueil</a>
 </header>
 
 <main>
-  <h1>⚽ Tableau tactique</h1>
-  <p>
-    Choisis ton système de jeu et déplace les joueurs
-    pour construire ta propre organisation.
-  </p>
 
-  <section class="panel">
-    <div class="controls">
-      <select id="formation" aria-label="Formation">
+<h1>⚽ Laboratoire tactique</h1>
+
+<p>
+  Construis ta formation, déplace les joueurs et
+  visualise des mouvements tactiques animés.
+</p>
+
+<section class="panel">
+
+  <div class="controls">
+
+    <div class="control-group">
+      <label for="formation">Formation</label>
+      <select id="formation">
         <option value="433">4-3-3</option>
         <option value="4231">4-2-3-1</option>
         <option value="352">3-5-2</option>
         <option value="442">4-4-2</option>
         <option value="343">3-4-3</option>
       </select>
-      <button id="reset">Réinitialiser</button>
     </div>
 
-    <div class="pitch" id="pitch">
-      <div class="midline"></div>
-      <div class="circle"></div>
-      <div class="area left"></div>
-      <div class="area right"></div>
+    <div class="control-group">
+      <label for="mouvement">Mouvement tactique</label>
+      <select id="mouvement">
+        <option value="profondeur">
+          Appel en profondeur
+        </option>
+        <option value="pressing">
+          Pressing collectif
+        </option>
+        <option value="dedoublement">
+          Dédoublement
+        </option>
+        <option value="passes">
+          Circuit de passes
+        </option>
+      </select>
     </div>
 
-    <div class="info">
-      💡 Déplace les joueurs avec la souris ou le doigt.
-      Le gardien est le numéro 1.
+    <div class="control-group">
+      <label for="vitesse">Vitesse</label>
+      <select id="vitesse">
+        <option value="0.5">Lente</option>
+        <option value="1" selected>Normale</option>
+        <option value="1.5">Rapide</option>
+      </select>
     </div>
-  </section>
+
+  </div>
+
+  <div class="pitch" id="pitch">
+    <div class="midline"></div>
+    <div class="circle"></div>
+    <div class="area left"></div>
+    <div class="area right"></div>
+
+    <svg class="arrow-layer" id="arrows"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none">
+      <defs>
+        <marker id="arrowhead"
+          markerWidth="4"
+          markerHeight="4"
+          refX="3"
+          refY="2"
+          orient="auto">
+          <path d="M0 0 L4 2 L0 4 Z"
+            fill="#ffe36a"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="animation-controls">
+    <button class="primary" id="play">
+      ▶️ Lecture
+    </button>
+    <button id="pause" disabled>
+      ⏸️ Pause
+    </button>
+    <button id="restart">
+      ↺ Recommencer
+    </button>
+    <button id="reset">
+      Réinitialiser la formation
+    </button>
+  </div>
+
+  <div class="description" id="description">
+    Choisis un mouvement puis clique sur Lecture.
+  </div>
+
+  <div class="info">
+    💡 Tu peux toujours déplacer les joueurs
+    manuellement avec la souris ou le doigt.
+    Les animations sont des exemples tactiques,
+    pas des séquences réelles de matchs.
+  </div>
+
+</section>
 </main>
 
 <script>
 const pitch = document.getElementById("pitch");
 const formation = document.getElementById("formation");
+const mouvement = document.getElementById("mouvement");
+const vitesse = document.getElementById("vitesse");
+
+const play = document.getElementById("play");
+const pause = document.getElementById("pause");
+const restart = document.getElementById("restart");
 const reset = document.getElementById("reset");
+const description = document.getElementById("description");
+const arrows = document.getElementById("arrows");
 
 const formations = {
   "433": [
@@ -210,47 +404,404 @@ const formations = {
   ]
 };
 
-function afficherFormation() {
-  pitch.querySelectorAll(".player").forEach(p => p.remove());
+const descriptions = {
+  profondeur:
+    "Un attaquant effectue un appel vers le but " +
+    "pour recevoir une passe dans la profondeur.",
 
-  formations[formation.value].forEach((position, index) => {
-    const joueur = document.createElement("div");
-    joueur.className = "player";
-    joueur.textContent = index + 1;
-    joueur.style.left = position[0] + "%";
-    joueur.style.top = position[1] + "%";
+  pressing:
+    "Plusieurs joueurs avancent ensemble " +
+    "pour réduire les espaces et presser l'adversaire.",
 
-    joueur.addEventListener("pointerdown", event => {
-      event.preventDefault();
-      joueur.setPointerCapture(event.pointerId);
-      joueur.style.zIndex = "5";
-    });
+  dedoublement:
+    "Un joueur de couloir dépasse son partenaire " +
+    "pour proposer une solution supplémentaire.",
 
-    joueur.addEventListener("pointermove", event => {
-      if (!joueur.hasPointerCapture(event.pointerId)) return;
+  passes:
+    "Le ballon circule entre plusieurs joueurs " +
+    "pendant qu'ils ajustent leurs positions."
+};
 
-      const rect = pitch.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width * 100;
-      const y = (event.clientY - rect.top) / rect.height * 100;
+let joueurs = [];
+let ballon = null;
 
-      joueur.style.left = Math.max(4, Math.min(96,x)) + "%";
-      joueur.style.top = Math.max(6, Math.min(94,y)) + "%";
-    });
+let animation = null;
+let progression = 0;
+let dernierTemps = null;
+let lecture = false;
 
-    joueur.addEventListener("pointerup", () => {
-      joueur.style.zIndex = "2";
-    });
+const duree = 4000;
 
-    joueur.addEventListener("pointercancel", () => {
-      joueur.style.zIndex = "2";
-    });
+function positionJoueur(joueur, x, y) {
+  joueur.x = Math.max(4, Math.min(96, x));
+  joueur.y = Math.max(6, Math.min(94, y));
 
-    pitch.appendChild(joueur);
-  });
+  joueur.element.style.left = joueur.x + "%";
+  joueur.element.style.top = joueur.y + "%";
 }
 
-formation.addEventListener("change", afficherFormation);
-reset.addEventListener("click", afficherFormation);
+function positionBallon(x, y) {
+  if (!ballon) return;
+
+  ballon.style.left = x + "%";
+  ballon.style.top = y + "%";
+}
+
+function creerBallon() {
+  ballon = document.createElement("div");
+  ballon.className = "ball";
+  ballon.textContent = "⚽";
+  pitch.appendChild(ballon);
+  positionBallon(53,50);
+}
+
+function creerJoueur(position, index) {
+  const element = document.createElement("div");
+  element.className = "player";
+  element.textContent = index + 1;
+
+  const joueur = {
+    element,
+    x:position[0],
+    y:position[1]
+  };
+
+  positionJoueur(joueur, joueur.x, joueur.y);
+
+  element.addEventListener("pointerdown", event => {
+    if (lecture) return;
+
+    event.preventDefault();
+    element.setPointerCapture(event.pointerId);
+    element.style.zIndex = "10";
+  });
+
+  element.addEventListener("pointermove", event => {
+    if (lecture) return;
+    if (!element.hasPointerCapture(event.pointerId)) return;
+
+    const rect = pitch.getBoundingClientRect();
+
+    const x =
+      (event.clientX - rect.left) / rect.width * 100;
+
+    const y =
+      (event.clientY - rect.top) / rect.height * 100;
+
+    positionJoueur(joueur,x,y);
+  });
+
+  function finDeplacement() {
+    element.style.zIndex = "3";
+  }
+
+  element.addEventListener("pointerup",finDeplacement);
+  element.addEventListener("pointercancel",finDeplacement);
+
+  pitch.appendChild(element);
+  return joueur;
+}
+
+function viderFleches() {
+  arrows.querySelectorAll("line").forEach(el => el.remove());
+}
+
+function tracerFleche(x1,y1,x2,y2) {
+  const ligne = document.createElementNS(
+    "http://www.w3.org/2000/svg","line"
+  );
+
+  ligne.setAttribute("x1",x1);
+  ligne.setAttribute("y1",y1);
+  ligne.setAttribute("x2",x2);
+  ligne.setAttribute("y2",y2);
+  ligne.setAttribute("stroke","#ffe36a");
+  ligne.setAttribute("stroke-width","0.7");
+  ligne.setAttribute("stroke-dasharray","2 1");
+  ligne.setAttribute("marker-end","url(#arrowhead)");
+
+  arrows.appendChild(ligne);
+}
+
+function arreterAnimation() {
+  lecture = false;
+
+  if (animation !== null) {
+    cancelAnimationFrame(animation);
+    animation = null;
+  }
+
+  dernierTemps = null;
+  play.disabled = false;
+  pause.disabled = true;
+
+  joueurs.forEach(j => j.element.classList.remove("moving"));
+}
+
+function afficherFormation() {
+  arreterAnimation();
+  progression = 0;
+
+  pitch.querySelectorAll(".player,.ball")
+    .forEach(el => el.remove());
+
+  viderFleches();
+
+  joueurs = formations[formation.value]
+    .map((position,index) => creerJoueur(position,index));
+
+  creerBallon();
+
+  description.textContent =
+    "Formation " +
+    formation.options[formation.selectedIndex].text +
+    " prête. " +
+    descriptions[mouvement.value];
+}
+
+function preparerMouvement() {
+  const origine = joueurs.map(j => [j.x,j.y]);
+  const cible = origine.map(p => [...p]);
+
+  const type = mouvement.value;
+  const trajectoireBallon = [];
+
+  if (type === "profondeur") {
+    const attaquant = 10;
+    const passeur = 6;
+
+    cible[attaquant][0] = Math.min(
+      94,origine[attaquant][0] + 10
+    );
+
+    trajectoireBallon.push(
+      [0,origine[passeur]],
+      [1,cible[attaquant]]
+    );
+
+    tracerFleche(
+      origine[attaquant][0],
+      origine[attaquant][1],
+      cible[attaquant][0],
+      cible[attaquant][1]
+    );
+
+  } else if (type === "pressing") {
+    [5,6,7,8,9,10].forEach(index => {
+      cible[index][0] = Math.min(
+        94,origine[index][0] + 12
+      );
+
+      tracerFleche(
+        origine[index][0],
+        origine[index][1],
+        cible[index][0],
+        cible[index][1]
+      );
+    });
+
+    trajectoireBallon.push(
+      [0,[93,50]],
+      [1,[93,50]]
+    );
+
+  } else if (type === "dedoublement") {
+    const lateral = 4;
+
+    cible[lateral][0] = Math.min(
+      94,origine[lateral][0] + 35
+    );
+
+    cible[lateral][1] = Math.max(
+      6,origine[lateral][1] - 5
+    );
+
+    tracerFleche(
+      origine[lateral][0],
+      origine[lateral][1],
+      cible[lateral][0],
+      cible[lateral][1]
+    );
+
+    trajectoireBallon.push(
+      [0,origine[8]],
+      [1,cible[lateral]]
+    );
+
+  } else if (type === "passes") {
+    trajectoireBallon.push(
+      [0,origine[1]],
+      [0.35,origine[5]],
+      [0.7,origine[6]],
+      [1,origine[9]]
+    );
+
+    cible[5][0] += 5;
+    cible[6][0] += 5;
+    cible[9][0] = Math.min(94,cible[9][0] + 5);
+
+    tracerFleche(
+      origine[1][0],origine[1][1],
+      origine[5][0],origine[5][1]
+    );
+    tracerFleche(
+      origine[5][0],origine[5][1],
+      origine[6][0],origine[6][1]
+    );
+    tracerFleche(
+      origine[6][0],origine[6][1],
+      origine[9][0],origine[9][1]
+    );
+  }
+
+  return {origine,cible,trajectoireBallon};
+}
+
+let scene = null;
+
+function interpolation(a,b,t) {
+  return a + (b-a)*t;
+}
+
+function positionSurTrajectoire(points,t) {
+  if (!points.length) return [50,50];
+
+  for (let i=0;i<points.length-1;i++) {
+    const [debut,p1] = points[i];
+    const [fin,p2] = points[i+1];
+
+    if (t <= fin) {
+      const facteur =
+        fin === debut ? 1 : (t-debut)/(fin-debut);
+
+      return [
+        interpolation(p1[0],p2[0],facteur),
+        interpolation(p1[1],p2[1],facteur)
+      ];
+    }
+  }
+
+  return points[points.length-1][1];
+}
+
+function afficherProgression(t) {
+  if (!scene) return;
+
+  joueurs.forEach((joueur,index) => {
+    const debut = scene.origine[index];
+    const fin = scene.cible[index];
+
+    const x = interpolation(debut[0],fin[0],t);
+    const y = interpolation(debut[1],fin[1],t);
+
+    positionJoueur(joueur,x,y);
+
+    if (
+      Math.abs(fin[0]-debut[0]) > 1 ||
+      Math.abs(fin[1]-debut[1]) > 1
+    ) {
+      joueur.element.classList.add("moving");
+    }
+  });
+
+  const pos = positionSurTrajectoire(
+    scene.trajectoireBallon,t
+  );
+
+  positionBallon(pos[0],pos[1]);
+}
+
+function boucle(temps) {
+  if (!lecture) return;
+
+  if (dernierTemps === null) {
+    dernierTemps = temps;
+  }
+
+  const delta = temps - dernierTemps;
+  dernierTemps = temps;
+
+  progression +=
+    delta * Number(vitesse.value) / duree;
+
+  progression = Math.min(1,progression);
+
+  afficherProgression(progression);
+
+  if (progression >= 1) {
+    arreterAnimation();
+    description.textContent =
+      "✅ Mouvement terminé : " +
+      descriptions[mouvement.value];
+    return;
+  }
+
+  animation = requestAnimationFrame(boucle);
+}
+
+function commencer() {
+  if (lecture) return;
+
+  if (progression >= 1) {
+    recommencer();
+  }
+
+  if (!scene || progression === 0) {
+    viderFleches();
+    scene = preparerMouvement();
+    afficherProgression(0);
+  }
+
+  lecture = true;
+  dernierTemps = null;
+
+  play.disabled = true;
+  pause.disabled = false;
+
+  description.textContent =
+    "▶️ Animation : " + descriptions[mouvement.value];
+
+  animation = requestAnimationFrame(boucle);
+}
+
+function mettreEnPause() {
+  if (!lecture) return;
+
+  arreterAnimation();
+
+  description.textContent =
+    "⏸️ Animation en pause. Clique sur Lecture pour continuer.";
+}
+
+function recommencer() {
+  arreterAnimation();
+  progression = 0;
+  scene = null;
+  viderFleches();
+
+  // Revenir à la formation de départ
+  joueurs.forEach((joueur,index) => {
+    const position = formations[formation.value][index];
+    positionJoueur(joueur,position[0],position[1]);
+  });
+
+  positionBallon(53,50);
+
+  description.textContent =
+    "↺ Prêt à recommencer : " +
+    descriptions[mouvement.value];
+}
+
+formation.addEventListener("change",afficherFormation);
+
+mouvement.addEventListener("change",() => {
+  recommencer();
+});
+
+play.addEventListener("click",commencer);
+pause.addEventListener("click",mettreEnPause);
+restart.addEventListener("click",recommencer);
+reset.addEventListener("click",afficherFormation);
 
 afficherFormation();
 </script>
