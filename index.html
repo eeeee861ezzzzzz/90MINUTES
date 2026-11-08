@@ -3,264 +3,467 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>90MINUTE. — Le football décrypté</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="90MINUTE — Le football décrypté. Analyses, comptes rendus et décryptages tactiques.">
+<title>90MINUTE. | Le football décrypté</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --navy: #101923;
+  --navy2: #1b2c43;
   --gold: #d8b46a;
+  --gold-dark: #a78340;
   --bg: #f7f7f4;
-  --card: #ffffff;
-  --ink: #101923;
-  --muted: #637081;
-  --line: #dfe1df;
+  --surface: #ffffff;
+  --text: #101923;
+  --muted: #657180;
+  --border: #dfe2e3;
 }
 
-:root[data-theme="dark"] {
+html[data-theme="dark"] {
   --bg: #101923;
-  --card: #1b2c43;
-  --ink: #f7f7f4;
-  --muted: #bdc8d5;
-  --line: #344357;
+  --surface: #1b2c43;
+  --text: #f5f5f5;
+  --muted: #bdc9d5;
+  --border: #35445a;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
-  font: 15px/1.65 Inter, Arial, sans-serif;
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.6;
 }
 
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
-img { width: 100%; object-fit: cover; display: block; }
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
 
 .container {
-  max-width: 1180px;
+  width: min(1200px, 94%);
   margin: auto;
-  padding: 0 22px;
 }
 
-.topline {
+.topbar {
   background: var(--navy);
-  color: #e7eaf0;
-  font-size: 12px;
-  padding: 8px 0;
-  letter-spacing: .08em;
+  color: #d8e0e8;
+  padding: 9px 0;
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
-.topline .container {
+.topbar-inner {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
 
-.masthead {
-  padding: 23px 0;
-  border-bottom: 1px solid var(--line);
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
-.masthead .container {
+.header-inner {
+  min-height: 108px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-between;
+  gap: 20px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 14px;
 }
 
-.mark {
-  width: 56px;
-  height: 56px;
+.brand-icon {
+  width: 64px;
+  height: 64px;
   background: var(--navy);
   color: white;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font: italic 800 38px "Barlow Condensed";
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
+  font: italic 900 43px "Barlow Condensed", sans-serif;
 }
 
-.mark::after {
+.brand-icon:after {
   content: "";
   position: absolute;
-  width: 48px;
-  height: 15px;
+  width: 50px;
+  height: 18px;
+  bottom: 6px;
+  left: 6px;
   border-bottom: 4px solid var(--gold);
   border-radius: 50%;
-  bottom: 5px;
-  left: 5px;
   transform: rotate(-12deg);
 }
 
-.brandname {
-  font: 800 39px/.9 "Barlow Condensed", Arial;
+.brand-title {
+  font: 900 43px/.9 "Barlow Condensed", sans-serif;
+  letter-spacing: -.5px;
 }
 
-.brandname span { color: var(--gold); }
+.brand-title span {
+  color: var(--gold-dark);
+}
 
-.tagline {
-  font-size: 10px;
-  letter-spacing: .2em;
+.brand-subtitle {
   color: var(--muted);
-  margin-top: 6px;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  margin-top: 7px;
 }
 
-.theme {
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 25px;
-  padding: 9px 14px;
-  color: var(--ink);
-}
-
-nav { border-bottom: 1px solid var(--line); }
-
-nav .container {
+.header-actions {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 12px;
 }
 
-nav button {
-  border: 0;
-  border-bottom: 3px solid transparent;
+.icon-button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
+}
+
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+}
+
+.nav-link {
+  border: none;
   background: none;
-  color: var(--ink);
-  padding: 15px 0;
-  font-weight: 700;
-  font-size: 13px;
-}
-
-nav button.active { border-bottom-color: var(--gold); }
-
-h1, h2, h3 {
-  font-family: "Barlow Condensed", Arial, sans-serif;
-  line-height: 1.1;
-  margin: 0;
-}
-
-h1 { font-size: clamp(40px, 6vw, 72px); }
-h2 { font-size: 36px; }
-h3 { font-size: 26px; }
-
-.kicker {
+  color: var(--text);
+  padding: 17px 0;
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: .13em;
-  color: #a77c30;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-link.active {
+  color: var(--gold-dark);
+  border-bottom-color: var(--gold);
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.intro {
+  padding: 42px 0 26px;
+}
+
+.eyebrow {
+  color: var(--gold-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
 }
 
-.intro { padding: 44px 0 30px; }
+h1, h2, h3 {
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  line-height: 1.08;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(43px, 6vw, 76px);
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 27px;
+  font-weight: 800;
+}
 
 .intro p {
   color: var(--muted);
-  max-width: 640px;
+  max-width: 690px;
+  font-size: 15px;
 }
 
-.hero {
+.news-layout {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 20px;
+}
+
+.main-story {
+  position: relative;
+  min-height: 480px;
   overflow: hidden;
+  border-radius: 7px;
+  background: var(--navy);
+  color: white;
 }
 
-.hero img {
-  height: 100%;
-  min-height: 370px;
+.main-story img {
+  height: 480px;
 }
 
-.hero-content {
-  padding: 38px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 17px;
+.main-story:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent 20%,
+    rgba(0,0,0,.35) 45%,
+    rgba(0,0,0,.92) 100%
+  );
+  pointer-events: none;
 }
 
-.hero-content h2 { font-size: clamp(30px, 4vw, 50px); }
+.main-story-content {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  padding: 32px;
+  width: 100%;
+}
 
-.hero-content p, .summary { color: var(--muted); }
+.main-story h2 {
+  font-size: clamp(35px, 4vw, 53px);
+  margin: 12px 0;
+}
+
+.main-story p {
+  color: #e3e8ef;
+  font-size: 14px;
+}
+
+.side-stories {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+
+.side-story {
+  position: relative;
+  border-radius: 7px;
+  overflow: hidden;
+  background: var(--navy);
+  color: white;
+  min-height: 230px;
+}
+
+.side-story img {
+  height: 230px;
+}
+
+.side-story:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent,
+    rgba(0,0,0,.9)
+  );
+  pointer-events: none;
+}
+
+.side-story-content {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  padding: 19px;
+}
+
+.side-story h3 {
+  font-size: 25px;
+  margin-top: 7px;
+}
+
+.story-link {
+  cursor: pointer;
+}
+
+.story-link:hover h2,
+.story-link:hover h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+}
+
+.category {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 5px 9px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+}
 
 .meta {
+  font-size: 12px;
   color: var(--muted);
+}
+
+.main-story .meta,
+.side-story .meta {
+  color: #e1e5eb;
+}
+
+.section-heading {
+  margin: 48px 0 22px;
+  padding-bottom: 13px;
+  border-bottom: 2px solid var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.section-heading button {
+  border: 0;
+  background: none;
+  color: var(--gold-dark);
+  font-weight: 800;
   font-size: 12px;
 }
 
-.btn {
-  border: 0;
-  background: var(--gold);
-  color: #101923;
-  font-weight: 800;
-  padding: 12px 18px;
-  border-radius: 4px;
-  align-self: flex-start;
-}
-
-.sectionhead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin: 46px 0 18px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--ink);
-}
-
-.sectionhead button {
-  border: 0;
-  background: none;
-  color: #b18a44;
-  font-weight: 800;
-}
-
-.grid {
+.articles-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0,1fr));
   gap: 22px;
 }
 
 .article-card {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 6px;
   overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
 }
 
-.article-card img { height: 180px; }
-.article-card .content { padding: 18px; }
-.article-card h3 { margin: 8px 0 12px; }
+.article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
 
-.article-card p {
-  color: var(--muted);
+.article-card img {
+  height: 190px;
+}
+
+.card-body {
+  padding: 19px;
+}
+
+.card-body h3 {
+  margin: 11px 0;
+}
+
+.card-body p {
   font-size: 13px;
+  color: var(--muted);
+}
+
+.leagues {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.league-box {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 24px 10px;
+  text-align: center;
+  transition: .2s;
+}
+
+.league-box:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.league-box .symbol {
+  font-size: 27px;
+  margin-bottom: 9px;
+}
+
+.league-box strong {
+  font-size: 13px;
+}
+
+.league-box small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 4px;
 }
 
 .filters {
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
-  margin: 22px 0;
+  gap: 12px;
+  margin: 26px 0;
 }
 
-.filters input, .filters select {
-  padding: 12px;
-  border: 1px solid var(--line);
+.filters input,
+.filters select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 5px;
-  background: var(--card);
-  color: var(--ink);
+  padding: 13px;
 }
 
 .filters input {
@@ -268,127 +471,206 @@ h3 { font-size: 26px; }
   min-width: 180px;
 }
 
-.page { display: none; }
-.page.active { display: block; }
-
-.article-body {
-  max-width: 780px;
-  margin: 40px auto 80px;
+.empty {
+  padding: 35px;
+  text-align: center;
+  color: var(--muted);
 }
 
-.article-body h1 { margin: 12px 0; }
+.reader {
+  max-width: 820px;
+  margin: 45px auto;
+}
 
-.article-body .cover {
-  height: auto;
-  max-height: 440px;
-  margin: 26px 0;
+.reader h1 {
+  font-size: clamp(43px, 6vw, 66px);
+  margin: 13px 0;
+}
+
+.reader-cover {
+  max-height: 470px;
   border-radius: 6px;
+  margin: 25px 0;
 }
 
-.article-body h2 {
-  font-size: 33px;
-  margin: 34px 0 12px;
-}
-
-.article-body p {
-  font-size: 17px;
-  line-height: 1.85;
-}
-
-.article-body .lead {
+.reader .lead {
   font-size: 20px;
   font-weight: 600;
 }
 
-.back {
-  background: none;
-  border: 0;
-  color: #b18a44;
-  padding: 0;
-  font-weight: 700;
+.reader p {
+  font-size: 16px;
+  line-height: 1.9;
 }
 
-.note {
-  background: var(--card);
+.reader h2 {
+  margin: 36px 0 15px;
+}
+
+.reader-box {
   border-left: 4px solid var(--gold);
-  padding: 16px 20px;
+  background: var(--surface);
+  padding: 20px;
+  margin: 25px 0;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: var(--gold-dark);
+  font-weight: 800;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.demo-label {
   color: var(--muted);
+  font-size: 12px;
+  margin-top: 15px;
 }
 
 footer {
-  margin-top: 80px;
+  margin-top: 75px;
   background: var(--navy);
   color: white;
-  padding: 35px 0;
+  padding: 42px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 footer p {
-  color: #bac5d3;
-  font-size: 13px;
+  color: #b9c5d3;
+  font-size: 12px;
 }
 
-footer .brandname { font-size: 30px; }
+@media(max-width: 900px) {
+  .news-layout {
+    grid-template-columns: 1fr;
+  }
 
-.empty {
-  padding: 40px;
-  color: var(--muted);
+  .side-stories {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .leagues {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-@media(max-width: 800px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero img { height: 270px; min-height: 0; }
-  .grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-content { padding: 24px; }
-}
+@media(max-width: 600px) {
+  .topbar-inner span:last-child {
+    display: none;
+  }
 
-@media(max-width: 560px) {
-  .container { padding: 0 15px; }
-  .brandname { font-size: 30px; }
-  .mark { width: 46px; height: 46px; font-size: 32px; }
-  .tagline { font-size: 8px; }
-  .grid { grid-template-columns: 1fr; }
-  .article-card img { height: 220px; }
-  nav .container { gap: 20px; }
-  .intro { padding-top: 28px; }
-  .topline .container span:last-child { display: none; }
+  .header-inner {
+    min-height: 83px;
+  }
+
+  .brand-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 33px;
+  }
+
+  .brand-title {
+    font-size: 32px;
+  }
+
+  .brand-subtitle {
+    font-size: 8px;
+  }
+
+  .nav-inner {
+    gap: 23px;
+  }
+
+  .intro {
+    padding-top: 29px;
+  }
+
+  .main-story,
+  .main-story img {
+    min-height: 390px;
+    height: 390px;
+  }
+
+  .main-story-content {
+    padding: 22px;
+  }
+
+  .side-stories {
+    grid-template-columns: 1fr;
+  }
+
+  .side-story,
+  .side-story img {
+    min-height: 205px;
+    height: 205px;
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .article-card img {
+    height: 215px;
+  }
+
+  .leagues {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="topline">
-  <div class="container">
-    <span>LE FOOTBALL DÉCRYPTÉ</span>
-    <span>PREMIER LEAGUE · LALIGA · SERIE A · BUNDESLIGA · LIGUE 1</span>
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span>90MINUTE — LE FOOTBALL DÉCRYPTÉ</span>
+    <span>ANALYSES · COMPTES RENDUS · TACTIQUE</span>
   </div>
 </div>
 
-<header class="masthead">
-  <div class="container">
+<header>
+  <div class="container header-inner">
+
     <a href="#accueil" class="brand" onclick="showPage('accueil')">
-      <div class="mark">90</div>
+      <div class="brand-icon">90</div>
       <div>
-        <div class="brandname">90MINUTE<span>.</span></div>
-        <div class="tagline">LE FOOTBALL DÉCRYPTÉ</div>
+        <div class="brand-title">90MINUTE<span>.</span></div>
+        <div class="brand-subtitle">LE FOOTBALL DÉCRYPTÉ</div>
       </div>
     </a>
 
-    <button class="theme" onclick="toggleTheme()">◐ Thème</button>
+    <div class="header-actions">
+      <button class="icon-button" onclick="toggleTheme()" aria-label="Changer le thème">◐</button>
+      <button class="icon-button" onclick="openSearch()" aria-label="Rechercher">⌕</button>
+    </div>
+
   </div>
 </header>
 
 <nav>
-  <div class="container">
-    <button data-page="accueil" class="active"
-      onclick="showPage('accueil')">ACCUEIL</button>
-
-    <button data-page="articles"
-      onclick="showPage('articles')">ARTICLES</button>
-
-    <button onclick="showPage('articles');document.getElementById('search').focus()">
-      RECHERCHE
-    </button>
+  <div class="container nav-inner">
+    <button class="nav-link active" data-page="accueil" onclick="showPage('accueil')">ACCUEIL</button>
+    <button class="nav-link" data-page="articles" onclick="showPage('articles')">ARTICLES</button>
+    <button class="nav-link" onclick="openCategory('Analyse')">ANALYSES</button>
+    <button class="nav-link" onclick="openCategory('Compte rendu')">COMPTES RENDUS</button>
   </div>
 </nav>
 
@@ -397,39 +679,82 @@ footer .brandname { font-size: 30px; }
 <section id="accueil" class="page active">
 
   <div class="intro">
-    <div class="kicker">Bienvenue sur 90MINUTE</div>
-    <h1>AU-DELÀ DU SCORE.<br>LE FOOTBALL DÉCRYPTÉ.</h1>
-    <p>Comptes rendus, analyses tactiques et récits des rencontres. Un regard journalistique sur le jeu.</p>
+    <div class="eyebrow">Le média football nouvelle génération</div>
+    <h1>LE FOOTBALL.<br>AU-DELÀ DU SCORE.</h1>
+    <p>Des analyses tactiques, des comptes rendus détaillés et un regard différent sur les grandes rencontres du football européen.</p>
   </div>
 
-  <div id="featured"></div>
+  <div id="featuredNews" class="news-layout"></div>
 
-  <div class="sectionhead">
-    <h2>DERNIÈRES PUBLICATIONS</h2>
-    <button onclick="showPage('articles')">TOUS LES ARTICLES →</button>
+  <div class="section-heading">
+    <h2>DERNIERS ARTICLES</h2>
+    <button onclick="showPage('articles')">TOUT VOIR →</button>
   </div>
 
-  <div class="grid" id="homeGrid"></div>
+  <div id="latestArticles" class="articles-grid"></div>
+
+  <div class="section-heading">
+    <h2>LES CHAMPIONNATS</h2>
+  </div>
+
+  <div class="leagues">
+    <button class="league-box" onclick="openLeague('Premier League')">
+      <div class="symbol">🏴</div>
+      <strong>PREMIER LEAGUE</strong>
+      <small>Angleterre</small>
+    </button>
+
+    <button class="league-box" onclick="openLeague('LaLiga')">
+      <div class="symbol">🇪🇸</div>
+      <strong>LALIGA</strong>
+      <small>Espagne</small>
+    </button>
+
+    <button class="league-box" onclick="openLeague('Serie A')">
+      <div class="symbol">🇮🇹</div>
+      <strong>SERIE A</strong>
+      <small>Italie</small>
+    </button>
+
+    <button class="league-box" onclick="openLeague('Bundesliga')">
+      <div class="symbol">🇩🇪</div>
+      <strong>BUNDESLIGA</strong>
+      <small>Allemagne</small>
+    </button>
+
+    <button class="league-box" onclick="openLeague('Ligue 1')">
+      <div class="symbol">🇫🇷</div>
+      <strong>LIGUE 1</strong>
+      <small>France</small>
+    </button>
+  </div>
+
+  <div class="section-heading">
+    <h2>NOTRE VISION</h2>
+  </div>
+
+  <div class="reader-box">
+    <h3>COMPRENDRE AVANT DE JUGER.</h3>
+    <p>90MINUTE veut raconter les matchs et expliquer le football de façon claire, précise et accessible. Pas seulement des résultats : des histoires, des choix tactiques et des analyses.</p>
+  </div>
 
 </section>
 
 <section id="articles" class="page">
 
   <div class="intro">
-    <div class="kicker">La rédaction</div>
-    <h1>TOUS LES ARTICLES</h1>
-    <p>Retrouve nos comptes rendus et décryptages.</p>
+    <div class="eyebrow">La rédaction 90MINUTE</div>
+    <h1>TOUS LES ARTICLES.</h1>
+    <p>Retrouve les analyses et comptes rendus des cinq grands championnats européens.</p>
   </div>
 
   <div class="filters">
-
-    <input id="search" placeholder="Rechercher un club, un sujet..."
-      oninput="renderArticles()">
+    <input id="search" type="search" placeholder="Rechercher un article..." oninput="renderArticles()">
 
     <select id="category" onchange="renderArticles()">
       <option value="">Tous les formats</option>
-      <option>Analyse</option>
-      <option>Compte rendu</option>
+      <option value="Analyse">Analyses</option>
+      <option value="Compte rendu">Comptes rendus</option>
     </select>
 
     <select id="league" onchange="renderArticles()">
@@ -440,25 +765,29 @@ footer .brandname { font-size: 30px; }
       <option>Bundesliga</option>
       <option>Ligue 1</option>
     </select>
-
   </div>
 
-  <div class="grid" id="articleGrid"></div>
-  <p id="noResults" class="empty" hidden>Aucun article trouvé.</p>
+  <div id="articlesGrid" class="articles-grid"></div>
+  <p id="noResults" class="empty" hidden>Aucun article ne correspond à ta recherche.</p>
 
 </section>
 
 <section id="lecture" class="page">
-  <article id="reader" class="article-body"></article>
+  <div id="reader" class="reader"></div>
 </section>
 
 </main>
 
 <footer>
-  <div class="container">
-    <div class="brandname">90MINUTE<span>.</span></div>
-    <p>LE FOOTBALL DÉCRYPTÉ — Média football indépendant.</p>
-    <p>Version de démonstration : contenus fictifs.</p>
+  <div class="container footer-inner">
+    <div>
+      <div class="brand-title">90MINUTE<span style="color:#d8b46a">.</span></div>
+      <p>LE FOOTBALL DÉCRYPTÉ</p>
+    </div>
+    <div>
+      <p>Un média indépendant consacré au football.</p>
+      <p>© 2026 90MINUTE — Version de démonstration.</p>
+    </div>
   </div>
 </footer>
 
@@ -466,221 +795,264 @@ footer .brandname { font-size: 30px; }
 const articles = [
   {
     id: 1,
-    title: "Pourquoi le pressing haut transforme les grandes rencontres",
+    title: "Pourquoi le pressing haut change les grandes rencontres",
     category: "Analyse",
     league: "Premier League",
     minutes: 5,
     image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1300&q=85",
-    excerpt: "L'organisation collective, les espaces et les transitions expliqués simplement.",
-    body: [
-      "Le pressing haut cherche à récupérer le ballon rapidement dans le camp adverse. Son efficacité dépend de la coordination des joueurs.",
-      "Lorsque la pression se déclenche, les partenaires doivent fermer les lignes de passe.",
-      "Une équipe mal coordonnée peut laisser de grands espaces dans son dos."
+    excerpt: "Décryptage d'un mécanisme tactique devenu central dans le football moderne.",
+    paragraphs: [
+      "Le pressing haut consiste à exercer une pression collective sur l'adversaire dès sa première relance.",
+      "Pour fonctionner, cette organisation exige une coordination précise entre les attaquants, les milieux et la ligne défensive.",
+      "L'objectif n'est pas seulement de récupérer le ballon. Il s'agit aussi de forcer l'adversaire à jouer dans des zones moins favorables.",
+      "Le principal risque est l'espace laissé derrière la défense lorsqu'une première ligne de pression est éliminée."
     ]
   },
   {
     id: 2,
-    title: "Les moments qui peuvent faire basculer un grand match",
+    title: "Les moments qui font basculer une grande rencontre",
     category: "Compte rendu",
     league: "LaLiga",
     minutes: 4,
     image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1300&q=85",
-    excerpt: "Du premier temps fort au dernier changement, raconter le fil d'une rencontre.",
-    body: [
-      "Un compte rendu de qualité doit restituer les faits dans leur ordre et expliquer leur importance.",
-      "Les occasions, les changements et les temps forts doivent être vérifiés avant publication.",
-      "Ce texte est un exemple de mise en page et ne décrit aucun match réel."
+    excerpt: "Comment raconter le scénario et les tournants d'un match.",
+    paragraphs: [
+      "Un bon compte rendu commence par les faits : le score, les buts, les occasions importantes et les décisions déterminantes.",
+      "Il doit ensuite expliquer comment le rapport de force a évolué au cours de la rencontre.",
+      "Les changements de joueurs, les ajustements tactiques et la gestion du rythme permettent de mieux comprendre le résultat.",
+      "Cet article est une démonstration éditoriale et ne correspond à aucune rencontre réelle."
     ]
   },
   {
     id: 3,
-    title: "La bataille du milieu : comment une équipe prend le contrôle",
+    title: "La bataille du milieu : la clé du contrôle tactique",
     category: "Analyse",
     league: "Serie A",
     minutes: 6,
     image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1300&q=85",
-    excerpt: "Positionnement, circuits de passes et supériorités numériques.",
-    body: [
-      "Contrôler le milieu de terrain ne signifie pas seulement conserver le ballon.",
-      "Les déplacements entre les lignes permettent de créer des espaces.",
-      "L'analyse d'un match doit s'appuyer sur des observations précises."
+    excerpt: "Positionnement, circuits de passes et occupation des espaces.",
+    paragraphs: [
+      "La maîtrise du milieu de terrain dépend autant des déplacements sans ballon que de la qualité technique.",
+      "Les joueurs cherchent à créer des solutions de passe et des supériorités numériques.",
+      "L'occupation des demi-espaces peut aider une équipe à progresser tout en conservant plusieurs options offensives.",
+      "Une analyse sérieuse doit observer ces mécanismes dans le contexte d'un match précis."
     ]
   },
   {
     id: 4,
-    title: "Transitions rapides : une arme tactique à double tranchant",
+    title: "Les transitions rapides, une arme tactique redoutable",
     category: "Analyse",
     league: "Bundesliga",
     minutes: 5,
     image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1300&q=85",
-    excerpt: "Pourquoi certaines équipes attaquent dès la récupération du ballon.",
-    body: [
-      "La transition offensive commence dès la récupération du ballon.",
-      "Les premières secondes peuvent offrir des espaces importants.",
-      "Cette approche demande des appels coordonnés et une bonne protection défensive."
+    excerpt: "Pourquoi les premières secondes après une récupération peuvent être décisives.",
+    paragraphs: [
+      "Une transition offensive commence dès que l'équipe récupère la possession.",
+      "L'adversaire peut alors être momentanément désorganisé, ce qui crée des possibilités de progression rapide.",
+      "Les courses, la première passe et la prise de décision deviennent essentielles.",
+      "Cette stratégie doit néanmoins être équilibrée par une bonne couverture défensive."
     ]
   },
   {
     id: 5,
-    title: "Comment raconter les tournants d'une rencontre",
+    title: "Comment analyser les tournants d'une rencontre",
     category: "Compte rendu",
     league: "Ligue 1",
     minutes: 4,
     image: "https://images.unsplash.com/photo-1459865264687-5958f4b3b5c8?auto=format&fit=crop&w=1300&q=85",
-    excerpt: "Une méthode journalistique pour distinguer les faits des impressions.",
-    body: [
-      "Le compte rendu commence par le résultat vérifié et les faits importants.",
-      "Il explique ensuite le scénario et les choix tactiques.",
-      "Les statistiques doivent toujours provenir de sources fiables."
+    excerpt: "Un regard journalistique sur les moments qui décident du résultat.",
+    paragraphs: [
+      "Raconter un match nécessite de distinguer les observations des interprétations.",
+      "Le déroulement chronologique permet au lecteur de comprendre la dynamique de la rencontre.",
+      "Les statistiques vérifiées peuvent enrichir le récit, mais elles ne remplacent pas l'observation du jeu.",
+      "Ce contenu sert uniquement à présenter la future structure des comptes rendus de 90MINUTE."
     ]
   }
 ];
 
-function escapeHTML(s) {
-  return String(s).replace(/[&<>"']/g, c => ({
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     '"': "&quot;",
     "'": "&#39;"
-  }[c]));
+  }[char]));
 }
 
-function card(a) {
+function articleCard(a) {
   return `
-    <div class="article-card">
+    <article class="article-card">
       <a href="#article-${a.id}" onclick="openArticle(${a.id});return false">
-        <img src="${a.image}" alt="Football" loading="lazy">
+        <img src="${a.image}" alt="Illustration football" loading="lazy">
       </a>
-      <div class="content">
-        <div class="kicker">${a.category} · ${a.league}</div>
+
+      <div class="card-body">
+        <span class="eyebrow">${a.category} · ${a.league}</span>
+
         <h3>
           <a href="#article-${a.id}" onclick="openArticle(${a.id});return false">
             ${escapeHTML(a.title)}
           </a>
         </h3>
+
         <p>${escapeHTML(a.excerpt)}</p>
-        <div class="meta">90MINUTE · ${a.minutes} min de lecture</div>
+
+        <div class="meta">
+          La rédaction · ${a.minutes} min de lecture
+        </div>
       </div>
-    </div>
+    </article>
   `;
 }
 
-function showPage(name) {
-  document.querySelectorAll(".page").forEach(p => {
-    p.classList.toggle("active", p.id === name);
+function featureCard(a, main = false) {
+  const type = main ? "main-story" : "side-story";
+  const heading = main ? "h2" : "h3";
+
+  return `
+    <article class="${type} story-link"
+      onclick="openArticle(${a.id})"
+      role="button" tabindex="0"
+      onkeydown="if(event.key==='Enter')openArticle(${a.id})">
+
+      <img src="${a.image}" alt="Illustration football">
+
+      <div class="${main ? "main-story-content" : "side-story-content"}">
+        <span class="category">${a.category}</span>
+        <${heading}>${escapeHTML(a.title)}</${heading}>
+        ${main ? `<p>${escapeHTML(a.excerpt)}</p>` : ""}
+        <div class="meta">${a.league} · ${a.minutes} min</div>
+      </div>
+    </article>
+  `;
+}
+
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(element => {
+    element.classList.toggle("active", element.id === page);
   });
 
-  document.querySelectorAll("nav button[data-page]").forEach(b => {
-    b.classList.toggle("active", b.dataset.page === name);
+  document.querySelectorAll(".nav-link[data-page]").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === page);
   });
 
   window.scrollTo(0, 0);
 
-  if (name === "articles") renderArticles();
+  if (page === "articles") renderArticles();
 }
 
 function openArticle(id) {
-  const a = articles.find(x => x.id === id);
+  const a = articles.find(item => item.id === id);
   if (!a) return;
 
   document.getElementById("reader").innerHTML = `
-    <button class="back" onclick="showPage('articles')">
+    <button class="back-button" onclick="showPage('articles')">
       ← Retour aux articles
     </button>
 
-    <div class="kicker" style="margin-top:25px">
-      ${a.category} · ${a.league}
-    </div>
-
+    <div class="eyebrow">${a.category} · ${a.league}</div>
     <h1>${escapeHTML(a.title)}</h1>
 
     <div class="meta">
       Par la rédaction 90MINUTE · ${a.minutes} min de lecture
     </div>
 
-    <img class="cover" src="${a.image}" alt="Football">
+    <img class="reader-cover" src="${a.image}" alt="Football">
 
     <p class="lead">${escapeHTML(a.excerpt)}</p>
 
     <h2>LE DÉCRYPTAGE</h2>
 
-    ${a.body.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
+    ${a.paragraphs.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
 
     <h2>LE VERDICT 90MINUTE</h2>
 
-    <div class="note">
-      Contenu de démonstration. Les prochains articles
-      porteront sur des rencontres et informations vérifiées.
+    <div class="reader-box">
+      Une lecture du jeu claire et accessible.
+      Cette page contient un article d'exemple.
+      Les futures publications s'appuieront sur des faits vérifiés.
     </div>
+
+    <p class="demo-label">
+      Article fictif de démonstration — aucune rencontre réelle décrite.
+    </p>
   `;
 
   showPage("lecture");
 }
 
 function renderArticles() {
-  const q = document.getElementById("search").value.toLowerCase().trim();
-  const c = document.getElementById("category").value;
-  const l = document.getElementById("league").value;
+  const query = document.getElementById("search").value.toLowerCase().trim();
+  const category = document.getElementById("category").value;
+  const league = document.getElementById("league").value;
 
-  const filtered = articles.filter(a =>
-    (!c || a.category === c) &&
-    (!l || a.league === l) &&
-    (!q || [a.title, a.excerpt, a.league, a.category]
-      .join(" ").toLowerCase().includes(q))
-  );
+  const filtered = articles.filter(a => {
+    const matchCategory = !category || a.category === category;
+    const matchLeague = !league || a.league === league;
 
-  document.getElementById("articleGrid").innerHTML =
-    filtered.map(card).join("");
+    const text = [
+      a.title,
+      a.excerpt,
+      a.category,
+      a.league
+    ].join(" ").toLowerCase();
 
-  document.getElementById("noResults").hidden =
-    filtered.length > 0;
+    return matchCategory && matchLeague && text.includes(query);
+  });
+
+  document.getElementById("articlesGrid").innerHTML =
+    filtered.map(articleCard).join("");
+
+  document.getElementById("noResults").hidden = filtered.length !== 0;
+}
+
+function openSearch() {
+  showPage("articles");
+  document.getElementById("search").focus();
+}
+
+function openLeague(name) {
+  document.getElementById("search").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("league").value = name;
+  showPage("articles");
+}
+
+function openCategory(name) {
+  document.getElementById("search").value = "";
+  document.getElementById("category").value = name;
+  document.getElementById("league").value = "";
+  showPage("articles");
 }
 
 function toggleTheme() {
-  const next =
-    document.documentElement.dataset.theme === "dark"
-      ? "light"
-      : "dark";
+  const current = document.documentElement.dataset.theme;
+  const next = current === "dark" ? "light" : "dark";
 
   document.documentElement.dataset.theme = next;
 
   try {
     localStorage.setItem("90minute-theme", next);
-  } catch(e) {}
+  } catch(error) {}
 }
 
 try {
   document.documentElement.dataset.theme =
     localStorage.getItem("90minute-theme") || "light";
-} catch(e) {
+} catch(error) {
   document.documentElement.dataset.theme = "light";
 }
 
-const first = articles[0];
+document.getElementById("featuredNews").innerHTML =
+  featureCard(articles[0], true) +
+  `<div class="side-stories">
+    ${featureCard(articles[1])}
+    ${featureCard(articles[2])}
+  </div>`;
 
-document.getElementById("featured").innerHTML = `
-  <div class="hero">
-    <img src="${first.image}" alt="Stade de football">
-
-    <div class="hero-content">
-      <div class="kicker">À LA UNE · ${first.category}</div>
-      <h2>${escapeHTML(first.title)}</h2>
-      <p>${escapeHTML(first.excerpt)}</p>
-
-      <div class="meta">
-        La rédaction · ${first.minutes} min de lecture
-      </div>
-
-      <button class="btn" onclick="openArticle(${first.id})">
-        LIRE L'ARTICLE →
-      </button>
-    </div>
-  </div>
-`;
-
-document.getElementById("homeGrid").innerHTML =
-  articles.slice(1, 4).map(card).join("");
+document.getElementById("latestArticles").innerHTML =
+  articles.slice(0, 5).map(articleCard).join("");
 
 renderArticles();
 </script>
