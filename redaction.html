@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rédaction | 90MINUTES</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f5f5f2;
+      color: #101923;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #101923;
+      color: white;
+      padding: 24px 6%;
+      border-bottom: 4px solid #d8b46a;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    header span { color: #d8b46a; }
+
+    header p {
+      margin-bottom: 0;
+      color: #c8cdd2;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 35px auto;
+      padding: 0 18px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid #e0e2e4;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    h2 { margin-top: 0; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 18px 0 7px;
+    }
+
+    input, select, textarea {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd0d5;
+      border-radius: 7px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 7px;
+      padding: 14px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #101923;
+      color: #d8b46a;
+    }
+
+    .secondary {
+      background: #e9e9e6;
+      color: #101923;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .preview {
+      display: none;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .preview h2 {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .preview .category {
+      color: #a17b35;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .preview img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .preview section {
+      white-space: pre-wrap;
+      margin-top: 20px;
+    }
+
+    @media(max-width: 650px) {
+      .grid { grid-template-columns: 1fr; }
+      .panel { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>90MINUTES<span>.</span></h1>
+  <p>ESPACE RÉDACTION — LE FOOTBALL DÉCRYPTÉ</p>
+</header>
+
+<main>
+  <div class="panel">
+    <h2>Nouvel article</h2>
+    <p>Rédige ton analyse et prépare-la avant publication.</p>
+
+    <form id="articleForm">
+      <label for="titre">Titre de l'article</label>
+      <input id="titre" maxlength="150" required
+        placeholder="Ex : Comment le pressing a changé le match">
+
+      <div class="grid">
+        <div>
+          <label for="categorie">Catégorie</label>
+          <select id="categorie">
+            <option>Analyse tactique</option>
+            <option>Compte rendu</option>
+            <option>Actualité</option>
+            <option>Décryptage</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="championnat">Championnat</label>
+          <select id="championnat">
+            <option>Ligue 1</option>
+            <option>Premier League</option>
+            <option>LaLiga</option>
+            <option>Serie A</option>
+            <option>Bundesliga</option>
+            <option>Ligue des champions</option>
+            <option>Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="equipeA">Équipe à domicile</label>
+          <input id="equipeA" placeholder="Ex : PSG">
+        </div>
+        <div>
+          <label for="equipeB">Équipe à l'extérieur</label>
+          <input id="equipeB" placeholder="Ex : Marseille">
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="scoreA">Buts domicile</label>
+          <input id="scoreA" type="number" min="0" max="99">
+        </div>
+        <div>
+          <label for="scoreB">Buts extérieur</label>
+          <input id="scoreB" type="number" min="0" max="99">
+        </div>
+      </div>
+
+      <label for="image">URL de la photo de couverture</label>
+      <input id="image" type="url"
+        placeholder="https://exemple.com/photo.jpg">
+
+      <label for="introduction">Introduction</label>
+      <textarea id="introduction" required
+        placeholder="Présente le contexte et l'enjeu du match..."></textarea>
+
+      <label for="analyse">Analyse tactique détaillée</label>
+      <textarea id="analyse" required
+        style="min-height:300px"
+        placeholder="Explique les systèmes, le pressing, les transitions, les ajustements et les moments décisifs..."></textarea>
+
+      <label for="verdict">Le verdict 90MINUTES</label>
+      <textarea id="verdict"
+        placeholder="Ton bilan personnel du match..."></textarea>
+
+      <div class="actions">
+        <button type="button" class="secondary" onclick="enregistrer()">
+          Enregistrer le brouillon
+        </button>
+        <button type="button" class="primary" onclick="previsualiser()">
+          Prévisualiser l'article
+        </button>
+      </div>
+
+      <p id="message" role="status"></p>
+    </form>
+  </div>
+
+  <article class="panel preview" id="preview">
+    <p class="category" id="previewCategorie"></p>
+    <h2 id="previewTitre"></h2>
+    <p id="previewMatch"></p>
+    <img id="previewImage" alt="Couverture de l'article" hidden>
+
+    <h3>Introduction</h3>
+    <section id="previewIntroduction"></section>
+
+    <h3>Analyse tactique</h3>
+    <section id="previewAnalyse"></section>
+
+    <h3>Le verdict 90MINUTES</h3>
+    <section id="previewVerdict"></section>
+  </article>
+</main>
+
+<script>
+  const champs = [
+    "titre", "categorie", "championnat",
+    "equipeA", "equipeB", "scoreA", "scoreB",
+    "image", "introduction", "analyse", "verdict"
+  ];
+
+  function valeur(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function enregistrer() {
+    const brouillon = {};
+
+    champs.forEach(id => {
+      brouillon[id] = valeur(id);
+    });
+
+    localStorage.setItem(
+      "90minutes-brouillon",
+      JSON.stringify(brouillon)
+    );
+
+    document.getElementById("message").textContent =
+      "Brouillon enregistré sur ce navigateur.";
+  }
+
+  function previsualiser() {
+    const titre = valeur("titre");
+    const introduction = valeur("introduction");
+    const analyse = valeur("analyse");
+
+    if (!titre || !introduction || !analyse) {
+      document.getElementById("message").textContent =
+        "Complète le titre, l'introduction et l'analyse.";
+      return;
+    }
+
+    document.getElementById("previewTitre").textContent = titre;
+
+    document.getElementById("previewCategorie").textContent =
+      valeur("categorie") + " · " + valeur("championnat");
+
+    const equipeA = valeur("equipeA");
+    const equipeB = valeur("equipeB");
+    const scoreA = valeur("scoreA");
+    const scoreB = valeur("scoreB");
+
+    document.getElementById("previewMatch").textContent =
+      equipeA && equipeB
+        ? equipeA + " " + scoreA + " - " + scoreB + " " + equipeB
+        : "";
+
+    const photo = document.getElementById("previewImage");
+    const url = valeur("image");
+
+    photo.hidden = !url;
+    if (url) photo.src = url;
+    else photo.removeAttribute("src");
+
+    document.getElementById("previewIntroduction").textContent =
+      introduction;
+
+    document.getElementById("previewAnalyse").textContent =
+      analyse;
+
+    document.getElementById("previewVerdict").textContent =
+      valeur("verdict");
+
+    document.getElementById("preview").style.display = "block";
+    document.getElementById("preview").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+
+  const sauvegarde = localStorage.getItem("90minutes-brouillon");
+
+  if (sauvegarde) {
+    try {
+      const brouillon = JSON.parse(sauvegarde);
+
+      champs.forEach(id => {
+        if (typeof brouillon[id] === "string") {
+          document.getElementById(id).value = brouillon[id];
+        }
+      });
+    } catch (erreur) {
+      console.error("Brouillon invalide.");
+    }
+  }
+</script>
+
+</body>
+</html>
